@@ -1,0 +1,80 @@
+// rule: width | height | fontsize | padding | margin 
+@mixin attr-analyze($attrList) {
+  @each  $key, $attr in $attrList {
+    @if $key == 'background' {
+      background: $attr;
+    }
+    @if $key == 'width' {
+      width: $attr;
+    }
+    @if $key == 'height' {
+      height: $attr;
+    }
+    @if $key == 'lineHeight' {
+      line-height: $attr;
+    }
+    @if $key == 'fontsize' {
+      font-size: $attr;
+    }
+    @if $key == 'paddingLeft' {
+      padding-left: $attr;
+    }
+    @if $key == 'paddingRight' {
+      padding-right: $attr;
+    }
+    @if $key == 'paddingTop' {
+      padding-top: $attr;
+    }
+    @if $key == 'paddingBottom' {
+      padding-bottom: $attr;
+    }
+    @if $key == 'padding' {
+      margin: $attr;
+    }
+    @if $key == 'marginLeft' {
+      margin-left: $attr;
+    }
+    @if $key == 'marginRight' {
+      margin-right: $attr;
+    }
+    @if $key == 'marginTop' {
+      margin-top: $attr;
+    }
+    @if $key == 'marginBottom' {
+      margin-bottom: $attr;
+    }
+    @if $key == 'margin' {
+      margin: $attr;
+    }
+    @if $key == 'left' {
+      left: $attr;
+    }
+    @if $key == 'right' {
+      right: $attr;
+    }
+    @if $key == 'top' {
+      top: $attr;
+    }
+    @if $key == 'bottom' {
+      bottom: $attr;
+    }
+    @if $key == 'maxwidth' {
+      max-width: $attr;
+    }
+    @if $key == 'minwidth' {
+      min-width: $attr;
+    }
+  }
+}
+
+@mixin mediaAdapt($list) {
+    @each $point, $attr in $list {
+      @if $point == $--page-xs-width {
+          @include attr-analyze($attr)
+      }
+
+      @media screen and (min-width: $point) {
+        @include attr-analyze($attr)
+      }
+    }
+}

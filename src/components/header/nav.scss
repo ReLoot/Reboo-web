@@ -1,0 +1,164 @@
+$headerList: (
+  $--page-xs-width:(height: 80px),
+  $--page-sm-width:(height: 80px),
+  $--page-md-width:(height: 90px),
+  $--page-lg-width:(height: 104px),
+);
+
+$logoList: (
+  $--page-xs-width:(width:188px, height: 40px, left: 20px),
+  $--page-sm-width:(width:200px, height: 43px, left: 30px),
+  $--page-md-width:(width:200px, height: 43px, left: 50px),
+  $--page-lg-width:(width:260px, height: 56px, left: 80px),
+);
+
+$navList: (
+  $--page-xs-width:(left: 300px),
+  $--page-sm-width:(left: 300px),
+  $--page-md-width:(left: 300px),
+  $--page-lg-width:(left: 460px),
+);
+$navItemList: (
+  $--page-xs-width:(paddingLeft: 10px, paddingRight: 10px, lineHeight: 85px),
+  $--page-sm-width:(paddingLeft: 20px, paddingRight: 20px, lineHeight: 85px),
+  $--page-md-width:(paddingLeft: 20px, paddingRight: 20px, lineHeight: 95px),
+  $--page-lg-width:(paddingLeft: 27px, paddingRight: 27px, lineHeight: 110px),
+);
+$wcList: (
+  $--page-xs-width:(width: 190px, height: 49px),
+  $--page-sm-width:(width: 190px, height: 49px),
+  $--page-md-width:(width: 190px, height: 49px),
+  $--page-lg-width:(width: 215px, height: 56px),
+);
+$appendList: (
+  $--page-xs-width:(right: 30px),
+  $--page-sm-width:(right: 30px),
+  $--page-md-width:(right: 40px),
+  $--page-lg-width:(right: 85px),
+);
+$avatarList: (
+  $--page-xs-width:(width: 40px, height: 40px),
+  $--page-sm-width:(width: 60px, height: 60px),
+  $--page-md-width:(width: 65px, height: 65px),
+  $--page-lg-width:(width: 70px, height: 70px),
+);
+
+@include b(header){
+  @include mediaAdapt($headerList);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  z-index: 99;
+  @include e(logo) {
+    @include pvcenter();
+    @include mediaAdapt($logoList);
+    position: absolute;
+    background: url(/image/logo.png) no-repeat center/cover;
+    // opacity: 0.8;
+  }
+
+  @include e(nav) {
+    @include mediaAdapt($navList);
+    @include clearfix();
+    height: 100%;
+    position: absolute;
+    li {
+      @include mediaAdapt($navItemList);
+      font-family: OrbitronRegular;
+      font-size: 21px;
+      cursor: pointer;
+      height: 100%;
+      position: relative;
+      color: rgba(255,255,255,0.6);
+      float: left;
+      &:hover {
+        color: $--color-aqua;
+        text-shadow: 0 0 5px $--color-aqua;
+      }
+      
+      &.active{
+        color: $--color-aqua;
+        font-family: OrbitronBlack;
+      }
+      &.active {
+        background-image: linear-gradient(to bottom, rgba(87, 255, 250, 0.1) 20%, rgba(44, 255, 243, 0.5));
+        border-bottom: 6px solid $--color-aqua;
+      }
+
+    }
+  }
+
+  @include e(append) {
+    @include clearfix();
+    @include pvcenter();
+    @include mediaAdapt($appendList);
+    position: abosulte;
+    .wc {
+      @include mediaAdapt($wcList);
+      font-family: OrbitronRegular;
+    }
+
+    @include m(avatar) {
+      @include mediaAdapt($avatarList);
+      display: block;
+      background: url(/image/avatar.png) no-repeat center/cover;
+    }
+  }
+}
+
+@include b(account) {
+  @include e(infocard) {
+    ::v-deep .el-dialog {
+      width: 500px;
+      height: 258px;
+      background: url(/image/wallet_card.png) no-repeat center/cover;
+      &__close {
+        color: $--color-black;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      &__headerbtn {
+        z-index: 10;
+      }
+
+      &__body {
+        padding: 35px 41px;
+        position: relative;
+        color: $--color-white;
+        h3 {
+          font-size: 30px;
+          line-height: 100%;
+        }
+        .box {
+          width: 80px;
+          height: 80px;
+          background: url(/image/wallet_card_box.png) no-repeat center/cover;
+          position: absolute;
+          top: 28px;
+          right: 31px;
+        }
+
+        .address {
+          margin-top: 70px;
+          h4 {
+            margin-bottom: 10px;
+          }
+          .view {
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 100%;
+            font-size: 14px;
+            text-align: center;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}

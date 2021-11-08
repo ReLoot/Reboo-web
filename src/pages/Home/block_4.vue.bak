@@ -1,0 +1,204 @@
+<template>
+  <div class="home--bk">
+    <div class="container">
+      <bk-title bg="/image/home/bk_4_hd.png" title="Star War" color="#00E3FF" />
+      <div class="home--bk_desc">
+        {{$t('home.bk4Desc')}}
+      </div>
+
+      <div class="ship ship--scan">
+        <div class="ship--bg" ></div>
+        <div class="ship--scan_item ship--scan_item01">
+          <div class="ball"></div>
+          <div class="stick"></div>
+        </div>
+        <div class="ship--scan_item ship--scan_item02">
+          <div class="ball"></div>
+          <div class="stick"></div>
+        </div>
+        <div class="ship--scan_item ship--scan_item03">
+          <div class="ball"></div>
+          <div class="stick"></div>
+        </div>
+        <div class="ship--tag">
+          <div class="ship--tag_inner">
+            <a>
+              <label>Frigate</label>
+              <span>NO.2046</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import bkTitle from '@/components/home/bk_title'
+export default {
+  components: {bkTitle},
+  data(){
+    return {
+    }
+  }
+  
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/style/custom.scss';
+.container {
+  padding-top: 100px;
+}
+
+@include b(home) {
+  @include e(bk) {
+    @include m(desc) {
+      width: 70%;
+      margin: 40px auto 50px;
+      line-height: 150%;
+    }
+  }
+}
+
+@include b(ship) {
+  @include e(scan) {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 1378px;
+    // height: 0;
+    max-width: 100%;
+    margin: 0 auto;
+
+    .ball {
+      width: 178px;
+      height: 178px;
+      border-radius: 50%;
+      position: relative;
+      background:no-repeat center/cover;
+      z-index: 11;
+      &::after{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 220px;
+        height: 220px;
+        margin-left: -110px;
+        margin-top: -110px;
+        background:no-repeat center/cover;
+        z-index: 2;
+      }
+    }
+
+    .stick {
+      position: absolute;
+      background: no-repeat center;
+      background-size: auto 100%;
+    }
+
+    @include m(item) {
+      z-index: 10;
+    }
+
+    @include m(item01) {
+      position: absolute;
+      top: 74px;
+      left: 0;
+      .stick {
+        width: 458px;
+        height: 186px;
+        right: -408px;
+        bottom: -93px;
+        background-image: url(/image/home/bk_4_item_1_stick.png);
+      }
+      .ball {
+        background-image: url(/image/home/bk_4_item_1.png);
+        &::after {
+          background-image: url(/image/home/bk_4_item_1_rang.png);
+        }
+      }
+    }
+    @include m(item02) {
+      position: absolute;
+      top: 45px;
+      right: -20px;
+      .stick {
+        width: 472px;
+        height: 255px;
+        left: -257px;
+        top: 10px;
+        background-image: url(/image/home/bk_4_item_2_stick.png);
+      }
+      .ball {
+        background-image: url(/image/home/bk_4_item_2.png);
+        &::after {
+          background-image: url(/image/home/bk_4_item_2_rang.png);
+        }
+      }
+    }
+    @include m(item03) {
+      position: absolute;
+      bottom: -50px;
+      left: 120px;
+      .stick {
+        width: 317px;
+        height: 94px;
+        top: 0;
+        left: 90%;
+        background-image: url(/image/home/bk_4_item_3_stick.png);
+      }
+      .ball {
+        background-image: url(/image/home/bk_4_item_3.png);
+        &::after {
+          background-image: url(/image/home/bk_4_item_3_rang.png);
+        }
+      }
+    }
+
+  }
+
+  @include e(bg) {
+    width: 100%;
+    // height: 100%;
+    padding-bottom: 78.37%;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background:url(/image/home/ansel-hsiao-fulgor19.jpg) no-repeat center/cover;
+  }
+
+  @include e(tag) {
+    width: 47%;
+    position: absolute;
+    top: 47.5%;
+    left: 0;
+    @include m(inner) {
+      width: 100%;
+      height: 0;
+      padding-bottom: 20%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2;
+      font-size: 50px;
+      a {
+        @include pacenter();
+      }
+      label {
+        font-family: OrbitronBlack;
+        color: $--color-blue;
+        margin-right: 20px;
+      }
+      span {
+        font-family: OrbitronRegular;
+      }
+    }
+  }
+}
+
+</style>

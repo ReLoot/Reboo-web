@@ -1,0 +1,121 @@
+$--color-primary: #2CFFF3 !default;
+/// color|1|Background Color|4
+$--color-white: #FFFFFF !default;
+$--color-white-07: rgba(255,255,255,0.7) !default;
+$--color-white-04: rgba(255,255,255,0.4) !default;
+$--color-white-01: rgba(255,255,255,0.1) !default;
+/// color|1|Background Color|4
+$--color-black: #1A1A1A !default;
+$--color-black-1: #4D4D4D;
+$--color-black-2: #b3b3b3;
+$--color-black-3: #F3F3F3;
+$--color-black-4: #FBFBFB;
+
+$--color-primary-light-1: mix($--color-white, $--color-primary, 10%) !default; /* 53a8ff */
+$--color-primary-light-2: mix($--color-white, $--color-primary, 20%) !default; /* 66b1ff */
+$--color-primary-light-3: mix($--color-white, $--color-primary, 30%) !default; /* 79bbff */
+$--color-primary-light-4: mix($--color-white, $--color-primary, 40%) !default; /* 8cc5ff */
+$--color-primary-light-5: mix($--color-white, $--color-primary, 50%) !default; /* a0cfff */
+$--color-primary-light-6: mix($--color-white, $--color-primary, 60%) !default; /* b3d8ff */
+$--color-primary-light-7: mix($--color-white, $--color-primary, 70%) !default; /* c6e2ff */
+$--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default; /* d9ecff */
+$--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /* ecf5ff */
+/// color|1|Functional Color|1
+$--color-success: #54E4A5 !default;
+/// color|1|Functional Color|1
+$--color-warning: #E6A23C !default;
+/// color|1|Functional Color|1
+$--color-danger: #F56C6C !default;
+/// color|1|Functional Color|1
+$--color-info: #909399 !default;
+
+// Theme Color 1
+$--color-aqua: #2CFFF3 !default;
+// Theme Color 2
+$--color-palegreen: #2FFFC4 !default;
+// Theme Color 3
+$--color-yellow: #FFED2C !default;
+// Theme Color 4
+$--color-blue: #13ABFF !default;
+// Theme Color 5
+$--color-fuchsia: #FF00CC !default;
+
+/* 
+  -lg (≥1200px) || -md (≥992px) || -sm (≥768px) || -xs (<768px)
+*/
+$--page-lg-width: 1400px;
+$--page-md-width: 1200px;
+$--page-sm-width: 992px;
+$--page-xs-width: 768px;
+
+/*
+  form options
+ */
+$--form-controller-bg: $--color-black-2;
+
+/* 
+  public methods
+*/
+@mixin displayFlex($direction: row) {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: $direction;
+}
+// 定位居中
+@mixin pacenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+// 定位上下居中
+@mixin pvcenter {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+// 定位左右居中
+@mixin plcenter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+// 清除浮动
+@mixin clearfix {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// simple bem
+$e-separator: '--';
+$m-separator: '_';
+@mixin b($block) {
+  .#{$block} {
+    @content;
+  }
+}
+
+@mixin e($element) {
+  $selector: &;
+  @at-root {
+    #{$selector+$e-separator+$element} {
+      @content;
+    }
+  }
+}
+
+@mixin m($modifier) {
+  $selector: &;
+  @at-root {
+    #{$selector+$m-separator+$modifier} {
+      @content;
+    }
+  }
+}
+
+
+@import './media-screen.scss';

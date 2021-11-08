@@ -1,0 +1,118 @@
+@import './custom.scss';
+html, body, div, h1, h2, h3, h4, h5, a, p, ul, li, table, th, td, i,
+input, select, button, img, hr, br {
+  padding: 0;
+  margin: 0;
+  border: 0 none;
+  outline: none !important;
+}
+
+html {
+  background-color: #18212C;
+  color: $--color-white;
+  min-width: $--page-md-width;
+}
+
+
+$bodyList: (
+  // $--page-xs-width: (fontsize:12px),
+  // $--page-sm-width: (fontsize:14px),
+  $--page-md-width: (fontsize:16px),
+  $--page-lg-width: (fontsize:18px),
+);
+
+body {
+  @include mediaAdapt($bodyList);
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  line-height: 175%;
+  
+  letter-spacing: 1px;
+  min-width: $--page-md-width;
+  margin: 0 auto;
+}
+
+
+ul, li, dl, dd, dt {
+  list-style: none;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+a, a:hover, a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+
+  width: $--page-lg-width - 20px;
+}
+
+/* .rf-lab {
+  display: block;
+  background: no-repeat center/cover;
+} */
+
+// color
+@include b(color) {
+  @include e(danger) {
+    color: $--color-danger;
+  }
+  @include e(success) {
+    color: $--color-success;
+  }
+}
+
+
+
+.el-dropdown-menu {
+  // background-color: rgba(0,0,0,0.2);
+  // background-color: $--color-white-01;
+  background-color: rgba(0,0,0,0.7);
+  border-color: $--color-white-04;
+  &__item {
+    color: $--color-white-07;
+    &:not(.is-disabled):hover {
+      background-color: $--color-white-01;
+      // background-color: rgba(0,0,0,0.4);
+    }
+  }
+}
+
+.el-popper {
+  .popper__arrow::after {
+    border-color: $--color-white-04 !important;
+  }
+}
+
+
+
+// @media screen and (min-width: $--page-xs-width){
+//   .container {
+//     width: $--page-xs-width - 20px;
+//   }
+// }
+// @media screen and (min-width: $--page-sm-width){
+//   .container {
+//     width: $--page-sm-width - 20px;
+//   }
+// }
+// @media screen and (min-width: $--page-md-width){
+//   .container {
+//     width: $--page-md-width - 20px;
+//   }
+// }
+// @media screen and (min-width: $--page-lg-width){
+//   .container {
+//     width: $--page-lg-width - 20px;
+//   }
+// }
