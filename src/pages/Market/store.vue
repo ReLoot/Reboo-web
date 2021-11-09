@@ -12,14 +12,14 @@
     </div>
 
     <div class="store--bd">
-      <el-row :gutter="50">
-        <el-col :md="6">
+      <el-row :gutter="20">
+        <el-col :md="8">
           <div class="store--viewbox">
             <div class="store--viewbox_bg"></div>
             <div class="store--viewbox_box" :class="`store--viewbox_box_${tabs[curTabIdx]['type']}`"></div>
           </div>
         </el-col>
-        <el-col :md="18">
+        <el-col :md="16">
           <div class="store--ctn">
             
             <el-row class="store--ctn_top">
@@ -113,7 +113,7 @@
           <span class="pause">{{$t('market.storePaying')}}</span>
         </div>
       </div>
-      <cus-divider dStyle="white" style="margin-bottom: 100px" />
+      <cus-divider dStyle="white" style="margin-bottom: 40px" />
 
     </div>
 
@@ -154,13 +154,54 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$navItem: (
+  $--page-xs-width:(lineHeight: 34px, height: 34px),
+  $--page-sm-width:(lineHeight: 34px, height: 34px),
+  $--page-md-width:(lineHeight: 40px, height: 40px),
+  $--page-lg-width:(lineHeight: 46px, height: 46px),
+);
+
+$boxTitle: (
+  $--page-xs-width:(fontsize: 24px, marginBottom: 15px),
+  $--page-sm-width:(fontsize: 24px, marginBottom: 15px),
+  $--page-md-width:(fontsize: 26px, marginBottom: 18px),
+  $--page-lg-width:(fontsize: 28px, marginBottom: 20px),
+);
+$price: (
+  $--page-xs-width:(fontsize: 18px),
+  $--page-sm-width:(fontsize: 18px),
+  $--page-md-width:(fontsize: 20px),
+  $--page-lg-width:(fontsize: 22px),
+);
+$cell: (
+  $--page-xs-width:(height: 32px, lineHeight: 32px),
+  $--page-sm-width:(height: 32px, lineHeight: 32px),
+  $--page-md-width:(height: 40px, lineHeight: 40px),
+  $--page-lg-width:(height: 48px, lineHeight: 48px),
+);
+
+$payBtn: (
+  $--page-xs-width:(height: 30px, fontsize: 14px),
+  $--page-sm-width:(height: 30px, fontsize: 14px),
+  $--page-md-width:(height: 36px, fontsize: 16px),
+  $--page-lg-width:(height: 42px, fontsize: 18px),
+);
+
+$pay: (
+  $--page-xs-width:(fontsize:14px, margin:15px 0, lineheight:40),
+  $--page-sm-width:(fontsize:16px, margin:15px 0, lineheight:40),
+  $--page-md-width:(fontsize:18px, margin:18px 0, lineheight:49),
+  $--page-lg-width:(fontsize:20px, margin:22px 0, lineheight:58),
+);
+
 @include b(store) {
   @include e(hd) {
-    margin: 40px 0;
+    margin: 20px 0 40px;
     @include m(tabs) {
       @include clearfix();
       display: table;
       li {
+        @include mediaAdapt($navItem);
         display: table-cell;
         border-collapse: collapse;
         float: left;
@@ -168,15 +209,15 @@ export default {
         // padding: 0 20px;
         padding-left: 20px;
         padding-right: 20px;
-        height: 60px;
-        line-height: 60px;
+        // height: 60px;
+        // line-height: 60px;
         text-align: center;
         border: 1px solid $--color-white-07;
         color: $--color-white-07;
         cursor: pointer;
         -webkit-user-select: none;
         user-select: none;
-        font-size: 20px;
+        font-size: 16px;
         font-family: OrbitronRegular;
         &.active {
           border-color: $--color-aqua;
@@ -188,7 +229,7 @@ export default {
 
   @include e(bd) {
     & > .el-row {
-      margin-bottom: 50px;
+      margin-bottom: 20px;
     }
   }
 
@@ -222,7 +263,8 @@ export default {
   @include e(ctn) {
     @include m(top) {
       h2 {
-        font-size: 35px;
+        @include mediaAdapt($boxTitle);
+        // font-size: 35px;
         font-family: OrbitronBlack;
         margin-bottom: 15px;
       }
@@ -230,7 +272,8 @@ export default {
   }
 
   @include e(price) {
-    font-size: 28px;
+    // font-size: 28px;
+    @include mediaAdapt($price);
     font-family: OrbitronRegular;
     margin-bottom: 15px;
     span {
@@ -242,22 +285,24 @@ export default {
   }
 
   @include e(desc) {
-    margin-bottom: 30px;
-    font-size: 16px;
+    margin-bottom: 15px;
+    font-size: 14px;
     color: $--color-white-07;
+    line-height: 125%;
     font-family: OrbitronRegular;
   }
 
   @include e(rank) {
-    width: 696px;
+    // width: 696px;
+    width: 100%;
     background-color: #18212C;
     border-collapse: collapse;
-    margin-bottom: 35px;
+    margin-bottom: 15px;
     tr {
       &:first-child {
         td:not(:first-child){
           color: #D0E6EE;
-          font-size: 30px;
+          font-size: 20px;
           font-weight: 800;
           font-style: italic;
           font-family: OrbitronBlack;
@@ -273,12 +318,13 @@ export default {
 
     }
     td {
-      width: 160px;
-      height: 62px;
+      @include mediaAdapt($cell);
+      width: 20%;
+      // height: 62px;
       border: 1px solid rgba(255,255,255,0.3);
       text-align: center;
       &:first-child {
-        width: 200px;
+        width: 30%;
         background-color: $--color-white-01;
         font-family: OrbitronRegular;
         
@@ -288,16 +334,15 @@ export default {
 
   @include e(quantity) {
     h4 {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-family: OrbitronBlack;
     }
     @include m(count){
       background-color: $--color-white-01;
     }
     @include m(btn) {
+      @include mediaAdapt($payBtn);
       border-radius: 0;
-      width: 130px;
-      height: 60px;
       border-width: 2px;
       border-style: solid;
       border-color: $--color-aqua;
@@ -305,24 +350,25 @@ export default {
       background-color: #232E3B;
       vertical-align: middle;
       font-family: OrbitronRegular;
-      font-size: 22px;
-      margin-left: 15px;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-left: 10px;
       &:hover, &:active, &:focus {
         background-color: rgba(0,0,0,0.2);
       }
     }
   }
-
   @include e(pay) {
     @include displayFlex();
-    margin: 30px 0;
+    @include mediaAdapt($pay);
+    // margin: 30px 0;
     padding: 0 13px;
-    font-size: 28px;
+    // font-size: 28px;
     @include m(preview){
       -webkit-flex: 1;
       flex: 1;
       font-family: OrbitronBlack;
-      line-height: 40px;
+      // line-height: 40px;
     }
     
     @include m(append) {
@@ -331,23 +377,42 @@ export default {
       }
     }
   }
-
 }
 
+$number: (
+  $--page-xs-width:(width: 167px),
+  $--page-sm-width:(width: 167px),
+  $--page-md-width:(width: 167px),
+  $--page-lg-width:(width: 200px),
+);
+
+$numberHandler: (
+  $--page-xs-width:(lineHeight: 30px, width: 30px, fontsize: 20px),
+  $--page-sm-width:(lineHeight: 30px, width: 30px, fontsize: 20px),
+  $--page-md-width:(lineHeight: 36px, width: 40px, fontsize: 24px),
+  $--page-lg-width:(lineHeight: 42px, width: 50px, fontsize: 30px),
+);
+$numberInner: (
+  $--page-xs-width:(height: 30px, fontsize: 16px),
+  $--page-sm-width:(height: 30px, fontsize: 16px),
+  $--page-md-width:(height: 36px, fontsize: 18px),
+  $--page-lg-width:(height: 42px, fontsize: 20px),
+);
+
 .el-input-number {
-  $-elem-h: 60px;
-  width: 280px;
+  @include mediaAdapt($number);
   border-radius: 0;
   vertical-align: middle;
   ::v-deep span[role=button] {
-    width: 75px;
+    @include mediaAdapt($numberHandler);
+    // width: 75px;
     border-radius: 0;
     border-color: $--color-white-01;
     background-color: $--color-white-01;
-    font-size: 30px;
+    // font-size: 30px;
     font-weight: 800;
     color: $--color-white;
-    line-height: $-elem-h;
+    // line-height: $-elem-h;
     &.is-disabled {
       color: $--color-white-04;
       background-color: rgba(0,0,0,0.1);
@@ -356,12 +421,13 @@ export default {
 
   ::v-deep .el-input {
     &__inner {
+      @include mediaAdapt($numberInner);
       border-color: $--color-white-01 !important; 
       background-color: #18212C;
       color: $--color-white;
       border-radius: 0;
-      height: $-elem-h + 2;
-      font-size: 30px;
+      // height: $-elem-h + 2;
+      // font-size: 30px;
       font-weight: 800;
       font-family: OrbitronBlack;
     }

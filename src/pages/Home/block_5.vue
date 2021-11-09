@@ -7,7 +7,9 @@
       </div>
     </div>
 
-    <div class="home--bk_view"></div>
+    <div class="home--bk_view">
+      <img src="/image/home/cordy-daler-main1.jpg" alt="" error="" />
+    </div>
   </div>
 </template>
 
@@ -21,24 +23,40 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
 .container {
-  padding-top: 100px;
-  padding-bottom: 40px;
+  padding-top: 60px;
+  padding-bottom: 20px;
 }
+
+$view: (
+  $--page-xs-width: (height: 300px),
+  $--page-sm-width: (height: 406px),
+  $--page-md-width: (height: 526px),
+  $--page-lg-width: (height: 632px),
+);
 
 @include b(home) {
   @include e(bk) {
+    margin-bottom: 100px;
     @include m(desc) {
       font-family: OrbitronRegular;
-      width: 70%;
+      width: 95%;
       margin: 40px auto 50px;
       line-height: 150%;
     }
 
     @include m(view) {
-      width: 100%;
-      padding-bottom: 56.26%;
-      height: 0;
-      background: url(/image/home/cordy-daler-main1.jpg) no-repeat center/cover;
+      @include mediaAdapt($view);
+      // max-width: 100%;
+      margin: 0 auto;
+      // padding-bottom: 56.26%;
+      // height: 0;
+      // background: url(/image/home/cordy-daler-main1.jpg) no-repeat center/cover;
+      img {
+        height: 100%;
+        margin: auto;
+        max-width: 100%;
+        display: block;
+      }
     }
   }
 }

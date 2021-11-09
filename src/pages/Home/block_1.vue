@@ -1,7 +1,8 @@
 <template>
   <div class="home--bk">
     <div class="container">
-      <h1>{{$t('home.bannerTxt')}}</h1>
+      <!-- <h1>{{$t('home.bannerTxt')}}</h1> -->
+      <h1 v-html="$t('home.bannerTxt')"></h1>
       <!-- <h1>From Here To The Sea Of Stars</h1> -->
       <!-- <cus-btn-ein 
         class="home--bk_btn"
@@ -24,23 +25,23 @@
 }
 
 $bkList: (
-  $--page-xs-width:(height: 787px),
-  $--page-sm-width:(height: 787px),
-  $--page-md-width:(height: 787px),
-  $--page-lg-width:(height: 934px),
+  $--page-xs-width:(height: 422px),
+  $--page-sm-width:(height: 422px),
+  $--page-md-width:(height: 558px),
+  $--page-lg-width:(height: 675px),
 );
 
 $bkListHd: (
-  $--page-xs-width:(fontsize: 50px, marginTop: 310px, marginBottom: 50px),
-  $--page-sm-width:(fontsize: 68px, marginTop: 310px, marginBottom: 70px),
-  $--page-md-width:(fontsize: 74px, marginTop: 310px, marginBottom: 60px),
-  $--page-lg-width:(fontsize: 86px, margin: 358px auto 135px),
+  $--page-xs-width:(fontsize: 36px, marginTop: 172px, marginBottom: 40px),
+  $--page-sm-width:(fontsize: 36px, marginTop: 172px, marginBottom: 40px),
+  $--page-md-width:(fontsize: 45px, marginTop: 222px, marginBottom: 60px),
+  $--page-lg-width:(fontsize: 53px, margin: 269px auto 85px),
 );
 $btnList: (
-  $--page-xs-width:(width: 340px, height: 105px, fontsize: 22px),
-  $--page-sm-width:(width: 340px, height: 105px, fontsize: 22px),
-  $--page-md-width:(width: 380px, height: 117px, fontsize: 28px),
-  $--page-lg-width:(width: 422px, height: 130px, fontsize: 35px),
+  $--page-xs-width:(width: 188px, height: 55px, fontsize: 20px),
+  $--page-sm-width:(width: 188px, height: 55px, fontsize: 20px),
+  $--page-md-width:(width: 242px, height: 70px, fontsize: 24px),
+  $--page-lg-width:(width: 292px, height: 84px, fontsize: 28px),
 );
 
 @include b(home){
@@ -55,16 +56,19 @@ $btnList: (
     user-select: none;
     h1 {
       @include mediaAdapt($bkListHd);
-      width: 80%;
+      // width: 80%;
       display: inline-block;
       text-align: center;
       letter-spacing: 5px;
       line-height: 125%;
       color: $--color-aqua;
+      white-space: nowrap;
     }
 
     @include m(btn) {
       @include mediaAdapt($btnList);
+      display: block;
+      margin: 0 auto;
     }
   }
 }

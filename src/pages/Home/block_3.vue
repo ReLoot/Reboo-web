@@ -6,9 +6,9 @@
         {{$t('home.bk3Desc')}}
       </article>
 
-      <el-row class="cards2" :gutter="50"> 
+      <el-row class="cards2" :gutter="30"> 
         <template v-for="(item, idx) in cards">
-          <el-col :key="`cd2_item_${idx}`" :md="12">
+          <el-col :key="`cd2_item_${idx}`" :sm="12">
             <div
               class="cards2--item" 
               :style="{
@@ -58,58 +58,72 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
 .container {
-  padding-top: 100px;
+  padding-top: 60px;
 }
 
 @include b(home) {
   @include e(bk) {
     @include m(desc) {
       font-family: OrbitronRegular;
-      width: 60%;
+      width: 90%;
       margin: 40px auto 50px;
     }
   }
 }
 
-
-$ctnList: (
-  $--page-xs-width: (bottom: 35px),
-  $--page-sm-width: (bottom: 35px),
-  $--page-md-width: (bottom: 40px),
-  $--page-lg-width: (bottom: 50px),
-);
+// $ctnList: (
+//   $--page-xs-width: (bottom: 35px),
+//   $--page-sm-width: (bottom: 35px),
+//   $--page-md-width: (bottom: 40px),
+//   $--page-lg-width: (bottom: 50px),
+// );
 
 $cardList: (
-  $--page-xs-width: (maxwidth: 500px),
-  $--page-sm-width: (maxwidth: 550px),
-  $--page-md-width: (width: 630px),
-  $--page-lg-width: (width: 650px),
+  $--page-xs-width: (maxwidth: 300px),
+  $--page-sm-width: (maxwidth: 100%),
+  $--page-md-width: (width: 630px, max-width: 100%),
+  $--page-lg-width: (width: 650px, max-width: 100%),
+);
+
+$cardInner: (
+  $--page-xs-width: (marginTop: 50px),
+  $--page-sm-width: (marginTop: 50px),
+  $--page-md-width: (marginTop: 50px),
+  $--page-lg-width: (marginTop: 60px),
 );
 
 @include b(cards2) {
   @include e(item) {
     @include mediaAdapt($cardList);
-    // max-width: 632px;
-    // max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     background: no-repeat center/cover;
+    opacity: 0.9;
+    &:hover {
+      opacity: 1;
+    }
+
+    &:hover &_inner img{
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+
     @include m(inner) {
-      padding-bottom: 36.4%;
+       @include mediaAdapt($cardInner);
+      padding-bottom: 36.2%;
       position: relative;
       height: 0;
-      margin-top: 88px;
       img {
-        // width: 324px;
-        // height: 300px;
         width: 51.25%;
         position: absolute;
         right: 0;
         bottom: 0;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+        -webkit-transform-origin: center;
+        transform-origin: center;
       }
       .desc {
-        // width: 326px;
-        // width: 100%;
         position: absolute;
         left: 30px;
         bottom: 20px;

@@ -29,7 +29,7 @@
       padding-bottom: $attr;
     }
     @if $key == 'padding' {
-      margin: $attr;
+      padding: $attr;
     }
     @if $key == 'marginLeft' {
       margin-left: $attr;
@@ -70,7 +70,9 @@
 @mixin mediaAdapt($list) {
     @each $point, $attr in $list {
       @if $point == $--page-xs-width {
+        @media screen and (max-width: $point) {
           @include attr-analyze($attr)
+        }
       }
 
       @media screen and (min-width: $point) {

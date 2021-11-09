@@ -13,12 +13,11 @@ html {
   min-width: $--page-md-width;
 }
 
-
 $bodyList: (
-  // $--page-xs-width: (fontsize:12px),
-  // $--page-sm-width: (fontsize:14px),
-  $--page-md-width: (fontsize:16px),
-  $--page-lg-width: (fontsize:18px),
+  $--page-xs-width: (fontsize:14px),
+  $--page-sm-width: (fontsize:14px, minwidth:$--page-sm-width),
+  $--page-md-width: (fontsize:14px, minwidth:$--page-md-width),
+  $--page-lg-width: (fontsize:16px, minwidth:$--page-lg-width),
 );
 
 body {
@@ -28,7 +27,7 @@ body {
   line-height: 175%;
   
   letter-spacing: 1px;
-  min-width: $--page-md-width;
+  // min-width: $--page-md-width;
   margin: 0 auto;
 }
 
@@ -46,15 +45,23 @@ a, a:hover, a:active {
   text-decoration: none;
 }
 
+
+$containerList: (
+  $--page-xs-width: (width: 100%),
+  $--page-sm-width: (width: 100%),
+  $--page-md-width: (width: $--page-md-width - 200px),
+  $--page-lg-width: (width: $--page-lg-width - 200px),
+);
 .container {
+  @include mediaAdapt($containerList);
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 100px;
   margin-left: auto;
   margin-right: auto;
   max-width: 100%;
-
-  width: $--page-lg-width - 20px;
+  
+  // width: $--page-lg-width - 200px;
 }
 
 /* .rf-lab {
@@ -75,15 +82,12 @@ a, a:hover, a:active {
 
 
 .el-dropdown-menu {
-  // background-color: rgba(0,0,0,0.2);
-  // background-color: $--color-white-01;
   background-color: rgba(0,0,0,0.7);
   border-color: $--color-white-04;
   &__item {
     color: $--color-white-07;
     &:not(.is-disabled):hover {
       background-color: $--color-white-01;
-      // background-color: rgba(0,0,0,0.4);
     }
   }
 }
@@ -93,26 +97,3 @@ a, a:hover, a:active {
     border-color: $--color-white-04 !important;
   }
 }
-
-
-
-// @media screen and (min-width: $--page-xs-width){
-//   .container {
-//     width: $--page-xs-width - 20px;
-//   }
-// }
-// @media screen and (min-width: $--page-sm-width){
-//   .container {
-//     width: $--page-sm-width - 20px;
-//   }
-// }
-// @media screen and (min-width: $--page-md-width){
-//   .container {
-//     width: $--page-md-width - 20px;
-//   }
-// }
-// @media screen and (min-width: $--page-lg-width){
-//   .container {
-//     width: $--page-lg-width - 20px;
-//   }
-// }

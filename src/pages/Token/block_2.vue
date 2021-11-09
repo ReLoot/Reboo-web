@@ -63,31 +63,25 @@ export default {
 $itemList: (
   $--page-xs-width:(marginBottom: 30px),
   $--page-sm-width:(marginBottom: 35px),
-  $--page-md-width:(marginBottom: 80px),
-  $--page-lg-width:(marginBottom: 100px),
+  $--page-md-width:(marginBottom: 58px),
+  $--page-lg-width:(marginBottom: 70px),
 );
 $itemEmList: (
-  $--page-xs-width:(width: 125px, height: 125px, marginRight: 20px),
-  $--page-sm-width:(width: 125px, height: 125px, marginRight: 25px),
-  $--page-md-width:(width: 135px, height: 135px, marginRight: 25px),
-  $--page-lg-width:(width: 155px, height: 155px, marginRight: 30px),
+  $--page-xs-width:(width: 115px, height: 115px, marginRight: 18px),
+  $--page-sm-width:(width: 96px, height: 96px, marginRight: 18px),
+  $--page-md-width:(width: 96px, height: 96px, marginRight: 18px),
+  $--page-lg-width:(width: 115px, height: 115px, marginRight: 20px),
 );
 
 @include b(token) {
   @include e(cards) {
-    // @include displayFlex();
-    margin-top: 100px;
+    margin-top: 50px;
     @include m(item) {
       @include displayFlex();
       @include mediaAdapt($itemList);
-      min-width: 580px;
       max-width: 100%;
-      // min-width: 100%;
-      // margin-bottom: 100px;
       em {
         @include mediaAdapt($itemEmList);
-        // width: 155px;
-        // height: 155px;
         display: block;
         margin-right: 30px;
         background: no-repeat center/cover;
@@ -99,6 +93,7 @@ $itemEmList: (
       line-height: 125%;
       -webkit-flex: 1;
       flex: 1;
+      padding-bottom: 2em;
       a {
         position: absolute;
         bottom: 0;

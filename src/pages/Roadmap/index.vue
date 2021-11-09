@@ -119,6 +119,12 @@ export default {
   padding-top: 206px;
 }
 
+$rb: (
+  $--page-xs-width: (fontsize: 14px),
+  $--page-sm-width: (fontsize: 16px),
+  $--page-md-width: (fontsize: 18px),
+  $--page-lg-width: (fontsize: 20px),
+);
 @include b(roadMap) {
   background: url(/image/roadmap/banner.jpg) no-repeat center/cover;
   h2 {
@@ -163,6 +169,7 @@ export default {
       height: 70px;
       line-height: 70px;
       white-space: nowrap;
+      word-wrap: break-word;
     }
   }
 
@@ -209,10 +216,11 @@ export default {
       line-height: 150%;
     }
     .rb {
+      @include mediaAdapt($rb);
       font-family: OrbitronRegular;
-      font-size: 28px;
-      width: 444px;
-      height: 90px;
+      // font-size: 28px;
+      width: 378px;
+      height: 77px;
     }
   }
 }

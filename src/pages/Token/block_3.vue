@@ -77,8 +77,8 @@ export default {
 @include b(token) {
   @include e(bk) {
     @include m(desc) {
-      width: 70%;
-      margin: 40px auto 80px;
+      width: 90%;
+      margin: 40px auto 100px;
       line-height: 150%;
       font-family: OrbitronRegular;
     }
@@ -86,21 +86,22 @@ export default {
 }
 
 $pieList: (
-  $--page-xs-width:(fontsize: 80px),
-  $--page-sm-width:(fontsize: 86px),
-  $--page-md-width:(fontsize: 90px),
-  $--page-lg-width:(fontsize: 100px),
+  $--page-xs-width:(fontsize: 70px),
+  $--page-sm-width:(fontsize: 70px),
+  $--page-md-width:(fontsize: 70px),
+  $--page-lg-width:(fontsize: 75px),
 );
 
 @include b(tk) {
   @include e(pie) {
     @include clearfix();
-    margin-bottom: 100px;
+    margin-bottom: 1em;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    // max-width: 80%;
-    // font-size: 100px;
+    &:last-child {
+      margin-bottom: 0;
+    }
     @include mediaAdapt($pieList);
     @include m(inner) {
       position: relative;
@@ -108,14 +109,12 @@ $pieList: (
     }
 
     @include m(view) {
-      // width: 700px;
-      // height: 700px;
       width: 7em;
       height: 7em;
       background: url(/image/token/pie_1.png) no-repeat center/cover;
       .unit {
         @include pacenter();
-        font-size: 50px;
+        font-size: 0.5em;
         font-family: OrbitronBlack;
         color: $--color-yellow;
       }
@@ -128,20 +127,18 @@ $pieList: (
       p {
         width: 8em;
         text-align: right;
-        height: 100px;
-        // line-height: 150%;
+        height: 1em;
         word-break: break-all;
         position: absolute;
         bottom: -0.4em;
         right: 0;
         span {
-          font-size: 26px;
+          font-size: 0.26em;
           vertical-align: baseline;
           line-height: 100%;
           &.num {
             font-size: 0.4em;
             font-family: OrbitronBlack;
-            // vertical-align: -8px;
             vertical-align: baseline;
             color: $--color-yellow;
           }
@@ -222,7 +219,7 @@ $pieList: (
     left: -4.92em;
     line-height: 0;
     span {
-      line-height: 0;
+      line-height: 1.25;
       font-size: 16px;
     }
   }
@@ -230,7 +227,6 @@ $pieList: (
   .tk--pie_item {
     @include displayFlex();
     position: absolute;
-    // top: 4.88em;
     top: 5.38em;
     right: auto;
     left: -4.92em;

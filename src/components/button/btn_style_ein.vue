@@ -39,7 +39,7 @@ export default {
       position: relative;
       cursor: pointer;
       background: no-repeat center/cover;
-      font-size: 21px;
+      font-size: 14px;
       opacity: 0.9;
       -webkit-transform-origin: bottom;
       transform-origin: bottom;

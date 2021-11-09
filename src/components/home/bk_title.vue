@@ -27,20 +27,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/style/rewrite.scss';
+@import '@/style/custom.scss';
+$itemTitle: (
+  $--page-xs-width: (fontsize: 30px, padding:15px 91px 15px 90px),
+  $--page-sm-width: (fontsize: 30px, padding:15px 91px 15px 90px),
+  $--page-md-width: (fontsize: 30px, padding:15px 91px 15px 90px),
+  $--page-lg-width: (fontsize: 34px, padding:18px 107px 18px 105px)
+);
+
 @include b(bk) {
   @include e(title) {
     // height: 92px;
     text-align: center;
     h2 {
+      @include mediaAdapt($itemTitle);
       display: inline-block;
       font-family: OrbitronBlack;
-      font-size: 52px;
+      // font-size: 30px;
       text-align: center;
       margin-left: auto;
       margin-right: auto;
       line-height: 125%;
-      padding: 15px 150px 15px 120px;
+      // padding: 15px 150px 15px 120px;
+      // padding: 15px 91px 15px 90px;
       // background: no-repeat center/cover;
       background-repeat: no-repeat;
       background-position: center;

@@ -28,15 +28,15 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
 .container {
-  padding-top: 100px;
+  padding-top: 60px;
 }
 
 @include b(home) {
   @include e(bk) {
     @include m(desc) {
       font-family: OrbitronRegular;
-      width: 70%;
-      margin: 40px auto 50px;
+      width: 90%;
+      margin: 40px auto 80px;
       line-height: 150%;
     }
   }
@@ -47,12 +47,8 @@ export default {
     position: relative;
     top: 0;
     left: 0;
-    width: 1378px;
-    // height: 0;
-    max-width: 100%;
     margin: 0 auto;
-
-    width: 90%;
+    width: 100%;
     img {
       width: 100%;
       display: block;

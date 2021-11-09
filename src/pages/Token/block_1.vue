@@ -28,17 +28,10 @@
 export default {
   methods: {
     link() {  //url
-      // window.location.href = url
-      // if (type == 2) {
-      //   window.location.href = 'https://discord.com/invite/Cu9FcCMrrz'
-      // } else {
-      //   alert(this.$t('token.altr'))
-      // }
       this.$message({
         showClose: true,
         message: this.$t('token.altr')
       })
-      // return false
     }
   }
 }
@@ -46,36 +39,28 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
-// .container {
-//   padding-top: 385px;
-// }
-
-
-$bnList: (
-  $--page-xs-width:(height: 787px),
-  $--page-sm-width:(height: 787px),
-  $--page-md-width:(height: 787px),
-  $--page-lg-width:(height: 933px),
-);
 $bnListHd: (
-  $--page-xs-width:(fontsize: 60px, marginTop: 335px),
-  $--page-sm-width:(fontsize: 60px, marginTop: 335px),
-  $--page-md-width:(fontsize: 60px, marginTop: 335px),
-  $--page-lg-width:(fontsize: 70px, marginTop: 385px),
+  $--page-xs-width:(fontsize: 35px, marginTop: 243px),
+  $--page-sm-width:(fontsize: 35px, marginTop: 243px),
+  $--page-md-width:(fontsize: 35px, marginTop: 243px),
+  $--page-lg-width:(fontsize: 40px, marginTop: 200px),
 );
 $btnList: (
-  $--page-xs-width:(width: 280px, height: 73px, fontsize: 22px),
-  $--page-sm-width:(width: 280px, height: 73px, fontsize: 22px),
-  $--page-md-width:(width: 300px, height: 78px, fontsize: 28px),
-  $--page-lg-width:(width: 345px, height: 90px, fontsize: 30px),
+  $--page-xs-width:(width: 256px, height: 67px, fontsize: 18px),
+  $--page-sm-width:(width: 256px, height: 67px, fontsize: 18px),
+  $--page-md-width:(width: 280px, height: 73px, fontsize: 22px),
+  $--page-lg-width:(width: 280px, height: 73px, fontsize: 22px),
 );
 
 
 @include b(token) {
   @include e (banner) {
-    @include mediaAdapt($bnList);
+    // @include mediaAdapt($bnList);
     background: url(/image/token/banner.jpg) no-repeat center/cover;
-    border-top:1px solid transparent;
+    height: 675px;
+    .container {
+      border-top:1px solid transparent;
+    }
 
     h2 {
       @include mediaAdapt($bnListHd);

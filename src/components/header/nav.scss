@@ -1,46 +1,46 @@
 $headerList: (
-  $--page-xs-width:(height: 80px),
-  $--page-sm-width:(height: 80px),
-  $--page-md-width:(height: 90px),
-  $--page-lg-width:(height: 104px),
+  $--page-xs-width:(height: 50px),
+  $--page-sm-width:(height: 50px),
+  $--page-md-width:(height: 63px),
+  $--page-lg-width:(height: 76px),
 );
 
 $logoList: (
-  $--page-xs-width:(width:188px, height: 40px, left: 20px),
-  $--page-sm-width:(width:200px, height: 43px, left: 30px),
-  $--page-md-width:(width:200px, height: 43px, left: 50px),
-  $--page-lg-width:(width:260px, height: 56px, left: 80px),
+  $--page-xs-width:(width:125px, height: 25px, left: 34px),
+  $--page-sm-width:(width:125px, height: 25px, left: 34px),
+  $--page-md-width:(width:160px, height: 33px, left: 43px),
+  $--page-lg-width:(width:192px, height: 40px, left: 53px),
 );
 
 $navList: (
-  $--page-xs-width:(left: 300px),
-  $--page-sm-width:(left: 300px),
-  $--page-md-width:(left: 300px),
-  $--page-lg-width:(left: 460px),
+  $--page-xs-width:(left: 186px),
+  $--page-sm-width:(left: 186px),
+  $--page-md-width:(left: 240px),
+  $--page-lg-width:(left: 290px),
 );
 $navItemList: (
-  $--page-xs-width:(paddingLeft: 10px, paddingRight: 10px, lineHeight: 85px),
-  $--page-sm-width:(paddingLeft: 20px, paddingRight: 20px, lineHeight: 85px),
-  $--page-md-width:(paddingLeft: 20px, paddingRight: 20px, lineHeight: 95px),
-  $--page-lg-width:(paddingLeft: 27px, paddingRight: 27px, lineHeight: 110px),
+  $--page-xs-width:(paddingLeft: 12px, paddingRight: 12px, lineHeight: 50px),
+  $--page-sm-width:(paddingLeft: 12px, paddingRight: 12px, lineHeight: 50px),
+  $--page-md-width:(paddingLeft: 14px, paddingRight: 14px, lineHeight: 63px),
+  $--page-lg-width:(paddingLeft: 16px, paddingRight: 16px, lineHeight: 76px),
 );
 $wcList: (
-  $--page-xs-width:(width: 190px, height: 49px),
-  $--page-sm-width:(width: 190px, height: 49px),
-  $--page-md-width:(width: 190px, height: 49px),
-  $--page-lg-width:(width: 215px, height: 56px),
+  $--page-xs-width:(width: 141px, height: 37px, fontsize:12px),
+  $--page-sm-width:(width: 141px, height: 37px, fontsize:12px),
+  $--page-md-width:(width: 141px, height: 37px, fontsize:12px),
+  $--page-lg-width:(width: 157px, height: 41px, fontsize:14px),
 );
 $appendList: (
-  $--page-xs-width:(right: 30px),
-  $--page-sm-width:(right: 30px),
-  $--page-md-width:(right: 40px),
-  $--page-lg-width:(right: 85px),
+  $--page-xs-width:(right: 40px),
+  $--page-sm-width:(right: 40px),
+  $--page-md-width:(right: 50px),
+  $--page-lg-width:(right: 60px),
 );
 $avatarList: (
-  $--page-xs-width:(width: 40px, height: 40px),
-  $--page-sm-width:(width: 60px, height: 60px),
-  $--page-md-width:(width: 65px, height: 65px),
-  $--page-lg-width:(width: 70px, height: 70px),
+  $--page-xs-width:(width: 34px, height: 34px),
+  $--page-sm-width:(width: 34px, height: 34px),
+  $--page-md-width:(width: 45px, height: 45px),
+  $--page-lg-width:(width: 54px, height: 54px),
 );
 
 @include b(header){
@@ -57,7 +57,6 @@ $avatarList: (
     @include mediaAdapt($logoList);
     position: absolute;
     background: url(/image/logo.png) no-repeat center/cover;
-    // opacity: 0.8;
   }
 
   @include e(nav) {
@@ -68,7 +67,7 @@ $avatarList: (
     li {
       @include mediaAdapt($navItemList);
       font-family: OrbitronRegular;
-      font-size: 21px;
+      font-size: 14px;
       cursor: pointer;
       height: 100%;
       position: relative;
@@ -85,7 +84,7 @@ $avatarList: (
       }
       &.active {
         background-image: linear-gradient(to bottom, rgba(87, 255, 250, 0.1) 20%, rgba(44, 255, 243, 0.5));
-        border-bottom: 6px solid $--color-aqua;
+        border-bottom: 4px solid $--color-aqua;
       }
 
     }

@@ -20,7 +20,7 @@ export default {
         linkBlock: 'For more game introduction and details please check'
     },
     home: {
-        bannerTxt: 'From Here To The Sea Of Starts',
+        bannerTxt: 'From Here<br/>To The Sea Of Starts',
         bannerBtn: 'PLAY NOW',
         bk2Desc: 'The game starts with the colonization of planets; once all the plots on a planet get colonized by players,\
         a voting system will be launched to determine whether the planet adopts a federal governance or an empirical governance.\
@@ -54,9 +54,9 @@ export default {
         desc2: 'In the first two seasons, players will strive for individual development and gradually form groups;\
                 in the latest two seasons, as the universe gradually evolves,\
                 the need for resource competition will become prominent.',
-        thCell1: 'Major version number',
-        thCell2: 'Highest social structure',
-        thCell3: 'Highest spatial structure',
+        thCell1: 'Major version ',
+        thCell2: 'Social structure',
+        thCell3: 'Spatial structure',
         thCell4: 'New gameplay',
         thCell5: 'Add system',
         tr1Cell2: 'Individual asset owner',        

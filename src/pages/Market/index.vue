@@ -2,7 +2,7 @@
   <div class="market">
     <div class="container">
       <el-row class="market--hd" >
-        <el-col :sm="14" :xs="14">
+        <el-col :lg="14" >
         <ul class="market--hd_tabs">
           <li 
             v-for="(item, key) in tabs" 
@@ -14,7 +14,7 @@
           </li>
         </ul>
         </el-col>
-        <el-col :sm="10" :xs="10">
+        <el-col :lg="10" >
         <div class="market--count">
           <span>{{$t('market.balance')}}: </span>
           <span class="num" :style="{color:'#D0E6EE'}">0.00 VBN</span>
@@ -70,27 +70,35 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$navHeight: (
+  $--page-xs-width:(paddingTop: 50px),
+  $--page-sm-width:(paddingTop: 50px),
+  $--page-md-width:(paddingTop: 63px),
+  $--page-lg-width:(paddingTop: 76px),
+);
+
 .container {
-  padding-top: 100px;
+  @include mediaAdapt($navHeight);
 }
 
 $marketHdList: (
-  $--page-xs-width:(padding: 20px 10px 20px),
-  $--page-sm-width:(padding: 25px 10px 20px),
-  $--page-md-width:(padding: 30px 10px 25px),
-  $--page-lg-width:(padding: 40px 10px 30px),
+  $--page-xs-width:(padding: 20px 10px 15px),
+  $--page-sm-width:(padding: 20px 10px 15px),
+  $--page-md-width:(padding: 25px 10px 20px),
+  $--page-lg-width:(padding: 28px 10px 25px),
 );
+
 $navItem: (
-  $--page-xs-width:(marginRight: 40px),
-  $--page-sm-width:(marginRight: 40px),
-  $--page-md-width:(marginRight: 40px),
-  $--page-lg-width:(marginRight: 80px),
+  $--page-xs-width:(marginRight: 18px, fontsize: 16px, lineHeight: 24px),
+  $--page-sm-width:(marginRight: 18px, fontsize: 16px, lineHeight: 24px),
+  $--page-md-width:(marginRight: 20px, fontsize: 16px, lineHeight: 24px),
+  $--page-lg-width:(marginRight: 28px, fontsize: 18px, lineHeight: 24px),
 );
 $countList: (
-  $--page-xs-width:(fontsize: 20px, lineHeight: 25px),
-  $--page-sm-width:(fontsize: 23px, lineHeight: 28px),
-  $--page-md-width:(fontsize: 25px, lineHeight: 32px),
-  $--page-lg-width:(fontsize: 28px, lineHeight: 40px),
+  $--page-xs-width:(fontsize: 16px, lineHeight: 24px),
+  $--page-sm-width:(fontsize: 16px, lineHeight: 24px),
+  $--page-md-width:(fontsize: 16px, lineHeight: 24px),
+  $--page-lg-width:(fontsize: 18px, lineHeight: 24px),
 );
 
 @include b(market) {
@@ -106,6 +114,7 @@ $countList: (
         cursor: pointer;
         color: $--color-white-07;
         font-size: 22px;
+        white-space: nowrap;
         &.active {
           color: $--color-aqua;
         }
@@ -117,6 +126,7 @@ $countList: (
     @include mediaAdapt($countList);
     text-align: right;
     // font-size: 28px;
+    white-space: nowrap;
     .num {
       font-family: OrbitronRegular;
     }

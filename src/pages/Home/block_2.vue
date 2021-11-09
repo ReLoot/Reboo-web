@@ -6,27 +6,33 @@
         {{$t('home.bk2Desc')}}
       </article>
 
-      <el-row class="cards" :gutter="50">
-        <el-col :md="12">
-          <div class="cards--item" style="background-image: url(/image/home/bk_2_itembg_1.png);">
-            <em class="cards--item_toy" style="background-image:url(/image/home/bk_2_item_1.png)"></em>
-            <div class="cards--item_ctn">
-              <h4 style="color:#2CFFF3">{{$t('home.bk2Item1Hd')}}</h4>
-              <div class="desc">{{$t('home.bk2Item1')}}</div>
+      <div class="cards">
+        <el-row class="cards-wrap" :gutter="50">
+          <el-col :sm="12" :md="12">
+            <div class="cards--item" style="background-image: url(/image/home/bk_2_itembg_1.png);">
+              <div class="cards--item_toy" >
+                <em style="background-image:url(/image/home/bk_2_item_1.png)"></em>
+              </div>
+              <div class="cards--item_ctn">
+                <h4 style="color:#2CFFF3">{{$t('home.bk2Item1Hd')}}</h4>
+                <div class="desc">{{$t('home.bk2Item1')}}</div>
+              </div>
+              
             </div>
-            
-          </div>
-        </el-col>
-        <el-col :md="12">
-          <div class="cards--item" style="background-image: url(/image/home/bk_2_itembg_2.png);">
-            <em class="cards--item_toy" style="background-image:url(/image/home/bk_2_item_2.png)"></em>
-            <div class="cards--item_ctn">
-              <h4 style="color:#FFED2C">{{$t('home.bk2Item2Hd')}}</h4>
-              <div class="desc">{{$t('home.bk2Item2')}}</div>
+          </el-col>
+          <el-col :sm="12" :md="12">
+            <div class="cards--item" style="background-image: url(/image/home/bk_2_itembg_2.png);">
+              <div class="cards--item_toy" >
+                <em style="background-image:url(/image/home/bk_2_item_2.png)"></em>
+              </div>
+              <div class="cards--item_ctn">
+                <h4 style="color:#FFED2C">{{$t('home.bk2Item2Hd')}}</h4>
+                <div class="desc">{{$t('home.bk2Item2')}}</div>
+              </div>
             </div>
-          </div>
-        </el-col>
-      </el-row>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +53,7 @@ export default {
 @include b(home) {
   @include e(bk) {
     @include m(desc) {
-      width: 60%;
+      width: 90%;
       margin: 40px auto 50px;
       font-family: OrbitronRegular;
     }
@@ -55,80 +61,92 @@ export default {
 }
 
 $cardList: (
-  $--page-xs-width: (width:458px, height:402px, paddingTop: 285px),
-  $--page-sm-width: (width:458px, height:402px, paddingTop: 285px),
-  $--page-md-width: (width:534px, height:468px, paddingTop: 300px),
-  $--page-lg-width: (width:632px, height:552px, paddingTop: 365px),
-);
-$toyList: (
-  $--page-xs-width: (width:484px, height:363px, marginLeft: -242px),
-  $--page-sm-width: (width:484px, height:363px, marginLeft: -242px),
-  $--page-md-width: (width:534px, height:401px, marginLeft: -267px),
-  $--page-lg-width: (width:632px, height:552px, marginLeft: -316px),
-  // $--page-lg-width: (width:632px, height:552px, marginLeft: -316px),
-);
-// $ctnList: (
-//   $--page-xs-width: (bottom: 35px),
-//   $--page-sm-width: (bottom: 35px),
-//   $--page-md-width: (bottom: 40px),
-//   $--page-lg-width: (bottom: 50px),
-// );
+  $--page-xs-width: (width:385px, height:336px, paddingTop: 215px),
+  $--page-sm-width: (width:385px, height:336px, paddingTop: 215px),
+  $--page-md-width: (width:385px, height:336px, paddingTop: 215px),
+  $--page-lg-width: (width:465px, height:407px, paddingTop: 270px),
+); 
 $ctnList: (
-  $--page-xs-width: (top: 200px),
-  $--page-sm-width: (top: 200px),
-  $--page-md-width: (top: 280px),
-  $--page-lg-width: (top: 300px),
+  // $--page-xs-width: (top: 95px),
+  // $--page-sm-width: (top: 95px),
+  $--page-xs-width: (top: 187px),
+  $--page-sm-width: (top: 187px),
+  $--page-md-width: (top: 187px),
+  $--page-lg-width: (top: 230px),
+);
+
+$itemTitle: (
+  $--page-xs-width: (fontsize: 20px, marginBottom: 8px),
+  $--page-sm-width: (fontsize: 20px, marginBottom: 8px),
+  $--page-md-width: (fontsize: 24px, marginBottom: 12px),
+  $--page-lg-width: (fontsize: 26px, marginBottom: 16px),
 );
 
 @include b(cards) {
   text-align: center;
   padding-top: 106px;
-  display: inline-block;
   @include clearfix();
   .el-col {
     overflow: visible;
   }
+  @include e(wrap) {
+    display: inline-block;
+  }
   @include e(item) {
-    // width: 632px;
-    // height: 552px;
     @include mediaAdapt($cardList);
-    // float: left;
     position: relative;
-    // margin-right: 50px;
     margin: auto;
     background: no-repeat center/cover;
-    // padding: 365px 60px 0;
     padding-left: 60px;
     padding-right: 60px;
+    opacity: 0.95;
     @include m(toy) {
-      // @include mediaAdapt($toyList);
       @include plcenter();
       width: 105%;
       padding-bottom: 80%;
       height: 0;
       top: -106px;
-      background: no-repeat center/cover;
+      em {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: no-repeat center/cover;
+        -webkit-transition: 0.25s all;
+        transition: 0.25s all;
+      }
     }
-
     @include m(ctn) {
       @include plcenter();
       @include mediaAdapt($ctnList);
       position: absolute;
-      width: 80%;
+      width: 86.8%;
     }
-
     h4 {
-      font-size: 35px;
+      @include mediaAdapt($itemTitle);
       line-height: 100%;
       font-family: OrbitronBlack;
-      margin-bottom: 30px;
       position: relative;
       z-index: 1;
       white-space: nowrap;
+      text-align: left;
+    }
+    .desc {
+      line-height: 125%;
+      text-align: left;
     }
 
-    .desc {
-      line-height: 150%;
+    &:hover {
+      opacity: 1;
+    }
+
+    &:hover &_toy em{
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
     }
 
   }
