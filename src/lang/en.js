@@ -20,33 +20,34 @@ export default {
         linkBlock: 'For more game introduction and details please check'
     },
     home: {
-        bannerTxt: 'New World,No Rules',
+        bannerTxt: 'From Here To The Sea Of Starts',
         bannerBtn: 'PLAY NOW',
-        bk2Desc: 'The colonization of the planet is the starting point of the game. \
-        fter all the areas on the planet are occupied by players, a voting resolution will be used to determine whether the planet adopts a federal system or an empire system.\
-        After determining the governance mechanism (Federation|Empire), more advanced permissions are unlocked. Different styles of buildings, technology trees, weapon systems,\
-        and spaceship systems collide with each other under the two mechanisms to produce fascinating sparks; on top of this, players Through further development to compete for limited resources, \
-        all of this is completely in the hands of players.',
+        bk2Desc: 'The game starts with the colonization of planets; once all the plots on a planet get colonized by players,\
+        a voting system will be launched to determine whether the planet adopts a federal governance or an empirical governance.\
+        As the governance style determined, high-level buildings, technology tree, weapon system, spaceship system will be unlocked with their own camp features.\
+        On top of this, armed players will compete with each other to further exploit limited resources, and forge their own fate in this game.',
         bk2Item1Hd: 'Interstellar colonization',
-        bk2Item1: 'With the development of the technology tree, more high-level buildings are unlocked, so that players have the ability to manufacture near-high-end equipment and interstellar warships;\
-                this will lay the foundation for interstellar colonization.',
-        bk2Item2Hd: 'Build Federate/Empire',
-        bk2Item2: 'Power and money are the eternal pursuit of human nature; in order to defend your homeland, proactive offense may be your only choice. \
-                A grand and unpredictable power game will soon be on the stage.',
-        bk3Desc: 'Vibranium sets up a multi-layered scene with different organizational structures. For example, the planetary scene allows organizations/tribes, \
-                and the celestial scene allows high-level federations/empires to levy production taxes from the planets, \
-                It also provides certain benefits to the planet, such as military protection, new construction, dividends, mining rights, bonds, and coinage rights.',
-        bk3Item1: 'The resources in the game and even the spaceship can be easily traded with other players. The trading system is free and developed, and you can showcase your business skills here!',
+        bk2Item1: 'As the technology upgraded, more high - level buildings unlocked,\
+        players will be are armed with high - end armory and spaceship; which lay the foundation of interstellar colonization.',
+        bk2Item2Hd: 'Federate|Empire',
+        bk2Item2: 'Power and resources are the ultimate pursuits to human beings. To better protect your own land,\
+        a proactive invasion can be but the only choice for you. Curtain falls for an  unpredictable,\
+        magnificent GOT with you as the main character ',
+        bk3Desc: 'Vibranium team have designed different environmental settings for different level of organizations:\
+        under a planetary environment, players are permitted to form organization|tribe. While under a galaxy environment,\
+        players are permitted to build federation and empire. Under these two high - level governance,\
+        planetary organizations are asked to pay taxes for the access to protection, high - level buildings, mining right,\
+        bond-issuing right, currency-minting right, etc.',
+        bk3Item1: 'You can trade amory, building, spaceship, etc. on a built-in trading platform. By adopting different trading strategies, your commercial talent will be proved and exhibited.',
         bk3Item2: 'You can earn game resources without paying any cost in the game by working for other individuals.',
-        bk3Item3: 'You can build a variety of buildings on your own land, collect or produce, and continuously improve your assets and voice.',
-        bk3Item4: 'You can invest in the game, buy land from the system or other players to expand your sphere of influence.',
-        bk4Desc: '"Tired of peaceful development? Furious under the attack of other fleets? Come and join the war! Whether it’s as the vanguard of the organization,\
+        bk3Item3: 'Authority and wealth can be gained through putting up different buildings with different functions on your own land. With these buildings you can mine or produce amory | equipment.',
+        bk3Item4: 'Power and influences can be obtained through investing, conquering or forming an alliance with other players, which will grant you more land and resources.',
+        bk4Desc: 'Tired of peaceful development? Furious under the attack of other fleets? Come and join the war! Whether it’s as the vanguard of the organization,\
                 Or as a strategic leader , you can fully experience the thrills of SLG in the interstellar!\
                 You can also become an interstellar pirate that everyone knows, plundering caravans, land and even planets, all within your mind!\
-                The perfect spaceship system provides multiple types of ships ranging from shuttle ships to battleships/aircraft carriers to satisfy all your illusions about Star Wars!"',
-        bk5Desc: 'The vast universe, unlimited exploration! In Vibranium, there are a large number of galaxies and planets randomly generated by the system under certain rules. \
-                If you are tired of business wars and star wars, you will be able to find your favorite paradise and start a new journey with like-minded friends! \
-                There are more random events such as ancient civilization relics in the interstellar, providing unlimited possibilities for you who focus on interstellar exploration.',
+                The perfect spaceship system provides multiple types of ships ranging from shuttle ships to battleships/aircraft carriers to satisfy all your illusions about Star Wars!',
+        bk5Desc: 'Unlimited universe, unlimited exploration. Under a specially-designed mechanism, the system randomly generates a great number of galaxies and planets. Along with your friends,\
+        you may find your own Garden of Eden. Additionally, you may find ancient ruins and other interesting random events on your exploration.',
     },
     roadmap: {
         desc1: 'The game will be iterated in four major seasons. ',
@@ -58,7 +59,7 @@ export default {
         thCell3: 'Highest spatial structure',
         thCell4: 'New gameplay',
         thCell5: 'Add system',
-        tr1Cell2: 'Prolific individuals',        
+        tr1Cell2: 'Individual asset owner',        
         tr1Cell3: 'Celestial system',        
         tr1Cell4: 'Land, receiving subsistence allowance, mining, working, strengthening, talent, trading, ReLoot bonus, interstellar mobile, ranking',        
         tr1Cell5: 'Economic system, architectual system, talent system, trading system, strenghtening system',   
@@ -81,10 +82,10 @@ export default {
     token: {
         desc: 'VBN is a token issued entirely for Vibranium. It exists as a hard currency in the form of energy crystals in the game.\
         It can be used for consumption, development, war, participation in decision-making in the game, etc., to enhance your game status and increase your potential profit ability.',
-        // btn1: 'Trade at DexGuru',
-        // btn2: 'Trade at Eherscan',
-        btn1: 'Comming Soon',
-        btn2: 'Comming Soon',
+        btn1: 'Trade at DexGuru',
+        btn2: 'Trade at BscScan',
+        // btn1: 'Comming Soon',
+        altr: 'Comming Soon',
         bk2Hd: 'Token Function',
         bk2Item1: 'You can buy almost everything with VBN ! clothing, spaceship, land, a real society experience ',
         bk2Link1: 'Purchase game props',
@@ -114,10 +115,14 @@ export default {
         navTabItem3: 'My Item Card',
         boxType1: 'Territory Box',
         boxType2: 'Building Box',
-        storeDesc: 'Each building treasure chest contains a particle detector for the Vibranium game,\
+        // storeDesc: 'Each building treasure chest contains a particle detector for the Vibranium game,\
+        // which you can use to participate in the game and earn revenue.',
+        storeTab1Desc: 'Each territory treasure chest contains a land card, which is used in the Vabrinium  game,\
+        and you can use it to participate in the game and earn revenue.',
+        storeTab2Desc: 'Each building treasure chest contains a particle detector for the Vibranium game,\
         which you can use to participate in the game and earn revenue.',
-        tr1Cell1: 'Particle Detector',
-        tr1Cell2: 'Landcard',
+        tr1Cell1: 'Landcard',
+        tr1Cell2: 'Particle Detector',
         tr2Cell1: 'Quantity Ratio',
         tr2Cell2: 'Quantity Ratio',
         storePaying: 'Please wait',

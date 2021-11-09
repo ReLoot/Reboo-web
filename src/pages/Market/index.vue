@@ -16,7 +16,7 @@
         </el-col>
         <el-col :sm="10" :xs="10">
         <div class="market--count">
-          <span>{{$t('market.balance')}}:</span>
+          <span>{{$t('market.balance')}}: </span>
           <span class="num" :style="{color:'#D0E6EE'}">0.00 VBN</span>
         </div>
         </el-col>

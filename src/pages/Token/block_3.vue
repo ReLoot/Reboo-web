@@ -38,7 +38,6 @@
         </div>
       </div>
 
-      
       <div class="tk--pie tk--pie02">
         <div class="tk--pie_inner">
           <div class="tk--pie_view">
@@ -80,7 +79,8 @@ export default {
     @include m(desc) {
       width: 70%;
       margin: 40px auto 80px;
-      divne-height: 150%;
+      line-height: 150%;
+      font-family: OrbitronRegular;
     }
   }
 }

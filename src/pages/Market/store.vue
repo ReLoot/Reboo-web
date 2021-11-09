@@ -44,7 +44,8 @@
               <span>{{$t('common.price')}}</span>
               <span class="num">{{price|tofixed2}} VBN</span>
             </div>
-            <p class="store--desc">{{$t('market.storeDesc')}}</p>
+            <p class="store--desc" v-if="curTabIdx == 0" >{{$t('market.storeTab1Desc')}}</p>
+            <p class="store--desc" v-else >{{$t('market.storeTab2Desc')}}</p>
             <table class="store--rank" >
               <tr>
                 <td>
@@ -163,7 +164,10 @@ export default {
         display: table-cell;
         border-collapse: collapse;
         float: left;
-        width: 134px;
+        // width: 134px;
+        // padding: 0 20px;
+        padding-left: 20px;
+        padding-right: 20px;
         height: 60px;
         line-height: 60px;
         text-align: center;
@@ -173,6 +177,7 @@ export default {
         -webkit-user-select: none;
         user-select: none;
         font-size: 20px;
+        font-family: OrbitronRegular;
         &.active {
           border-color: $--color-aqua;
           color: $--color-aqua;
@@ -188,10 +193,7 @@ export default {
   }
 
   @include e(viewbox) {
-    // width: 317px;
-    // min-width: 100%;
     max-width: 317px;
-    // height: 425px;
     position: relative;
     margin-bottom: 30px;
     @include m(bg) {
@@ -205,8 +207,6 @@ export default {
     }
     @include m(box) {
       @include pacenter();
-      // width: 200px;
-      // height: 200px;
       width: 63%;
       padding-bottom: 63%;
       background: no-repeat center/cover;
@@ -223,6 +223,7 @@ export default {
     @include m(top) {
       h2 {
         font-size: 35px;
+        font-family: OrbitronBlack;
         margin-bottom: 15px;
       }
     }
@@ -244,6 +245,7 @@ export default {
     margin-bottom: 30px;
     font-size: 16px;
     color: $--color-white-07;
+    font-family: OrbitronRegular;
   }
 
   @include e(rank) {
@@ -258,6 +260,8 @@ export default {
           font-size: 30px;
           font-weight: 800;
           font-style: italic;
+          font-family: OrbitronBlack;
+
         }
       }
 
@@ -274,7 +278,10 @@ export default {
       border: 1px solid rgba(255,255,255,0.3);
       text-align: center;
       &:first-child {
+        width: 200px;
         background-color: $--color-white-01;
+        font-family: OrbitronRegular;
+        
       }
     }
   }
@@ -282,6 +289,7 @@ export default {
   @include e(quantity) {
     h4 {
       margin-bottom: 20px;
+      font-family: OrbitronBlack;
     }
     @include m(count){
       background-color: $--color-white-01;
@@ -296,6 +304,7 @@ export default {
       color: $--color-aqua;
       background-color: #232E3B;
       vertical-align: middle;
+      font-family: OrbitronRegular;
       font-size: 22px;
       margin-left: 15px;
       &:hover, &:active, &:focus {

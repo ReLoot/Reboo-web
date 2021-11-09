@@ -137,6 +137,7 @@ export default {
     padding: 0 20px;
     text-align: center;
     margin: 0 auto 40px;
+    font-family: OrbitronRegular;
   }
 
   @include e(tb) {
@@ -193,6 +194,7 @@ export default {
       @include pacenter();
       font-size: inherit;
       max-width: 100%;
+      line-height: 150%;
       width: 250px;
     }
   }
@@ -201,11 +203,13 @@ export default {
     text-align: center;
     p {
       margin: 0 auto 50px;
+      font-family: OrbitronRegular;
       text-align: center;
       max-width: 85%;
       line-height: 150%;
     }
     .rb {
+      font-family: OrbitronRegular;
       font-size: 28px;
       width: 444px;
       height: 90px;

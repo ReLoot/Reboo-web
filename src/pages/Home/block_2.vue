@@ -42,7 +42,6 @@ export default {
 @import '@/style/custom.scss';
 .container {
   padding-top: 100px;
-  text-align: center;
 }
 
 @include b(home) {
@@ -50,6 +49,7 @@ export default {
     @include m(desc) {
       width: 60%;
       margin: 40px auto 50px;
+      font-family: OrbitronRegular;
     }
   }
 }
@@ -81,6 +81,7 @@ $ctnList: (
 );
 
 @include b(cards) {
+  text-align: center;
   padding-top: 106px;
   display: inline-block;
   @include clearfix();

@@ -28,6 +28,7 @@ export default {
 @include b(home) {
   @include e(bk) {
     @include m(desc) {
+      font-family: OrbitronRegular;
       width: 70%;
       margin: 40px auto 50px;
       line-height: 150%;

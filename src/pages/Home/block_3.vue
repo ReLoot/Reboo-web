@@ -64,6 +64,7 @@ export default {
 @include b(home) {
   @include e(bk) {
     @include m(desc) {
+      font-family: OrbitronRegular;
       width: 60%;
       margin: 40px auto 50px;
     }
@@ -110,10 +111,12 @@ $cardList: (
         // width: 326px;
         // width: 100%;
         position: absolute;
-        left: 35px;
-        bottom: 35px;
+        left: 30px;
+        bottom: 20px;
         padding-right: 45.25%;
         box-sizing: content-box;
+        line-height: 120%;
+        letter-spacing: 0;
       }
     }
   }

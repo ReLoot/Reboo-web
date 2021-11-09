@@ -8,7 +8,7 @@
             <p>{{$t('footer.linkBlock')}}</p>
           </div>
           <div class="item" >
-            <a href="https://docs.vibrantium.io/" >https://docs.vibrantium.io/</a>
+            <a href="https://docs.vibraniumslg.io/" >https://docs.vibraniumslg.io/</a>
           </div>
         </div>
         <cus-divider dStyle="green" />
@@ -36,7 +36,7 @@
       </div>
       <div class="footer--bottom">
         <el-row >
-          <el-col :sm="16">
+          <el-col :sm="14">
             <a
               class="apps"
               v-for="(item, idx) in apps" 
@@ -46,7 +46,7 @@
             />
             <!-- @click="goLink(item)" -->
           </el-col>
-          <el-col :sm="8">
+          <el-col :sm="10">
             <p class="footer--bottom_copyright">© 2021 Vibranium. All Rights Reserved</p>
           </el-col>
         </el-row>
@@ -67,7 +67,6 @@ export default {
       immediate: true,
       handler(to) {
         this.curRoute = to.name
-        console.log(to)
       },
     }
   },
@@ -77,7 +76,7 @@ export default {
       apps: [
         'https://twitter.com/Vibranium_VBN',
         'https://t.me/Vibranium_VBN',
-        'https://discord.com/invite/kERPbw3EhR',
+        'https://dsc.gg/vibraniumslg',
         'https://github.com/Vibranium-Game-Science',
         'https://medium.com/@Vibranium_VBN'
       ]
@@ -87,9 +86,6 @@ export default {
     changeLang(lang) {
       this.$i18n.locale = lang
     },
-    goLink(url) {
-      console.log(url, 123)
-    }
   }
 }
 </script>
@@ -103,6 +99,8 @@ export default {
 
 @include b(footer) {
   color: $--color-white-07;
+  font-family: OrbitronRegular;
+
   @include e(top) {
     @include displayFlex();
     // align-items: center;
@@ -110,6 +108,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
     align-items: flex-end;
+
     @include m(logo) {
       width: 260px;
       height: 56px;
@@ -173,6 +172,7 @@ export default {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    
     @include m(inner) {
       @include displayFlex();
       align-items: center;

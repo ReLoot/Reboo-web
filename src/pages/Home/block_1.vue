@@ -1,8 +1,8 @@
 <template>
   <div class="home--bk">
     <div class="container">
-      <!-- <h1>{{$t('home.bannerTxt')}}</h1> -->
-      <h1>From Here To The Sea Of Stars</h1>
+      <h1>{{$t('home.bannerTxt')}}</h1>
+      <!-- <h1>From Here To The Sea Of Stars</h1> -->
       <!-- <cus-btn-ein 
         class="home--bk_btn"
         bg="/image/home/bk_1_btn.png"

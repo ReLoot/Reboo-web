@@ -96,6 +96,7 @@ $itemEmList: (
 
     @include m(ctn) {
       position: relative;
+      line-height: 125%;
       -webkit-flex: 1;
       flex: 1;
       a {
