@@ -1,5 +1,6 @@
 module.exports = {
   productionSourceMap: false,
+  filenameHashing: true,
   devServer: {
     open: true,
     proxy: {

@@ -132,12 +132,12 @@ $extrInner: (
   $--page-lg-width: (width:40px, height:40px, marginRight: 20px),
 );
 
-$local: (
-  $--page-xs-width: (width:130px, height:31px, lineHeight: 31px, fontsize:14px),
-  $--page-sm-width: (width:130px, height:31px, lineHeight: 31px, fontsize:14px),
-  $--page-md-width: (width:130px, height:31px, lineHeight: 31px, fontsize:14px),
-  $--page-lg-width: (width:130px, height:31px, lineHeight: 31px, fontsize:14px),
-);
+/* $local: (
+  $--page-xs-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
+  $--page-sm-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
+  $--page-md-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
+  $--page-lg-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
+); */
 
 @include b(footer) {
   color: $--color-white-07;
@@ -181,18 +181,18 @@ $local: (
     }
     
     @include m(localeBtn) {
-      @include mediaAdapt($local);
-      // width: 137px;
-      // height: 40px;
-      // line-height: 40px;
+      // @include mediaAdapt($local);
       display: inline-block;
       text-align: center;
       background-color: $--color-white-01;
       border: 1px solid $--color-white-04;
       display: block;
       color: $--color-white-07;
-      // font-size: 18px;
       cursor: pointer;
+      width:120px;
+      height:31px;
+      line-height:31px;
+      font-size:14px
     }
   }
 
@@ -204,9 +204,6 @@ $local: (
     .apps {
       @include mediaAdapt($apps);
       cursor: pointer;
-      // width: 64px;
-      // height: 64px;
-      // margin-right: 30px;
       display: inline-block;
       vertical-align: middle;
       background: no-repeat center/cover;
