@@ -67,7 +67,7 @@ export default {
         tr2Cell3: 'Celestial system',        
         tr2Cell4: 'Employment, land/item trading, new buildings, new resources, technology trees, decision-making participation, main professions, intermediate mining',        
         tr2Cell5: 'Technology system, trading system, building system, item system, DAO system, profession system.',        
-        tr3Cell2: 'Organization/Tribe',        
+        tr3Cell2: 'Organization/Tribe',
         tr3Cell3: 'Celestial system',        
         tr3Cell4: 'Wars, sub-professions, new buildings, new resources, senior mining',        
         tr3Cell5: 'Spaceship system, military system',
@@ -117,8 +117,8 @@ export default {
         boxType2: 'Building Box',
         // storeDesc: 'Each building treasure chest contains a particle detector for the Vibranium game,\
         // which you can use to participate in the game and earn revenue.',
-        storeTab1Desc: 'Each territory box contains a land card designed for Vibranium game.\
-        This card grants you a land plot in game.(*The quantity ratio value is for reference; the real value will be displayed during the official sale.)',
+        storeTab1Desc: 'Each territory box contains a land card designed for Vibranium game. This card grants you a land plot in game.\
+        (*The quantity ratio value is for reference; the real value will be displayed during the official sale.)',
         storeTab2Desc: 'Each building box contains a particle detector card designed for Vibranium game.\
         This card grants you a particle detector; with which you can start your mining business.(*The quantity ratio value is for reference;the real value will be displayed during the official sale.)',
         tr1Cell1: 'Landcard',
