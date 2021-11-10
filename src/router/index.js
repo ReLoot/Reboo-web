@@ -11,6 +11,7 @@ Router.prototype.push = function push(location, onResolve, onReject) {
 
 Vue.use(Router)
 
+// console.log(process.env.VUE_APP_DEV_TYPE)
 const routes = (() => {
   let routes_
   const dev_type = process.env.VUE_APP_DEV_TYPE

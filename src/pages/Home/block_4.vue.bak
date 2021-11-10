@@ -157,7 +157,6 @@ export default {
         }
       }
     }
-
   }
 
   @include e(bg) {

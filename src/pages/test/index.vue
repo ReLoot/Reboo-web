@@ -1,8 +1,8 @@
 <template>
   <div class="test">
     <el-form ref="form" :model="formData" label-width="380px">
+      <div>钱包地址：{{account}}</div>
       
-
       <el-form-item label="购买探测器宝箱">
         <div><el-button type="danger" @click="buyToolBox">SUBMIT</el-button></div>
         <div><pre>{{buy_tool_box}}</pre></div>

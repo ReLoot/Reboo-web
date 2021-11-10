@@ -1,7 +1,7 @@
-// import web3 from 'web3'
 import detectEthereumProvider from "@metamask/detect-provider"
 import storage from '@/store/index'
 import {Message} from 'element-ui'
+import Web3 from "web3"
 // import { Store } from "vuex"
 
 export default class metaMaskUtils {
@@ -23,13 +23,14 @@ export default class metaMaskUtils {
     if (this.provider_) {
       let check_ = await this.networkCheck()
       if (!check_) return false
+      
+      const w3 = new Web3()
+      console.log(w3)
 
       try { 
         const accounts = await this.provider_.request({ method: 'eth_requestAccounts' });
-        this.account = accounts[0]
-        
+        this.account = new Web3().utils.toChecksumAddress(accounts[0])
         storage.commit('user/account', this.account)
-
         this.eventRegister()
       } catch (err) {
         console.error(err)

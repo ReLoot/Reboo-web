@@ -48,7 +48,7 @@
             <p class="store--desc" v-else >{{$t('market.storeTab2Desc')}}</p>
             <table class="store--rank" >
               <tr>
-                <td>
+                <!-- <td>
                   <span v-if="curTabIdx == 0">
                     {{$t('market.tr1Cell1')}}
                   </span>
@@ -58,29 +58,29 @@
                 </td>
                 <td>S</td>
                 <td>SS</td>
-                <td>SSS</td>
+                <td>SSS</td> -->
+                <template v-for="(item, idx) in rankList" >
+                  <td :key="`rank_${idx}`" >
+                    <template v-if="idx == 0">
+                      {{$t(item[curTabIdx])}}
+                    </template>
+                    <template v-else>
+                      {{item}}
+                    </template>
+                  </td>
+                </template>
               </tr>
               <tr>
-                <td>
-                  <span v-if="curTabIdx == 0">
-                    {{$t('market.tr2Cell1')}}
-                  </span>
-                  <span v-else>
-                    {{$t('market.tr2Cell2')}}
-                  </span>
-                </td>
-                <td>
-                  <span v-if="curTabIdx == 0">50%</span>
-                  <span v-else>60%</span>
-                </td>
-                <td>
-                  <span v-if="curTabIdx == 0">35%</span>
-                  <span v-else>30%</span>
-                </td>
-                <td>
-                  <span v-if="curTabIdx == 0">15%</span>
-                  <span v-else>10%</span>
-                </td>
+                <template v-for="(item, idx) in processList">
+                  <td :key="`process_${idx}`" >
+                    <template v-if="idx == 0">
+                      {{$t(item[curTabIdx])}}
+                    </template>
+                    <template v-else>
+                      {{item[curTabIdx]}}
+                    </template>
+                  </td>
+                </template>
               </tr>
             </table>
 
@@ -137,6 +137,8 @@ export default {
         type: 'build',
         view: 'market.boxType2'
       }],
+      rankList: [['market.tr1Cell1','market.tr1Cell2'], 'S', 'SS', 'SSS'],
+      processList: [['market.tr2Cell1', 'market.tr2Cell2'], [50, 60], [35, 30], [15, 10]],
       price: 0,
       num: 1,
       min: 1,
