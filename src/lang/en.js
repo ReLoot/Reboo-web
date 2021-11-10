@@ -20,7 +20,7 @@ export default {
         linkBlock: 'For more game introduction and details please check'
     },
     home: {
-        bannerTxt: 'From Here<br/>To The Sea Of Starts',
+        bannerTxt: 'From Here<br/>To The Sea Of Stars',
         bannerBtn: 'PLAY NOW',
         bk2Desc: 'The game starts with the colonization of planets; once all the plots on a planet get colonized by players,\
         a voting system will be launched to determine whether the planet adopts a federal governance or an empirical governance.\
@@ -28,11 +28,11 @@ export default {
         On top of this, armed players will compete with each other to further exploit limited resources, and forge their own fate in this game.',
         bk2Item1Hd: 'Interstellar colonization',
         bk2Item1: 'As the technology upgraded, more high - level buildings unlocked,\
-        players will be are armed with high - end armory and spaceship; which lay the foundation of interstellar colonization.',
+        players will be armed with high - end armory and spaceship; which lays the foundation of future interstellar colonizing activities',
         bk2Item2Hd: 'Federate|Empire',
         bk2Item2: 'Power and resources are the ultimate pursuits to human beings. To better protect your own land,\
-        a proactive invasion can be but the only choice for you. Curtain falls for an  unpredictable,\
-        magnificent GOT with you as the main character ',
+        a proactive invasion can be but the only choice for you. Curtain falls for an unpredictable,\
+        magnificent GOT - You are the main character.',
         bk3Desc: 'Vibranium team have designed different environmental settings for different level of organizations:\
         under a planetary environment, players are permitted to form organization|tribe. While under a galaxy environment,\
         players are permitted to build federation and empire. Under these two high - level governance,\
@@ -75,8 +75,8 @@ export default {
         tr4Cell3: 'galaxy ',        
         tr4Cell4: 'Historic site exploration,new buildings, new resources,new spaceships, new technologies top mining',        
         tr4Cell5: 'Historic site system', 
-        extr: 'The initial version of S1 will provide 10k test account purchase qualifications, \
-        giving priority to enter the world of Vibranium to grab the first pot of gold; if you don’t get it, you can buy it through the Binance NFT secondary market',
+        extr: 'The initial version of S1 will provide 10k test accounts to players, giving priority to enter the world of Vibranium to grab the first pot of gold.\
+        If you don’t get the test account, buy it through the Binance NFT secondary market.',
         extrBtn: 'Purchase on Binance NFT'
     },
     token: {
@@ -87,20 +87,20 @@ export default {
         // btn1: 'Comming Soon',
         altr: 'Comming Soon',
         bk2Hd: 'Token Function',
-        bk2Item1: 'You can buy almost everything with VBN ! clothing, spaceship, land, a real society experience ',
+        bk2Item1: 'VBN is the circulating currency in this game for trading on equipment, spaceship, land, etc.',
         bk2Link1: 'Purchase game props',
-        bk2Item2: 'Development is key. Makethe most use of your tokens, plan carefully and grow .Only when you become stronger your wealth will grow',
+        bk2Item2: 'Development is key important in this game: do calculation before spending your VBN. Playing it smart, you can be influential and wealthy.',
         bk2Link2: 'Earn more tokens',
-        bk2Item3: 'Can\'t beat the opposing fleet? Consume VBN, which is an energy crystal, to charge starship weapons,\
-        and find a way to do a killer shot ! High-level buildings can also improve performance through VBN.',
+        bk2Item3: 'Find your opponent hard to conquer? Use VBN to recharge your warship weapon to strike a killer shot!\
+        High-level building’s enhancement also consumes your VBN.',
         bk2Link3: 'Advanced gameplay loss',
-        bk2Item4: 'By depositing your DAO into VBN and other ways to increase your influence in the organization, \
-        you can gain more voting rights, determine taxes, dividends, key construction, war preferences, membership retention, etc.',
+        bk2Item4: 'By staking your VBN into the DAO organization, you will be authorized with more voting rights in terms of determining taxes,\
+        dividends, building construction, war declaration, membership governance, etc.',
         bk2Link4: 'Participate in DAO decision',
         bk3Hd: 'Dual Token Model',
-        bk3Desc: 'In order to reduce the threshold for players to play as much as possible, offer a friendly game operation and enable more people to participate in Vibranium, \
-        there will be another token that can be exchanged one-to-one with VBN for high-frequency trading of non core props in the game. Rest assured, you can alway redeem at any time with just a little miner fee.',
-        bk3Pie1Item1: 'Owned by the team, locked for one year, released after one year, and released after 24 months',
+        bk3Desc: 'For a smooth and user-friendly gaming experience, there will be another token that can be redeemed at a ratio of 1:1 to VBN;\
+        this token is applied in scenario like high-frequency trading of non-core props in the game. Rest-assured, you can redeem at any time with only gas fee to be paid.',
+        bk3Pie1Item1: 'Owned by the founding team, locked for one year from the issuing date; release within the next 24 months (after one year locked).',
         bk3Pie1Item2: 'Community building, business cooperation',
         bk3Pie1Item3: 'Provide liquidity and liquidity mining in DEX',
         bk3Pie1Item4: 'Game output',
@@ -117,10 +117,10 @@ export default {
         boxType2: 'Building Box',
         // storeDesc: 'Each building treasure chest contains a particle detector for the Vibranium game,\
         // which you can use to participate in the game and earn revenue.',
-        storeTab1Desc: 'Each territory treasure chest contains a land card, which is used in the Vabrinium  game,\
-        and you can use it to participate in the game and earn revenue.',
-        storeTab2Desc: 'Each building treasure chest contains a particle detector for the Vibranium game,\
-        which you can use to participate in the game and earn revenue.',
+        storeTab1Desc: 'Each territory box contains a land card designed for Vibranium game.\
+        This card grants you a land plot in game.(*The quantity ratio value is for reference; the real value will be displayed during the official sale.)',
+        storeTab2Desc: 'Each building box contains a particle detector card designed for Vibranium game.\
+        This card grants you a particle detector; with which you can start your mining business.(*The quantity ratio value is for reference;the real value will be displayed during the official sale.)',
         tr1Cell1: 'Landcard',
         tr1Cell2: 'Particle Detector',
         tr2Cell1: 'Quantity Ratio',
