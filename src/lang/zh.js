@@ -103,7 +103,7 @@ export default {
         navTabItem3: '我的道具卡',
         boxType1: '领土宝箱',
         boxType2: '建筑宝箱',
-        storeTab1Desc: '每个领土宝箱都包含不同矿脉的地块，这是参与游戏并获得收益的基础。',
+        storeTab1Desc: '每个领土宝箱都包含不同矿脉的地块，这是参与游戏并获得收益的基础。(*最终以正式发售的概率为主)',
         storeTab2Desc: '每个建筑宝箱都包含一个粒子探测器，用于 Vibranium 游戏，您可以用它来参与游戏，获取收益。',
         tr1Cell1: '置地卡',
         tr1Cell2: '粒子探测器',
