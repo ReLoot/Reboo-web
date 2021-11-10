@@ -1,6 +1,20 @@
 <template>
   <div class="dataList">
-    No Data
+
+    <div class="store--hd">
+      <ul class="store--hd_tabs">
+        <li 
+          v-for="(item, idx) in tabs" 
+          :key="`store_tabs_${idx}`"
+          :class="{active: curTabIdx == idx}"
+          @click="tabsTrigger(idx)"
+        >{{$t(item.view)}}</li>
+      </ul>
+    </div>
+
+
+
+
   </div>
 </template>
 
