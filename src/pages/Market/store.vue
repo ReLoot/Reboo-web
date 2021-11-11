@@ -1,14 +1,7 @@
 <template>
   <div class="store">
     <div class="store--hd">
-      <ul class="store--hd_tabs">
-        <li 
-          v-for="(item, idx) in tabs" 
-          :key="`store_tabs_${idx}`"
-          :class="{active: curTabIdx == idx}"
-          @click="tabsTrigger(idx)"
-        >{{$t(item.view)}}</li>
-      </ul>
+      <tabs-market :tabs="tabs" :tabIdx="curTabIdx" @trigger="tabsTrigger" />
     </div>
 
     <div class="store--bd">
@@ -101,7 +94,6 @@
         </el-col>
       </el-row>
 
-
       <cus-divider dStyle="white" />
       <div class="store--pay">
         <div class="store--pay_preview">
@@ -114,18 +106,18 @@
         </div>
       </div>
       <cus-divider dStyle="white" style="margin-bottom: 40px" />
-
     </div>
-
-
-
   </div>
 </template>
 
 <script>
+import tabsMarket from '@/components/tabs/tabs_market'
 export default {
   filters: {
     tofixed2:(num)=>parseInt(num).toFixed(2)
+  },
+  components: {
+    tabsMarket,
   },
   data(){
     return {
@@ -156,13 +148,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
-$navItem: (
-  $--page-xs-width:(lineHeight: 34px, height: 34px),
-  $--page-sm-width:(lineHeight: 34px, height: 34px),
-  $--page-md-width:(lineHeight: 40px, height: 40px),
-  $--page-lg-width:(lineHeight: 46px, height: 46px),
-);
-
 $boxTitle: (
   $--page-xs-width:(fontsize: 24px, marginBottom: 15px),
   $--page-sm-width:(fontsize: 24px, marginBottom: 15px),
@@ -199,34 +184,6 @@ $pay: (
 @include b(store) {
   @include e(hd) {
     margin: 20px 0 40px;
-    @include m(tabs) {
-      @include clearfix();
-      display: table;
-      li {
-        @include mediaAdapt($navItem);
-        display: table-cell;
-        border-collapse: collapse;
-        float: left;
-        // width: 134px;
-        // padding: 0 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-        // height: 60px;
-        // line-height: 60px;
-        text-align: center;
-        border: 1px solid $--color-white-07;
-        color: $--color-white-07;
-        cursor: pointer;
-        -webkit-user-select: none;
-        user-select: none;
-        font-size: 16px;
-        font-family: OrbitronRegular;
-        &.active {
-          border-color: $--color-aqua;
-          color: $--color-aqua;
-        }
-      }
-    }
   }
 
   @include e(bd) {
@@ -254,10 +211,10 @@ $pay: (
       padding-bottom: 63%;
       background: no-repeat center/cover;
       &_domain {
-        background-image: url(/image/token/box_domain.png);
+        background-image: url(/image/box_domain.png);
       }
       &_build {
-        background-image: url(/image/token/box_build.png);
+        background-image: url(/image/box_build.png);
       }
     }
   }

@@ -47,7 +47,7 @@ export default {
   components: {cusStore, cusList},
   data(){
     return {
-      curIdx: 0,
+      curIdx: 1,
       tabs: [{
         txt: 'market.navTabItem1',
         type: 'store'
