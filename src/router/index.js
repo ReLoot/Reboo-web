@@ -62,7 +62,16 @@ const routes = (() => {
         component: ()=>import('@/pages/Market'),
         meta: {
           view: 'header.navItem4'
-        }
+        },
+        children: [{
+          path: 'boxes',
+          name: 'boxesList',
+          component: ()=>import('@/pages/Market'),
+        },{
+          path: 'cards',
+          name: 'cardList',
+          component: ()=>import('@/pages/Market'),
+        }]
       }]
     }]
   }

@@ -2,9 +2,16 @@ import detectEthereumProvider from "@metamask/detect-provider"
 import storage from '@/store/index'
 import {Message} from 'element-ui'
 import Web3 from "web3"
-// import { Store } from "vuex"
 
-export default class metaMaskUtils {
+// import ml_abi from '@/utils/contract/miner_card.json'
+// import vb_abi from '@/utils/contract/Vib.json'
+
+// const vbn_contract = process.env.VUE_APP_VBNcxzk
+// const building_contract = process.env.VUE_APP_BUILDING_CONTRACT
+// const land_contract = process.env.VUE_APP_LAND_CONTRACT
+
+
+export class metaMaskUtils {
   provider_
   account = storage.getters["user/account"]
   
@@ -23,9 +30,6 @@ export default class metaMaskUtils {
     if (this.provider_) {
       let check_ = await this.networkCheck()
       if (!check_) return false
-      
-      const w3 = new Web3()
-      console.log(w3)
 
       try { 
         const accounts = await this.provider_.request({ method: 'eth_requestAccounts' });
@@ -105,6 +109,4 @@ export default class metaMaskUtils {
     })
     console.error(err)
   }
-
-
 }

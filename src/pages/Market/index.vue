@@ -28,11 +28,11 @@
       </template>
       
       <template v-if="curIdx == 1">
-        <cus-list typ="box" />
+        <cus-list />
       </template>
       
       <template v-if="curIdx == 2">
-        <cus-list typ="card" />
+        <cus-list />
       </template>
 
 
@@ -50,10 +50,10 @@ export default {
       curIdx: 1,
       tabs: [{
         txt: 'market.navTabItem1',
-        type: 'store'
+        type: 'market'
       },{
         txt: 'market.navTabItem2',
-        type: 'boxList'
+        type: 'boxesList'
       },{
         txt: 'market.navTabItem3',
         type: 'cardList'
@@ -63,6 +63,7 @@ export default {
   methods: {
     tabsTrigger(cur) {
       this.curIdx = cur
+      this.$router.push({name: this.tabs[cur]['type']})
     }
   }
 }

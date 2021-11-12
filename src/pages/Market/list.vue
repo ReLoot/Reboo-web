@@ -2,73 +2,92 @@
   <div class="dataList">
 
     <div class="dataList--hd">
-      <tabs-market :tabs="tabs" :tabIdx="curTabIdx" @trigger="tabsTrigger" />
+      <tabs-market :tabs="tabs" :tabIdx="listType" @trigger="tabsTrigger" />
     </div>
 
     <div class="dataList--bd">
-
-      <el-row class="dataList--bd_list" :gutter="20">
-
-        <el-col 
-          v-for="(item, idx) in landBoxList"
-          :key="`list_${idx}`"
-          :md="6" :sm="8" :xs="12"
-        >
-          <div class="dataList--bd_card blinebox ">
-            <div class="inner">
-              <h4 class="title">{{item.name}}</h4>
-              <div class="element--wrap">
-                <em class="element--view" />
+      <template v-if="pageType == 'boxesList'">
+        <el-row class="dataList--bd_list" :gutter="20">
+          <el-col 
+            v-for="(item, idx) in landBoxList"
+            :key="`land_list_${idx}`"
+            :md="6" :sm="8" :xs="12"
+          >
+            <div class="dataList--bd_card blinebox ">
+              <div class="inner">
+                <h4 class="title">{{item.name}}</h4>
+                <div class="element--wrap">
+                  <em 
+                    class="element--view" 
+                    :class="{
+                      'element--view_land': listType == 0,
+                      'element--view_building': listType == 1
+                    }"
+                  />
+                </div>
+                <cus-btn-ein
+                  class="card_btn"
+                  @click.native="boxOpen(item.bid)"
+                >OPEN</cus-btn-ein>
               </div>
-              <cus-btn-ein
-                class="card_btn"
-                @click.native="boxOpen(item.bid)"
-              >OPEN</cus-btn-ein>
             </div>
-          </div>
-        </el-col>
+          </el-col>
 
-        <el-col 
-          v-for="(item, idx) in landBoxList"
-          :key="`list_${idx}`"
-          :md="6" :sm="8" :xs="12"
-        >
-          <div class="dataList--bd_card toolCard">
-            <div class="inner">
-              <h4 class="title">{{item.name}}</h4>
-              <div class="element-wrap">
-                <em class="element-view" />
-              </div>
-              <div class="info">
-                <div class="l-part">
-                  <img class="rank" src="/image/market/rank_1.png" />
-                  <p># L8804</p>
-                </div> 
-                <div class="r-part">
-                  <p class="item">
-                    <label>Sturdy</label>
-                    <span>15 %</span>
-                  </p>
-                  <p class="item">
-                    <label>Sturdy</label>
-                    <span>15 %</span>
-                  </p>
-                  <p class="item">
-                    <label>Sturdy</label>
-                    <span>15 %</span>
-                  </p>
-                  <p class="item">
-                    <label>Sturdy</label>
-                    <span>15 %</span>
-                  </p>
+        </el-row>
+      </template>
+
+
+      <template v-if="pageType == 'cardList'">
+        <el-row class="dataList--bd_list" :gutter="20">
+
+          <el-col 
+            v-for="(item, idx) in landBoxList"
+            :key="`tool_list_${idx}`"
+            :md="6" :sm="8" :xs="12"
+          >
+            <div class="dataList--bd_card toolCard">
+              <div class="inner">
+                <h4 class="title">{{item.name}}</h4>
+                <div class="element--wrap">
+                  <em 
+                    class="element--view" 
+                    :class="{
+                      'element--view_land': listType == 0,
+                      'element--view_building': listType == 1
+                    }"
+                  />
+                </div>
+                <div class="info">
+                  <div class="l-part">
+                    <img class="rank" src="/image/market/rank_1.png" />
+                    <p># L8804</p>
+                  </div> 
+                  <div class="r-part">
+                    <p class="item">
+                      <label>Sturdy</label>
+                      <span>15 %</span>
+                    </p>
+                    <p class="item">
+                      <label>Sturdy</label>
+                      <span>15 %</span>
+                    </p>
+                    <p class="item">
+                      <label>Sturdy</label>
+                      <span>15 %</span>
+                    </p>
+                    <p class="item">
+                      <label>Sturdy</label>
+                      <span>15 %</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </el-col>
+          </el-col>
 
+        </el-row>
+      </template>
 
-      </el-row>
     </div>
   </div>
 </template>
@@ -76,13 +95,23 @@
 <script>
 import tabsMarket from '@/components/tabs/tabs_market'
 export default {
-  props:['type'],
   components: {
     tabsMarket,
   },
+  watch:{
+    '$route'(n) {
+      this.pageType = n.name
+      this.listType = 0
+    }
+  },
+  // updated(){
+  //   console.log(444)
+  //   console.log(this.listType)
+  // },
   data(){
     return {
-      curTabIdx: 0,
+      pageType: 'boxesList',    // boxesList \ cardList
+      listType: 0,     // land 0 \ building 1
       tabs: [{
         type: 'domain',
         view: 'market.boxType1',
@@ -103,12 +132,15 @@ export default {
       toolBox:[{
         name: '置地卡',
         view: ''
+      },{
+        name: '置地卡',
+        view: ''
       }]
     }
   },
   methods: {
     tabsTrigger(cur) {
-      this.curTabIdx = cur
+      this.listType = cur
     },
     boxOpen(id) {
       // console.log('a')
@@ -139,12 +171,10 @@ export default {
       -webkit-transition: all 0.25s;
       transition: all 0.25s;
       box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
-
       &:hover {
         transform: scale(1.02);
         box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);
       }
-
       .inner {
         border-radius: 4px;
         padding-bottom: 142%;
@@ -154,7 +184,6 @@ export default {
         background: no-repeat center/cover;
         font-family: OrbitronRegular;
       }
-
       h4 {
         @include plcenter();
         width: 150px;
@@ -163,8 +192,6 @@ export default {
         top: 0;
         text-align: center
       }
-
-
     }
   }
 }
@@ -181,7 +208,6 @@ export default {
     display: block;
     padding-bottom: 100%;
     width: 100%;
-    // background: url(/image/box_build.png) no-repeat center/cover;
     background: no-repeat center/cover
   }
 }
@@ -191,7 +217,10 @@ export default {
     background-image: url(/image/market/box_card_bg.png) 
   }
   @include b(element) {
-    @include e(view) {
+    @include e(view_land) {
+      background-image: url(/image/box_domain.png)
+    }
+    @include e(view_building) {
       background-image: url(/image/box_build.png)
     }
   }
@@ -215,8 +244,11 @@ export default {
     background-image: url(/image/market/tool_card_bg.png)
   }
   @include b(element) {
-    @include m(view) {
-      background-image: url(/image/box_build.png)
+    @include e(view_land) {
+      background-image: url(/image/card_land.png)
+    }
+    @include e(view_building) {
+      background-image: url(/image/card_tool.png)
     }
   }
   .info {
@@ -238,7 +270,6 @@ export default {
       }
     }
     .l-part {
-      // width: 50%;
       img.rank {
         height: 36px;
         margin-bottom: 20px;
@@ -255,6 +286,9 @@ export default {
         @include displayFlex();
         justify-content: space-between;
         width: 100%;
+      }
+      span {
+        color: $--color-aqua;
       }
     }
   }
