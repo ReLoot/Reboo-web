@@ -84,8 +84,8 @@
             v-if="!pageLoading"
             @click.native="pay"
           >BUY NOW</cus-btn-ein> -->
-          <!-- v-if="pageLoading" -->
-          <span  class="pause">{{$t('market.storePaying')}}</span>
+           <!-- v-if="pageLoading" -->
+          <span class="pause">{{$t('market.storePaying')}}</span>
         </div>
       </div>
       <cus-divider dStyle="white" style="margin-bottom: 40px" />
@@ -102,6 +102,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', {
+      account: 'account',
       email: 'email',
     }),
   },
@@ -133,6 +134,14 @@ export default {
       this.num = this.min
     },
     async pay() {
+      console.log(this.account)
+      if(!this.account) {
+        this.$message({
+          message: this.$t('common.nopermission'),
+          type: 'error'
+        })
+        return false
+      }
       this.pageLoading = true
       if(this.curTabIdx == 0) {
         await this.$landContract.payForBox(this.num)

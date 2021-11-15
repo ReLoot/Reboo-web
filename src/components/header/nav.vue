@@ -122,14 +122,11 @@ export default {
       loading: false,
     }
   },
-  created() {
-    // this.$
-    // this.$globalBus.$emit('TRANSCATION_TAB', 'unwrap');
-    this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
-      this.bindEmailVisible = !this.bindEmailVisible
-    })
-
-  },
+  // created() {
+    // this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
+    //   this.bindEmailVisible = !this.bindEmailVisible
+    // })
+  // },
   mounted() {
     this.$nextTick(() => {
       if(this.account) {
@@ -154,8 +151,9 @@ export default {
       })
     },
     bindEmail(){
-      const reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
-      if (!reg.test(this.formData.email)){
+      // const reg = new RegExp(/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/);
+      console.log(this.formData.email)
+      if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/.test(this.formData.email)){
         this.$message({
           message: this.$t('header.bindEmailIput'),
           type: 'error'
@@ -185,8 +183,8 @@ export default {
       })
     },
     getCode(){
-      const reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
-      if (!reg.test(this.formData.email)){
+      // const reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+      if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/.test(this.formData.email)){
         this.$message({
           message: this.$t('header.bindEmailIput'),
           type: 'error'

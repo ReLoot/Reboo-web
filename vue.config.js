@@ -7,6 +7,7 @@ module.exports = {
         '/api': {
             // target: process.env.VUE_APP_URL,
             target: 'http://101.32.186.13:8082/',
+            // target: 'http://110.40.128.216:9000',
             changeOrigin: true,         // 是否改变域名
             pathRewrite: {
               '/api': '/'

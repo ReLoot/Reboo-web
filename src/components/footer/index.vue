@@ -41,8 +41,8 @@
           v-if="account"
         >
           <!-- <span v-if="subscribe == 1">Unsubscribe</span> -->
-          <em v-if="subscribe == 1" class="unsubscribe"></em>
-          <em v-else class="subscribe"></em>
+          <em  v-if="subscribe == 1" class="subscribe"></em>
+          <em v-else class="unsubscribe"></em>
           <span v-if="subscribe == 1" >{{$t('footer.unsubscribe')}}</span>
           <span v-else >{{$t('footer.subscribe')}}</span>
         </cus-btn-ein>
@@ -113,7 +113,6 @@ export default {
     subscr(){
       if(this.email) {
         const subscribe = this.subscribe==1?-1:1
-        console.log(subscribe)
         this.$http('subscribe', {eth_address: this.account, subscribe: subscribe})
           .then(res => {
             let tip 

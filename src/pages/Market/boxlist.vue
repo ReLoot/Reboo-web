@@ -127,7 +127,6 @@ export default {
       }
     },
     boxSelect(id) {
-      console.log(id)
       if(this.pageLoading) return false
       this.pageLoading = true
 

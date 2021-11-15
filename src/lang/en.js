@@ -4,6 +4,7 @@ export default {
         price: 'price',
         quantity: 'quantity',
         total: 'total',
+        nopermission: 'No permission'
     },
     header: {
         btn: 'Connect Wallet',
@@ -27,8 +28,8 @@ export default {
     },
     footer: {
         linkBlock: 'For more game introduction and details please check',
-        subscribeTip: 'You have successfully subscribed to the event, and event notifications will be sent to your email',
-        unsubscribeTip: 'You have unsubscribed from notifications',
+        subscribeTip: 'You have unsubscribed from notifications',
+        unsubscribeTip: 'You have successfully subscribed to the event, and event notifications will be sent to your email',
         subscribe: 'Subscribe',
         unsubscribe: 'Unsubscribe',
     },
