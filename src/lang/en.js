@@ -30,8 +30,8 @@ export default {
         linkBlock: 'For more game introduction and details please check',
         subscribeTip: 'You have unsubscribed from notifications',
         unsubscribeTip: 'You have successfully subscribed to the event, and event notifications will be sent to your email',
-        subscribe: 'Subscribe',
-        unsubscribe: 'Unsubscribe',
+        subscribe: 'Not Subscribed',
+        unsubscribe: 'Subscribed',
     },
     home: {
         bannerTxt: 'From Here<br/>To The Sea Of Stars',
