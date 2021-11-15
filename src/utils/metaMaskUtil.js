@@ -63,8 +63,6 @@ export class metaMaskUtils {
   }
 
   eventRegister () {
-    console.log('Handle EventRegister')
-    
     this.provider_.on('chainChanged', ()=>{
       this.onChainChanged()
     })
@@ -82,10 +80,11 @@ export class metaMaskUtils {
   }
 
   onAccountChanged(account_) {
-    if(!account_ || account_ !== storage.getters['user/account']) {
+    // console.log(!account_ , account_, storage.getters['user/account'])
+    // if(!account_ && account_ !== storage.getters['user/account']) {
       this.clearCatch()
       window.location.reload()
-    }
+    // }
   }
 
   onDisconnect() {

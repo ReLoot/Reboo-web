@@ -122,11 +122,11 @@ export default {
       loading: false,
     }
   },
-  // created() {
-    // this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
-    //   this.bindEmailVisible = !this.bindEmailVisible
-    // })
-  // },
+  created() {
+    this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
+      this.bindEmailVisible = !this.bindEmailVisible
+    })
+  },
   mounted() {
     this.$nextTick(() => {
       if(this.account) {

@@ -299,7 +299,7 @@ $extrInner: (
 
   &--email_btn {
     // width: 130px;
-    min-width: 130px;
+    min-width: 160px;
     padding-left: 10px;
     padding-right: 10px;
     height: 31px;
