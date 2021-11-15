@@ -38,6 +38,7 @@
           class="footer--email_btn"
           :bg="`/image/footer_btn_subscribe.png`"
           @click.native="subscr"
+          v-if="account"
         >
           <!-- <span v-if="subscribe == 1">Unsubscribe</span> -->
           <em v-if="subscribe == 1" class="unsubscribe"></em>
