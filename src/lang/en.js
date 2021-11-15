@@ -143,6 +143,7 @@ export default {
         storePay: '',
     },
     personal: {
-        hd: 'Personal Information'
+        hd: 'Personal Information',
+        bindBtn: 'BIND',
     }
 }
