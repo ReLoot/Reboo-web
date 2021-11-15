@@ -113,14 +113,20 @@ export default {
       // vbn 合约
       let vbn_contract = await getContract(vb_abi, vbnAddress)
       // minerNFT 合约
-      let tool_contract = await getContract(ml_abi,toolContractAddress)
+      // let tool_contract = await getContract(ml_abi,toolContractAddress)
+      // const provider = await detectEthereumProvider();
+      // const web3 = new Web3(provider);
 
-      const provider = await detectEthereumProvider();
-      const web3 = new Web3(provider);
-      await vbn_contract.methods.approve(toolContractAddress, web3.utils.toBN(5*Math.pow(10, 18))).send({from: account_})
-      // 购买minerNFT
-      const n = await tool_contract.methods.mintMulti(account_, 2).send({from: account_})
-      this.buy_tool_box = n
+      console.log('balanceOF:', account_)
+      const balance = await vbn_contract.methods.balanceOf(account_).call()
+      console.log(balance)
+      // const approve_1 = vbn_contract.methods.approve(landContractAddress, web.utils.toBN())
+
+      // await vbn_contract.methods.approve(toolContractAddress, web3.utils.toBN(5*Math.pow(10, 18))).send({from: account_})
+
+      // // 购买minerNFT
+      // const n = await tool_contract.methods.mintMulti(account_, 2).send({from: account_})
+      // this.buy_tool_box = n
     },
     async buyLandBox(){
       let account_ = this.account

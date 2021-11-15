@@ -1,0 +1,187 @@
+import detectEthereumProvider from "@metamask/detect-provider"
+import storage from '@/store/index'
+import {Message} from 'element-ui'
+import $http from '@/utils/http'
+
+import Web3 from "web3"
+
+import ml_abi from '@/utils/contract/miner_card.json'
+import vbn_abi from '@/utils/contract/Vib.json'
+
+const vbn_contract_address = process.env.VUE_APP_VBN_CONTRACT
+const building_contract_address = process.env.VUE_APP_BUILDING_CONTRACT
+const land_contract_address = process.env.VUE_APP_LAND_CONTRACT
+
+
+const BN =  new Web3().utils.BN
+
+// const account_ = storage.getters["user/account"]
+
+const getContract = async (abi, contract_address) => {
+  const provider = await detectEthereumProvider()
+  const web3 = new Web3(provider)
+  return new web3.eth.Contract(abi, contract_address)
+}
+
+const sysToast = (err, type='error') => {
+  console.error(err)
+  Message({
+      message: JSON.stringify(err['message']||err),
+      type: type
+  })
+}
+
+
+class contractConstruct {
+  constructor(options) {
+    if (options)
+      Object.assign(this, options)
+  }  
+  
+  // getVbnContractOption = async () => await getContract(vbn_abi, vbn_contract_address)
+  getVbnContractOption() {
+    return getContract(vbn_abi, vbn_contract_address)
+  }
+
+  async init() {
+    await this.getVbnBalance()
+    await this.classifyItem()
+  }
+
+  async getVbnBalance() {
+    const account_ = this.accountCheck()
+    if (!account_) return false
+
+    const vbnContract = await this.getVbnContractOption()
+    const balance = await vbnContract.methods.balanceOf(account_).call()
+    const unit = Math.pow(10, 9)
+    const balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
+    
+    storage.commit('user/balance', balance_)
+    
+    return {
+      balance,
+      balanceFormart: balance_
+    }
+  }
+
+  async payForOne() {
+    const accoutn_ = this.accountCheck()
+    if (!accoutn_) return false
+  }
+
+  async payForBox(amount) {
+    const account_ = this.accountCheck()
+    if (!account_) return false
+
+    const vbn_require_amount = 2
+    const {balanceFormart} = await this.getVbnBalance()
+    const vbnContract = await this.getVbnContractOption()
+    const mainContract = await this.mainContractOption()
+    
+    amount = amount < 2?2:parseInt(amount)
+    
+    if (balanceFormart <= vbn_require_amount*amount) {
+      sysToast('No enough balance for pay')
+      return false
+    }
+    try {
+      await vbnContract.methods.approve(this.mainContractAddress, new BN(String(vbn_require_amount*amount*Math.pow(10, 18)))).send({from: account_})
+      await mainContract.methods.mintMulti(account_, amount).send({from: account_})
+      sysToast('Buy successed !', 'success')
+    } catch (err) {
+      sysToast(err)
+    }
+  }
+
+  async getAllList() {
+    const account_ = this.accountCheck()
+    if (!account_) return false
+
+    const mainContract = await this.mainContractOption()
+    const list = await mainContract.methods.getOwnerTokenIDs(account_, 0, 10000).call()
+    return list
+  }
+
+  openBox(boxID) {
+    const account_ = this.accountCheck()
+    if (!account_) return false
+    return $http(this.openBoxMethods, {token_id: boxID, account: account_})
+  }
+  
+  checkCardInfo(boxID) {
+    const account_ = this.accountCheck()
+    if (!account_) return false
+    return $http(this.checkCardInfoMethods, {token_id: boxID, account: account_})
+  }
+
+  async classifyItem() {
+    const account_ = this.accountCheck()
+    if (!account_) return false
+    
+    let boxList = [], cardList = []
+    const allBox = await this.getAllList()
+    // console.log(allBox)
+    allBox.forEach(async item => {
+      // console.log(this.checkCardInfo)
+      // console.log(item)
+      this.checkCardInfo(item)
+        .then(res => {
+          if (res && res.code == 0) {
+            cardList.push(res.data)
+            storage.commit(this.store.cards, cardList)
+          }
+          
+          if (res && res.code == -11) {
+            boxList.push(item)
+            storage.commit(this.store.boxes, boxList)
+          }
+      })
+    })
+  }
+
+  accountCheck() {
+    const account_ = storage.getters["user/account"]
+    if(!account_) {
+      // sysToast('Please Connect Metamaks Wallet')
+      return false
+    }
+    return account_
+  }
+
+
+}
+
+/* 领土宝箱 | 置地卡 */
+export class landContractClass extends contractConstruct{
+  constructor() {
+    const landContractOption = async () => await getContract(ml_abi, land_contract_address)
+    super({
+      mainContractOption: landContractOption, 
+      mainContractAddress: land_contract_address,
+      openBoxMethods: 'open_land_box',
+      checkCardInfoMethods: 'info_land',
+      store: {
+        boxes: 'user/landBox',
+        cards: 'user/landCard'
+      }
+    })
+  }
+}
+
+/* 建筑宝箱 | 粒子探测器 */
+export class buildingContractClass extends contractConstruct{
+  constructor() {
+    const buildingContractOption = async () => await getContract(ml_abi, building_contract_address)
+    super({
+      mainContractOption: buildingContractOption, 
+      mainContractAddress: building_contract_address,
+      openBoxMethods: 'open_tool_box',
+      checkCardInfoMethods: 'info_tool',
+      store: {
+        boxes: 'user/buildingBox',
+        cards: 'user/buildingCard'
+      }
+    })
+  }
+}

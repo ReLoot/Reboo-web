@@ -1,6 +1,7 @@
 <template>
   <a 
     class="cus--btn cus--btn_ein"
+    :class="{disabled}"
     :style="{backgroundImage: `url(${bg})`, color}"
   >
     <span class="cus--btn_str" >
@@ -23,6 +24,10 @@ export default {
     bg: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -53,6 +58,10 @@ export default {
         transform: scale(0.99);
       }
 
+      &.disabled {
+        opacity: 0.7;
+        cursor: default;
+      }
     }
 
     @include m(str) { 

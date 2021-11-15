@@ -32,7 +32,7 @@ export default {
         showClose: true,
         message: this.$t('token.altr')
       })
-    }
+    },
   }
 }
 </script>

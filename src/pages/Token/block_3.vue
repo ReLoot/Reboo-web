@@ -8,10 +8,20 @@
           <div class="tk--pie_view">
             <span class="unit">VBN</span>
           </div>
+          <div class="tk--pie_item tk--pie_item_00">
+            <p>
+              <span>{{$t('token.bk3Pie1Item0')}} </span>
+              <span class="num">1%</span>
+            </p>
+            <div class="stick">
+              <em></em>
+            </div>
+          </div>
+
           <div class="tk--pie_item tk--pie_item_01">
             <p>
               <span>{{$t('token.bk3Pie1Item1')}} </span>
-              <span class="num">5%</span>
+              <span class="num">4%</span>
             </p>
             <div class="stick">
               <em></em>
@@ -111,7 +121,7 @@ $pieList: (
     @include m(view) {
       width: 7em;
       height: 7em;
-      background: url(/image/token/pie_1.png) no-repeat center/cover;
+      background: url(/image/token/pie_1.jpg) no-repeat center/cover;
       .unit {
         @include pacenter();
         font-size: 0.5em;
@@ -154,28 +164,38 @@ $pieList: (
       }
     }
     
-    @include m(item_01) {
-      top: 0.2em;
+    @include m(item_00) {
+      top: 0;
       .stick {
-        height: 0.84em;
-        width: 7.23em;
-        top: 0.55em;
+        height: 1.3em;
+        width: 7.5em;
+        top: 0.0em;
+        background-image: url(/image/token/pie_1_stick_0.png);
+      }
+    }
+    
+    @include m(item_01) {
+      top: 0.9em;
+      .stick {
+        height: 0.7em;
+        width: 7.1em;
+        top: 0.0em;
         background-image: url(/image/token/pie_1_stick_1.png);
       }
     }
 
     @include m(item_02) {
-      top: 1.95em;
+      top: 1.8em;
       .stick {
-        height: 0.48em;
-        width: 6.4em;
+        height: 0.6em;
+        width: 6.5em;
         top: 0em;
         background-image: url(/image/token/pie_1_stick_2.png);
       }
     }
 
     @include m(item_03) {
-      top: 3.92em;
+      top: 3.52em;
       .stick {
         top: -0.3em;
         width: 6.22em;
@@ -203,7 +223,7 @@ $pieList: (
   }
 
   .tk--pie_view {
-    background-image: url(/image/token/pie_2.png);
+    background-image: url(/image/token/pie_2.jpg);
     .unit {
       @include pacenter();
       color: $--color-blue;

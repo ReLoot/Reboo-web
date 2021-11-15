@@ -66,6 +66,7 @@
         <cus-btn-ein 
           class="rb"
           bg="/image/roadmap/btn_1.png"
+          @click.native="link"
         >{{$t('roadmap.extrBtn')}}</cus-btn-ein>
       </div>
 
@@ -108,6 +109,11 @@ export default {
         system: 'roadmap.tr4Cell5',
         color: '#E24E75'
       }]
+    }
+  },
+  methods: {
+    link() {
+      this.$message(this.$t('token.altr'))
     }
   }
 }

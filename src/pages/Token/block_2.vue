@@ -10,7 +10,7 @@
             <em :style="{backgroundImage: `url(${item.img})`}"></em>
             <div class="token--cards_ctn">
               <p>{{$t(item.desc)}}</p>
-              <a>
+              <a @click="link">
                 {{$t(item.linktxt)}}
                 <i :style="{backgroundImage: 'url(/image/arr_r.png)'}"></i>
               </a>
@@ -49,6 +49,11 @@ export default {
         link: '',
         img: '/image/token/litem_04.png'
       }]
+    }
+  },
+  methods: {
+    link() {
+      this.$message(this.$t('token.altr'))
     }
   }
 }

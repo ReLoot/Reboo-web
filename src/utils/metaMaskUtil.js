@@ -2,14 +2,12 @@ import detectEthereumProvider from "@metamask/detect-provider"
 import storage from '@/store/index'
 import {Message} from 'element-ui'
 import Web3 from "web3"
-
 // import ml_abi from '@/utils/contract/miner_card.json'
 // import vb_abi from '@/utils/contract/Vib.json'
 
 // const vbn_contract = process.env.VUE_APP_VBNcxzk
 // const building_contract = process.env.VUE_APP_BUILDING_CONTRACT
 // const land_contract = process.env.VUE_APP_LAND_CONTRACT
-
 
 export class metaMaskUtils {
   provider_
@@ -36,6 +34,7 @@ export class metaMaskUtils {
         this.account = new Web3().utils.toChecksumAddress(accounts[0])
         storage.commit('user/account', this.account)
         this.eventRegister()
+        // window.location.reload()
       } catch (err) {
         console.error(err)
       }
@@ -64,12 +63,13 @@ export class metaMaskUtils {
   }
 
   eventRegister () {
-    if (!this.provider_) return false
+    console.log('Handle EventRegister')
+    
     this.provider_.on('chainChanged', ()=>{
       this.onChainChanged()
     })
     this.provider_.on('accountsChanged', ()=>{
-      this.onAccountChanged()
+      this.onAccountChanged(this.account)
     })
     this.provider_.on('disconnect', ()=>{
       this.onDisconnect()
@@ -82,8 +82,7 @@ export class metaMaskUtils {
   }
 
   onAccountChanged(account_) {
-    // account is not in catch
-    if(!account_ || account_.length == 0 || account_[0] !== storage.getters['user/account']) {
+    if(!account_ || account_ !== storage.getters['user/account']) {
       this.clearCatch()
       window.location.reload()
     }
@@ -95,10 +94,8 @@ export class metaMaskUtils {
   }
 
   clearCatch() {
-    // clear cookie \\ clear stroage
     localStorage.removeItem('account')
     storage.dispatch('user/cleanAccount')
-    // storage.commit('user/account', '')
   }
 
   showError(err) {

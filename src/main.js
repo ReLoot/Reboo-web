@@ -3,11 +3,15 @@ import ElementUI from 'element-ui'
 import App from './App.vue'
 import router from '@/router'
 
+// template
 import cusBtnEin from '@/components/button/btn_style_ein'
 import cusDivider from '@/components/divider/divider_ein'
+import cusNoData from '@/components/warning/tmp_nodata_1'
 
 import store from '@/store'
-import mu from '@/utils/metaMaskUtil'
+import {metaMaskUtils} from '@/utils/metaMaskUtil'
+import {landContractClass, buildingContractClass} from '@/utils/contractUtils'
+
 import {initI18n} from '@/utils/i18n'
 import cus_http from '@/utils/http'
 
@@ -21,15 +25,19 @@ Vue.use(ElementUI)
 
 Vue.component('cusBtnEin', cusBtnEin)
 Vue.component('cusDivider', cusDivider)
-
+Vue.component('cusNoData', cusNoData)
 
 Vue.config.productionTip = false
 
 Vue.prototype.$http = cus_http
-Vue.prototype.$mu = new mu()
+Vue.prototype.$mu = new metaMaskUtils()
 
+
+Vue.prototype.$landContract = new landContractClass()
+Vue.prototype.$buildingContract = new buildingContractClass()
+Vue.prototype.$globalBus = new Vue()
 // const i18n = initI18n('zh') //jsCookie.get('lang')?jsCookie.get('lang'):process.env.VUE_APP_LANG
-const i18n = initI18n('en') //jsCookie.get('lang')?jsCookie.get('lang'):process.env.VUE_APP_LANG
+const i18n = initI18n(localStorage.getItem('lang')||'en') //jsCookie.get('lang')?jsCookie.get('lang'):process.env.VUE_APP_LANG
 
 new Vue({
   router,

@@ -11,10 +11,21 @@
       <cus-btn-ein 
         class="home--bk_btn"
         bg="/image/home/bk_1_btn.png"
+        @click.native="bannerBtn"
       >PLAY NOW</cus-btn-ein>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    bannerBtn(){
+      this.$message(this.$t('token.altr'))
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';

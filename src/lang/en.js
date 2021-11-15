@@ -7,17 +7,30 @@ export default {
     },
     header: {
         btn: 'Connect Wallet',
-        dropItem1: 'My wallet',
-        dropItem2: 'Login out',
+        dropItem1: 'Personal',
+        dropItem2: 'Receive NFT',
+        dropItem3: 'ID Card',
+        dropItem4: 'Login out',
         dialogTitle1: 'My wallet',
         dialogTitle2: 'Wallet Address',
         navItem1: 'Home',
         navItem2: 'Planning',
         navItem3: 'Token Model',
         navItem4: 'Market',
+        bindEmailHd: 'Bind Email',
+        bindEmailIput: 'Please fill in the correct email format',
+        sendCode: 'Send Code',
+        sendCodeTip: 'The verification code has been sent to the mailbox ',
+        submit: 'Submit'
+
+
     },
     footer: {
-        linkBlock: 'For more game introduction and details please check'
+        linkBlock: 'For more game introduction and details please check',
+        subscribeTip: 'You have successfully subscribed to the event, and event notifications will be sent to your email',
+        unsubscribeTip: 'You have unsubscribed from notifications',
+        subscribe: 'Subscribe',
+        unsubscribe: 'Unsubscribe',
     },
     home: {
         bannerTxt: 'From Here<br/>To The Sea Of Stars',
@@ -100,10 +113,11 @@ export default {
         bk3Hd: 'Dual Token Model',
         bk3Desc: 'For a smooth and user-friendly gaming experience, there will be another token that can be redeemed at a ratio of 1:1 to VBN;\
         this token is applied in scenario like high-frequency trading of non-core props in the game. Rest-assured, you can redeem at any time with only gas fee to be paid.',
-        bk3Pie1Item1: 'Owned by the founding team, locked for one year from the issuing date; release within the next 24 months (after one year locked).',
-        bk3Pie1Item2: 'Community building, business cooperation',
-        bk3Pie1Item3: 'Provide liquidity and liquidity mining in DEX',
-        bk3Pie1Item4: 'Game output',
+        bk3Pie1Item0: 'Private placement and IDO',
+        bk3Pie1Item1: 'Community development and business cooperation',
+        bk3Pie1Item2: 'Owned by the founding team , locked for one year',
+        bk3Pie1Item3: 'Liquidity for DEX and CEX',
+        bk3Pie1Item4: 'LP mining and play2earn output',
         bk3Pie2desc: 'Dark matter (DKMT) is continuously detected and discovered by particle detectors, \
         and is issued in unlimited quantities. All the output of DKMT comes from the game, and is used to serve the development of the game.',
         bk3Pie2Item1: 'Game outputs'
@@ -115,8 +129,8 @@ export default {
         navTabItem3: 'My Item Card',
         boxType1: 'Territory Box',
         boxType2: 'Building Box',
-        // storeDesc: 'Each building treasure chest contains a particle detector for the Vibranium game,\
-        // which you can use to participate in the game and earn revenue.',
+        cardType1: 'Landcard',
+        cardType2: 'Particle Detector',
         storeTab1Desc: 'Each territory box contains a land card designed for Vibranium game. This card grants you a land plot in game.\
         (*The quantity ratio value is for reference; the real value will be displayed during the official sale.)',
         storeTab2Desc: 'Each building box contains a particle detector card designed for Vibranium game.\
@@ -127,5 +141,8 @@ export default {
         tr2Cell2: 'Quantity Ratio',
         storePaying: 'Please wait',
         storePay: '',
+    },
+    personal: {
+        hd: 'Personal Information'
     }
 }

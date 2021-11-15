@@ -6,12 +6,19 @@ module.exports = {
     proxy: {
         '/api': {
             // target: process.env.VUE_APP_URL,
-            target: 'https://101.32.186.13:8082/',
+            target: 'http://101.32.186.13:8082/',
             changeOrigin: true,         // 是否改变域名
             pathRewrite: {
               '/api': '/'
             }
         },
+        '/vib': {
+          target: 'http://45.32.20.228:9300/',
+          changeOrigin: true,
+          pathRewrite: {
+            '/vib': '/'
+          }
+        }
     }
   }   
 }

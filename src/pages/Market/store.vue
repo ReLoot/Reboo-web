@@ -19,18 +19,6 @@
               <el-col :md="18">
                 <h2>{{$t(tabs[curTabIdx]['view'])}}</h2>
               </el-col>
-              <!-- sell process -->
-              <!-- <el-col :md="6">
-                <div class="process">
-                  <div class="process--amount">
-                    <span>销售数量</span>  
-                    <span>2000//6000</span>  
-                  </div>      
-                  <div class="process--bar">
-                    <div class="process--bar_inner"></div>
-                  </div>
-                </div>
-              </el-col> -->
             </el-row>
 
             <div class="store--price">
@@ -41,17 +29,6 @@
             <p class="store--desc" v-else >{{$t('market.storeTab2Desc')}}</p>
             <table class="store--rank" >
               <tr>
-                <!-- <td>
-                  <span v-if="curTabIdx == 0">
-                    {{$t('market.tr1Cell1')}}
-                  </span>
-                  <span v-else>
-                    {{$t('market.tr1Cell2')}}
-                  </span>
-                </td>
-                <td>S</td>
-                <td>SS</td>
-                <td>SSS</td> -->
                 <template v-for="(item, idx) in rankList" >
                   <td :key="`rank_${idx}`" >
                     <template v-if="idx == 0">
@@ -70,7 +47,7 @@
                       {{$t(item[curTabIdx])}}
                     </template>
                     <template v-else>
-                      {{item[curTabIdx]}}
+                      {{item[curTabIdx]}}%
                     </template>
                   </td>
                 </template>
@@ -101,8 +78,14 @@
           <span>{{num*price|tofixed2}} VBN</span>
         </div>
         <div class="store--pay_append">
-          <!-- <button>PAY NOW</button> -->
-          <span class="pause">{{$t('market.storePaying')}}</span>
+          <!-- <cus-btn-ein 
+            class="pay"
+            bg="/image/market/btn_1.png"
+            v-if="!pageLoading"
+            @click.native="pay"
+          >BUY NOW</cus-btn-ein> -->
+          <!-- v-if="pageLoading" -->
+          <span  class="pause">{{$t('market.storePaying')}}</span>
         </div>
       </div>
       <cus-divider dStyle="white" style="margin-bottom: 40px" />
@@ -112,9 +95,15 @@
 
 <script>
 import tabsMarket from '@/components/tabs/tabs_market'
+import {mapGetters} from 'vuex'
 export default {
   filters: {
     tofixed2:(num)=>parseInt(num).toFixed(2)
+  },
+  computed: {
+    ...mapGetters('user', {
+      email: 'email',
+    }),
   },
   components: {
     tabsMarket,
@@ -122,6 +111,7 @@ export default {
   data(){
     return {
       curTabIdx: 0,
+      pageLoading: false,
       tabs: [{
         type: 'domain',
         view: 'market.boxType1',
@@ -131,16 +121,29 @@ export default {
       }],
       rankList: [['market.tr1Cell1','market.tr1Cell2'], 'S', 'SS', 'SSS'],
       processList: [['market.tr2Cell1', 'market.tr2Cell2'], [50, 60], [35, 30], [15, 10]],
-      price: 0,
-      num: 1,
-      min: 1,
-      max: 10
+      price: 1,
+      num: 2,
+      min: 2,
+      max: 10,
     }
   },
   methods: {
     tabsTrigger(cur) {
       this.curTabIdx = cur
       this.num = this.min
+    },
+    async pay() {
+      this.pageLoading = true
+      if(this.curTabIdx == 0) {
+        await this.$landContract.payForBox(this.num)
+        await this.$landContract.init()
+      }
+      if(this.curTabIdx == 1) {
+        await this.$buildingContract.payForBox(this.num)
+        await this.$buildingContract.init()
+      }
+
+      this.pageLoading = false
     }
   }
 }
@@ -323,6 +326,7 @@ $pay: (
     // margin: 30px 0;
     padding: 0 13px;
     // font-size: 28px;
+    align-items: center;
     @include m(preview){
       -webkit-flex: 1;
       flex: 1;
@@ -331,6 +335,12 @@ $pay: (
     }
     
     @include m(append) {
+      .pay {
+        font-family: OrbitronBlack;
+        width: 180px;
+        height: 47.25px;
+        font-size: 18px;
+      }
       .pause {
         font-family: OrbitronBlack;
       }

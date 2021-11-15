@@ -1,5 +1,6 @@
 import axios from 'axios'
 import apis from './api'
+import store from '@/store'
 
 var http = axios.create({
   baseURL: '/',
@@ -10,6 +11,8 @@ http.interceptors.request.use(function (config) {
   if (config.method === 'post') {
     config.headers['Content-Type'] = 'application/json;charset=UTF-8'
   }
+  config.headers['Authorization'] = 'Bearer '+store.getters['common/token']
+
   return config
 }, function (error) {
   return Promise.reject(error)
@@ -24,6 +27,9 @@ http.interceptors.response.use(function (response) {
 
 const httpHandler = {
   get (url, param={}) {
+    // for(let i in param) {
+    //   param[i] = encodeURI(param[i])
+    // }
     return new Promise((resolve, reject) => {
       http({ method: 'get', url: url, params: param, body: param })
         .then(result => {
@@ -37,6 +43,9 @@ const httpHandler = {
     })
   },
   post (url, param = {}) {
+    // for(let i in param) {
+    //   param[i] = encodeURI(param[i])
+    // }
     return new Promise((resolve, reject) => {
       http({ method: 'post', url: url, data: param })
         .then(({status, data}) => {
@@ -50,6 +59,9 @@ const httpHandler = {
     })
   },
   put (url, param = {}) {
+    // for(let i in param) {
+    //   param[i] = encodeURI(param[i])
+    // }
     return new Promise((resolve, reject) => {
       http({ method: 'put', url: url, data: param })
         .then(({status, data}) => {

@@ -160,4 +160,49 @@ $avatarList: (
       }
     }
   }
+
+
+  @include e(dialog) {
+    ::v-deep .el-dialog { 
+      width: 428px;
+      // height: 379px;
+      background: #2C3541;
+      border: 2px solid #99A9BD;
+      &__close {
+        color: $--color-black;
+        font-size: 20px;
+        font-weight: 800;
+        color: #99A9BD;
+      }
+
+      &__headerbtn {
+        z-index: 99;
+      }
+
+      &__body {
+        padding: 40px 50px 80px;
+        position: relative;
+        color: $--color-white;
+        h3 {
+          font-size: 30px;
+          line-height: 100%;
+          text-align: center;
+          font-family: OrbitronRegular;
+          margin-bottom: 40px;
+        }
+
+        .el-form-item {
+          margin-bottom: 40px;
+        }
+
+        .form_submit {
+          width: 100%;
+          height: 46px;
+          font-size: 16px;
+          font-family: OrbitronRegular;
+          display: block;
+        }
+      }
+    }
+  }
 }

@@ -17,12 +17,17 @@ const routes = (() => {
   const dev_type = process.env.VUE_APP_DEV_TYPE
   if (dev_type && dev_type == 'api_test') {
     routes_ = [{
+      path: '*',
+      name: '404',
+      // component: ()=>import('@/pages/404')
+      redirect: '/eins'
+    },{
       path: '/',
       component: ()=>import('@/components/template_2.vue'),
       redirect: '/eins',
       children: [{
         path: 'eins',
-        component: ()=>import('@/pages/test')
+        component: ()=>import('@/pages/api_test')
       }]
     }]
   } else {
@@ -72,6 +77,18 @@ const routes = (() => {
           name: 'cardList',
           component: ()=>import('@/pages/Market'),
         }]
+      },{
+        path: '/PersonalInfo',
+        name: 'personalInfo',
+        component: ()=>import('@/pages/Account/personalInfo'),
+      },{
+        path: 'ID_Card',
+        name: 'idcard',
+        component: ()=>import('@/pages/Account/idCard')
+      },{
+        path: '/ReceiveNFT',
+        name: 'receivenft',
+        component: ()=>import('@/pages/Account/receive')
       }]
     }]
   }

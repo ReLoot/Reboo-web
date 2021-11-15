@@ -14,25 +14,25 @@
           </li>
         </ul>
         </el-col>
+
         <el-col :lg="10" >
-        <div class="market--count">
-          <span>{{$t('market.balance')}}: </span>
-          <span class="num" :style="{color:'#D0E6EE'}">0.00 VBN</span>
-        </div>
+          <div class="market--count">
+            <span>{{$t('market.balance')}}: </span>
+            <span class="num" :style="{color:'#D0E6EE'}">{{balance}} VBN</span>
+          </div>
         </el-col>
       </el-row>
       <cus-divider dStyle="white" />
-
       <template v-if="curIdx == 0">
         <cus-store />
       </template>
       
       <template v-if="curIdx == 1">
-        <cus-list />
+        <box-list />
       </template>
       
       <template v-if="curIdx == 2">
-        <cus-list />
+        <card-list />
       </template>
 
 
@@ -42,12 +42,23 @@
 
 <script>
 import cusStore from './store'
-import cusList from './list'
+import boxList from './boxlist'
+import cardList from './cardlist'
+// import {landContractClass, buildingContractClass} from '@/utils/contractUtils'
+
+// const landCtr = new landContractClass()
+// const buildCtr = new buildingContractClass()
+import {mapGetters} from 'vuex'
 export default {
-  components: {cusStore, cusList},
+  computed: {
+      ...mapGetters('user', {
+          balance: 'balance'
+      }),
+  },
+  components: {cusStore, boxList, cardList},
   data(){
     return {
-      curIdx: 1,
+      curIdx: 0,
       tabs: [{
         txt: 'market.navTabItem1',
         type: 'market'
@@ -60,12 +71,19 @@ export default {
       }]
     }
   },
+  // async created() {
+  //   const balance = await landCtr.getVbnBalance()
+
+  //   landCtr.classifyItem()
+  //   buildCtr.classifyItem()
+  // },
   methods: {
     tabsTrigger(cur) {
       this.curIdx = cur
       this.$router.push({name: this.tabs[cur]['type']})
-    }
-  }
+    },
+  },
+  
 }
 </script>
 

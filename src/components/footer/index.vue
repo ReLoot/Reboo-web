@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="container">
-      <div class="footer--extr" v-if="curRoute !== 'market'">
+      <div class="footer--extr" v-if="extrVisible.indexOf(curRoute) !== -1">
         <cus-divider dStyle="green" />
         <div class="footer--extr_inner">
           <div class="item" >
@@ -33,6 +33,19 @@
             <el-dropdown-item command="zh" >中文简体</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+
+        <cus-btn-ein 
+          class="footer--email_btn"
+          :bg="`/image/footer_btn_subscribe.png`"
+          @click.native="subscr"
+        >
+          <!-- <span v-if="subscribe == 1">Unsubscribe</span> -->
+          <em v-if="subscribe == 1" class="unsubscribe"></em>
+          <em v-else class="subscribe"></em>
+          <span v-if="subscribe == 1" >{{$t('footer.unsubscribe')}}</span>
+          <span v-else >{{$t('footer.subscribe')}}</span>
+        </cus-btn-ein>
+        
       </div>
       <div class="footer--bottom">
         <el-row >
@@ -52,15 +65,23 @@
         </el-row>
       </div>
     </div>
+
+
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   computed: {
     locale(){
         return this.$i18n.locale == 'en' ? 'English' : '中文简体'
-    }
+    },
+    ...mapGetters('user', {
+        account: 'account',
+        email: 'email',
+        subscribe: 'subscribe'
+    }),
   },
   watch: {
     '$route':{
@@ -73,6 +94,7 @@ export default {
   data() {
     return {
       curRoute: '',
+      extrVisible: ['home', 'roadmap', 'token'],
       apps: [
         'https://twitter.com/Vibranium_VBN',
         'https://t.me/Vibranium_VBN',
@@ -85,7 +107,29 @@ export default {
   methods: {
     changeLang(lang) {
       this.$i18n.locale = lang
+      localStorage.setItem('lang', lang)
     },
+    subscr(){
+      if(this.email) {
+        const subscribe = this.subscribe==1?-1:1
+        console.log(subscribe)
+        this.$http('subscribe', {eth_address: this.account, subscribe: subscribe})
+          .then(res => {
+            let tip 
+
+            if (this.subscribe == 1) {
+              tip = 'footer.subscribeTip'
+            } else {
+              tip = 'footer.unsubscribeTip'
+            }
+            this.$store.commit('user/subscribe', subscribe)
+            this.$message({ type: 'success', message: this.$t(tip) })
+          })
+      } else {
+        this.$globalBus.$emit('EMAIL_DIALOG_VISIBLE')
+      }
+
+    }
   }
 }
 </script>
@@ -250,6 +294,29 @@ $extrInner: (
            cursor: pointer;
          }
        }
+    }
+  }
+
+  &--email_btn {
+    // width: 130px;
+    min-width: 130px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 31px;
+    margin-left: 15px;
+    em {
+      display: inline-block;
+      width: 12px;
+      height: 14px;
+      background: no-repeat center/cover;
+      vertical-align: middle;
+      margin-right: 5px;
+      &.subscribe {
+        background-image: url(/image/lab_subscribe.png);
+      }
+      &.unsubscribe {
+        background-image: url(/image/lab_unsubscribe.png);
+      }
     }
   }
 }

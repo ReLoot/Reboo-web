@@ -6,48 +6,19 @@
     </div>
 
     <div class="dataList--bd">
-      <template v-if="pageType == 'boxesList'">
-        <el-row class="dataList--bd_list" :gutter="20">
+
+        <el-row class="dataList--bd_list" :gutter="20" v-if="viewList.length > 0">
           <el-col 
-            v-for="(item, idx) in landBoxList"
-            :key="`land_list_${idx}`"
-            :md="6" :sm="8" :xs="12"
-          >
-            <div class="dataList--bd_card blinebox ">
-              <div class="inner">
-                <h4 class="title">{{item.name}}</h4>
-                <div class="element--wrap">
-                  <em 
-                    class="element--view" 
-                    :class="{
-                      'element--view_land': listType == 0,
-                      'element--view_building': listType == 1
-                    }"
-                  />
-                </div>
-                <cus-btn-ein
-                  class="card_btn"
-                  @click.native="boxOpen(item.bid)"
-                >OPEN</cus-btn-ein>
-              </div>
-            </div>
-          </el-col>
-
-        </el-row>
-      </template>
-
-
-      <template v-if="pageType == 'cardList'">
-        <el-row class="dataList--bd_list" :gutter="20">
-
-          <el-col 
-            v-for="(item, idx) in landBoxList"
+            v-for="(item, idx) in viewList"
             :key="`tool_list_${idx}`"
             :md="6" :sm="8" :xs="12"
           >
             <div class="dataList--bd_card toolCard">
               <div class="inner">
-                <h4 class="title">{{item.name}}</h4>
+                <h4 class="title">
+                  <span v-if="listType == 0">Landcard</span>
+                  <span v-else>Particle Detector</span>
+                </h4>
                 <div class="element--wrap">
                   <em 
                     class="element--view" 
@@ -59,34 +30,25 @@
                 </div>
                 <div class="info">
                   <div class="l-part">
-                    <img class="rank" src="/image/market/rank_1.png" />
-                    <p># L8804</p>
+                    <img v-if="item.rarity == 'S'" class="rank" src="/image/market/rank_1.png" />
+                    <img v-if="item.rarity == 'SS'" class="rank" src="/image/market/rank_2.png" />
+                    <img v-if="item.rarity == 'SSS'" class="rank" src="/image/market/rank_3.png" />
+                    <p># {{item.token_id}}</p>
                   </div> 
-                  <div class="r-part">
-                    <p class="item">
-                      <label>Sturdy</label>
-                      <span>15 %</span>
-                    </p>
-                    <p class="item">
-                      <label>Sturdy</label>
-                      <span>15 %</span>
-                    </p>
-                    <p class="item">
-                      <label>Sturdy</label>
-                      <span>15 %</span>
-                    </p>
-                    <p class="item">
-                      <label>Sturdy</label>
-                      <span>15 %</span>
-                    </p>
+                  <div class="r-part"  v-if="item.attributes">
+                    <template v-for="(attr, key) in item.attributes" >
+                      <p class="item" :key="`attr_${key}`">
+                        <label>{{key}}</label>
+                        <span>{{attr}} %</span>
+                      </p>
+                    </template>
                   </div>
                 </div>
               </div>
             </div>
           </el-col>
-
         </el-row>
-      </template>
+        <cus-no-data v-else />
 
     </div>
   </div>
@@ -94,58 +56,58 @@
 
 <script>
 import tabsMarket from '@/components/tabs/tabs_market'
+import {mapGetters} from 'vuex'
+
 export default {
+  computed: {
+    ...mapGetters('user', {
+      landCard: 'landCard',
+      buildingCard: 'buildingCard'
+    }),
+  },
   components: {
     tabsMarket,
   },
   watch:{
-    '$route'(n) {
-      this.pageType = n.name
-      this.listType = 0
+    landCard(n) {
+      if (n && this.listType == 0) 
+        this.viewList = n
+    },
+    buildingCard(n) {
+      if (n && this.listType == 1) 
+        this.viewList = n
     }
   },
-  // updated(){
-  //   console.log(444)
-  //   console.log(this.listType)
-  // },
   data(){
     return {
-      pageType: 'boxesList',    // boxesList \ cardList
       listType: 0,     // land 0 \ building 1
       tabs: [{
         type: 'domain',
-        view: 'market.boxType1',
+        view: 'market.cardType1',
       },{
         type: 'build',
-        view: 'market.boxType2'
+        view: 'market.cardType2'
       }],
-      landBoxList: [{
-        name: '领土宝箱',
-        bid: '123'
-      },{
-        name: '领土宝箱',
-        bid: '223'
-      },{
-        name: '领土宝箱',
-        bid: '333'
-      }],
-      toolBox:[{
-        name: '置地卡',
-        view: ''
-      },{
-        name: '置地卡',
-        view: ''
-      }]
+      viewList: []
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      if (this.listType == 0) 
+        this.viewList = this.landCard
+      else
+        this.viewList = this.buildingCard
+    })
   },
   methods: {
     tabsTrigger(cur) {
       this.listType = cur
+      if (cur == 0) {
+        this.viewList = this.landCard
+      } else {
+        this.viewList = this.buildingCard
+      }
     },
-    boxOpen(id) {
-      // console.log('a')
-      console.log(id)
-    }
   }
 }
 </script>
@@ -186,7 +148,8 @@ export default {
       }
       h4 {
         @include plcenter();
-        width: 150px;
+        white-space: nowrap;
+        width: 100%;
         height: 36px;
         line-height: 36px;
         top: 0;
@@ -209,33 +172,6 @@ export default {
     padding-bottom: 100%;
     width: 100%;
     background: no-repeat center/cover
-  }
-}
-
-@include b(blinebox) {
-  .inner {
-    background-image: url(/image/market/box_card_bg.png) 
-  }
-  @include b(element) {
-    @include e(view_land) {
-      background-image: url(/image/box_domain.png)
-    }
-    @include e(view_building) {
-      background-image: url(/image/box_build.png)
-    }
-  }
-  .card_btn {
-    width: 80%;
-    height: 44px;
-    line-height: 44px;
-    font-size: 24px;
-    position: absolute;
-    bottom: 22px;
-    left: 50%;
-    margin-left: -40%;
-    background-color: #2D8A92;
-    border: 2px solid #3DB5AE;
-    font-size: 18px;
   }
 }
 
@@ -282,12 +218,24 @@ export default {
     .r-part {
       width: 47.5%;
       font-size: 12px;
+      display: table;
       p {
-        @include displayFlex();
-        justify-content: space-between;
+        display: table-row;
+        // @include displayFlex();
+        // justify-content: space-between;
         width: 100%;
+        white-space: nowrap;
+        text-align: right;
       }
+      label {
+        display: table-cell;
+        padding: 4px 0 0px 4px;
+      }
+
       span {
+        padding: 4px 0 0px 4px;
+        display: table-cell;
+        margin-left: 5px;
         color: $--color-aqua;
       }
     }
