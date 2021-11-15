@@ -13,7 +13,7 @@
             <em :style="{backgroundImage: `url(/image/account/user_info_lab${key+1}.png)`}"></em>
             <div class="user--info_ctn" >
               <p class="name">{{item.view}}</p>
-              <p class="props" v-if="item.view == 'Wallet Address'">{{account || '--'}}</p>
+              <p class="props" v-if="item.view == 'Address'">{{account || '--'}}</p>
               <p class="props" v-else-if="item.view == 'Email'">{{email || '--'}}</p>
               <p class="props" v-else >{{item.val || '--'}}</p>
             </div>

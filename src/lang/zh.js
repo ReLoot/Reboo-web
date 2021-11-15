@@ -25,8 +25,8 @@ export default {
     },
     footer: {
         linkBlock: '更多游戏介绍和详情请查看白皮书',
-        subscribeTip: '您已成功订阅活动，活动通知将发送到您的邮箱',
-        unsubscribeTip: '你已成功取消订阅',
+        subscribeTip: '你已成功取消订阅',
+        unsubscribeTip: '您已成功订阅活动，活动通知将发送到您的邮箱',
         subscribe: '订阅邮箱',
         unsubscribe: '取消订阅',
 
