@@ -1,6 +1,5 @@
 <template>
   <div class="dataList">
-
     <div class="dataList--hd">
       <tabs-market :tabs="tabs" :tabIdx="listType" @trigger="tabsTrigger" />
     </div>
@@ -85,10 +84,13 @@ export default {
       if (n && this.listType == 0) 
         this.viewList = n
     },
-    buildingBox(n) {
-      if (n && this.listType == 1) 
-        this.viewList = n
-    }
+    buildingBox: {
+      immediate: true,
+      handler(n, o) {
+        if (n && this.listType == 1) 
+          this.viewList = n
+      },
+    },
   },
   data(){
     return {
@@ -127,58 +129,35 @@ export default {
       }
     },
     boxSelect(id) {
-      console.log(id)
       if(this.pageLoading) return false
       this.pageLoading = true
 
       this.gifURL = this.listType==0?'/image/market/box_land.gif':'/image/market/box_building.gif'
       this.curItemID = id
 
+      const contractObj = this.listType == 0 ? this.$landContract : this.$buildingContract
       // let id = this.curItemID
       this.pageLoading = true
-      if (this.listType == 0)
-        this.$landContract.openBox(id)
-          .then(res => {
-            this.boxDialogVisible = true
-            if (res.data.rarity == 'SS')
-              this.boxCardRank = 2
-            else if (res.data.rarity == 'SSS')
-              this.boxCardRank = 3
-            else
-              this.boxCardRank = 1
+      contractObj.openBox(id)
+        .then(res => {
+          this.boxDialogVisible = true
+          if (res.data.rarity == 'SS')
+            this.boxCardRank = 2
+          else if (res.data.rarity == 'SSS')
+            this.boxCardRank = 3
+          else
+            this.boxCardRank = 1
 
-            this.pageLoading = false
-            this.$landContract.classifyItem()
+          this.pageLoading = false
+          contractObj.classifyItem()
 
-          }).catch(err => {
-            this.pageLoading = false
-            this.$message({
-              message: err,
-              type: 'error'
-            })
+        }).catch(err => {
+          this.pageLoading = false
+          this.$message({
+            message: err,
+            type: 'error'
           })
-
-      if (this.listType == 1)
-        this.$buildingContract.openBox(id)
-          .then(res => {
-            this.boxDialogVisible = true
-            if (res.data.rarity == 'SS')
-              this.boxCardRank = 2
-            else if (res.data.rarity == 'SSS')
-              this.boxCardRank = 3
-            else
-              this.boxCardRank = 1
-
-            this.pageLoading = false
-            this.$buildingContract.classifyItem()
-
-          }).catch(err => {
-            this.pageLoading = false
-            this.$message({
-              message: err,
-              type: 'error'
-            })
-          })
+        })
     },
     boxDialogClose() {
       this.gifURL = ''

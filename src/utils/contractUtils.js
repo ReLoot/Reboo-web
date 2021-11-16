@@ -24,7 +24,6 @@ const getContract = async (abi, contract_address) => {
 }
 
 const sysToast = (err, type='error') => {
-  console.error(err)
   Message({
       message: JSON.stringify(err['message']||err),
       type: type
@@ -121,23 +120,30 @@ class contractConstruct {
     
     let boxList = [], cardList = []
     const allBox = await this.getAllList()
-    // console.log(allBox)
-    allBox.forEach(async item => {
-      // console.log(this.checkCardInfo)
-      // console.log(item)
+    allBox.forEach(async (item, idx) => {
       this.checkCardInfo(item)
         .then(res => {
           if (res && res.code == 0) {
             cardList.push(res.data)
-            storage.commit(this.store.cards, cardList)
+            // storage.commit(this.store.cards, cardList)
           }
-          
           if (res && res.code == -11) {
             boxList.push(item)
+            // storage.commit(this.store.boxes, boxList)
+          }
+          if(idx == allBox.length-1) {
+            storage.commit(this.store.cards, cardList)
             storage.commit(this.store.boxes, boxList)
           }
+          
+      }).catch(err => {
+        this.$message({
+          message: err,
+          type: 'error'
+        })
       })
     })
+
   }
 
   accountCheck() {
