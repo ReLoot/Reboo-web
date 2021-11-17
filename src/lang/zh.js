@@ -129,7 +129,7 @@ export default {
         tr1Cell2: '粒子探测器',
         tr2Cell1: '数量比',
         tr2Cell2: '数量比',
-        storePaying: '请等待',
+        storePaying: '未开放',
         storePay: '',
     },
     personal: {

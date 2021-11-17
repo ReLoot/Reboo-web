@@ -81,7 +81,8 @@ const routes = (() => {
         path: '/PersonalInfo',
         name: 'personalInfo',
         component: ()=>import('@/pages/Account/personalInfo'),
-      },{
+      },
+      /* {
         path: 'ID_Card',
         name: 'idcard',
         component: ()=>import('@/pages/Account/idCard')
@@ -89,7 +90,8 @@ const routes = (() => {
         path: '/ReceiveNFT',
         name: 'receivenft',
         component: ()=>import('@/pages/Account/receive')
-      }]
+      } */
+    ]
     }]
   }
   return routes_
