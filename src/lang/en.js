@@ -4,6 +4,7 @@ export default {
         price: 'price',
         quantity: 'quantity',
         total: 'total',
+        nopermission: 'No permission'
     },
     header: {
         btn: 'Connect Wallet',

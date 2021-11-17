@@ -4,6 +4,7 @@ export default {
         price: '价格',
         quantity: '数量',
         total: '总共',
+        nopermission: 'No Permission'
     },
     header: {
         btn: '链接钱包',
@@ -28,13 +29,12 @@ export default {
         subscribeTip: '你已成功取消订阅',
         unsubscribeTip: '您已成功订阅活动，活动通知将发送到您的邮箱',
         subscribe: '订阅邮箱',
-        unsubscribe: '取消订阅',
+        unsubscribe: '已订阅',
         subscrSuccess: {
             title: '订阅活动',
             sub: '您已成功订阅活动，活动通知将发送到您的邮箱',
             txt: '敬请留意!'
         }
-
     },
     home: {
         bannerTxt: '首款社交属性的元宇宙SLG类链游<br/>即将启程',

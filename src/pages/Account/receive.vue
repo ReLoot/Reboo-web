@@ -133,9 +133,8 @@ export default {
     async formSbumit(){
       if (Boolean(String(this.nickName)) && Boolean(this.gid)) return false
       this.$refs['registForm'].validate((valid) => {
-        console.log(valid)
         if (valid) {
-          alert('submit!');
+          return false
         } else {
           console.log('error submit!!');
           return false;

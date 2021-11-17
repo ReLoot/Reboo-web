@@ -108,12 +108,9 @@ export default {
     }
   },
   created() {
-    // this.$
-    // this.$globalBus.$emit('TRANSCATION_TAB', 'unwrap');
     this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
       this.bindEmailVisible = !this.bindEmailVisible
     })
-
   },
   mounted() {
     this.$nextTick(() => {
@@ -139,8 +136,7 @@ export default {
       })
     },
     bindEmail(){
-      const reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
-      if (!reg.test(this.formData.email)){
+      if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
         this.$message({
           message: this.$t('header.bindEmailIput'),
           type: 'error'
@@ -170,8 +166,7 @@ export default {
       })
     },
     getCode(){
-      const reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
-      if (!reg.test(this.formData.email)){
+      if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
         this.$message({
           message: this.$t('header.bindEmailIput'),
           type: 'error'

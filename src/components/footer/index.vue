@@ -41,8 +41,8 @@
           v-if="account"
         >
           <!-- <span v-if="subscribe == 1">Unsubscribe</span> -->
-          <em v-if="subscribe == 1" class="unsubscribe"></em>
-          <em v-else class="subscribe"></em>
+          <em  v-if="subscribe == 1" class="subscribe"></em>
+          <em v-else class="unsubscribe"></em>
           <span v-if="subscribe == 1" >{{$t('footer.unsubscribe')}}</span>
           <span v-else >{{$t('footer.subscribe')}}</span>
         </cus-btn-ein>
@@ -303,7 +303,7 @@ $extrInner: (
   }
 
   &--email_btn {
-    width: 140px;
+    width: 160px;
     padding-left: 10px;
     padding-right: 10px;
     height: 31px;
