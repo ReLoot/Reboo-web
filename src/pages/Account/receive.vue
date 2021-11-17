@@ -13,40 +13,35 @@
 
             <h4>Example Card</h4>
             <div class="user--card">
-              <div class="user--card_inner front">
-                <div class="card--item t_l">
+              <div class="user--card_inner front" >
+                <div class="card--item t_l" v-if="cardInfo.nickname" >
                   <label>Nick name</label>
-                  <p>{{formData.nickname}}</p>
+                  <p>{{cardInfo.nickname}}</p>
                 </div>
-                <div class="card--item t_r">
-                  <label>Time</label>
-                  <p>10/24</p>
-                </div>
-                <div class="card--item b_l">
+                <div class="card--item b_l" v-if="cardInfo.game_no" >
                   <label>Game ID</label>
-                  <p>{{formData.gid}}</p>
+                  <p>{{cardInfo.game_no}}</p>
                 </div>
-                <div class="card--item b_r">
+                <div class="card--item b_r" v-if="cardInfo.card_no" >
                   <label>Card Number</label>
-                  <p>123123545641521423</p>
+                  <p>{{cardInfo.card_no}}</p>
                 </div>
               </div>
             </div>
           </el-col>
 
           <el-col :md="10">
-            <el-form > 
-              <el-form-item label="Nick Name">
-                <el-input v-model="formData.nickname"/>
+            <el-form ref="registForm" :model="formData" > 
+              <el-form-item label="Nick Name" prop="nickname" required>
+                <el-input v-model="formData.nickname" :disabled="Boolean(nickName)" />
               </el-form-item>
-              <el-form-item label="Game ID">
-                <el-input v-model="formData.gid">
+              <el-form-item label="Game ID" prop="gid" required>
+                <el-input v-model="formData.gid" disabled >
                   <template slot="append">
-                    GET GID
+                    <a @click="getGameID">GET GID</a>
                    </template>
                 </el-input>
               </el-form-item>
-                <!-- @click.native="walletConnect" -->
               
               <cus-btn-ein 
                 @click.native="formSbumit"
@@ -58,35 +53,97 @@
         </el-row>
       </div>
 
-      <cus-divider dStyle="white" />
+      <cus-divider-ein dStyle="white" />
 
     </div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
+  computed: {
+    ...mapGetters('user', {
+      account: 'account',
+      gid: 'gid',
+      nft: 'nft',
+      nickName: 'nickName'
+    }),
+  },
   data(){
     return {
+      cardInfo: {
+        nickname: '',
+        game_no: '',
+        card_no: '',
+      },
       formData: {
         nickname: '',
-        gid: '10001'
+        gid: '',
+      },
+      rules: {
+          nickname: [
+              {required: true, trigger:'change'},
+          ],
       }
     }
   },
-  methods: {
-    formSbumit(){
-      this.$store.commit('user/nickName', this.formData.nickname)
-      this.$store.commit('user/gid', this.formData.gid)
-      this.$store.commit('user/enableRecived', false)
-      // this.$message({})
-      this.$message({
-        message: 'Subscribe Successed!',
-        type: 'success'
-      })
-      this.$router.replace({name: 'idcard'})
+  watch: {
+    gid(n) {
+      this.formData.gid = this.gid
+    },
+    formData: {
+      immediate: true,
+      handler(n) {
+        this.cardInfo.nickname = n.nickname
+        this.cardInfo.game_no = n.gid
+      },
+      deep: true
+    },
+    nft: {
+      immediate: true,
+      deep: true,
+      handler(n) {
+        this.cardInfo.game_no = n.game_no
+        this.cardInfo.card_no = n.card_no
+      }
+    },
+    nickName (n){
+      this.formData.nickname = n 
     }
-  }
+  },
+  created() {
+    this.formData.gid = this.gid
+    this.formData.nickname = this.nickName
+  },
+  methods: {
+    getGameID() {
+      if (this.gid) return false
+      let vaild = this.$refs['registForm'].validateField('nickname', async err => {
+        if(!err) {
+          let res = await this.$http('get_game_id', {
+            name: this.formData.nickname,
+            eth_address: this.account
+          })
+          console.log(res)
+        }
+      })
+    },
+    async formSbumit(){
+      if (Boolean(String(this.nickName)) && Boolean(this.gid)) return false
+      this.$refs['registForm'].validate((valid) => {
+        console.log(valid)
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+
+    }
+  },
 }
 </script>
 
@@ -133,6 +190,7 @@ $navHeight: (
       font-size: 18px;
       font-family: OrbitronRegular;
       margin-top: 30px;
+      text-align: center;
     }
   }
 

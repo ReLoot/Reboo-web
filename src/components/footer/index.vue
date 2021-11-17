@@ -2,7 +2,7 @@
   <div class="footer">
     <div class="container">
       <div class="footer--extr" v-if="extrVisible.indexOf(curRoute) !== -1">
-        <cus-divider dStyle="green" />
+        <cus-divider-ein dStyle="green" />
         <div class="footer--extr_inner">
           <div class="item" >
             <p>{{$t('footer.linkBlock')}}</p>
@@ -11,7 +11,7 @@
             <a href="https://docs.vibraniumslg.io/" >https://docs.vibraniumslg.io/</a>
           </div>
         </div>
-        <cus-divider dStyle="green" />
+        <cus-divider-ein dStyle="green" />
       </div>
 
       <div class="footer--top">
@@ -68,6 +68,22 @@
     </div>
 
 
+    <el-dialog
+      class="subsrcibe--success"
+      :visible.sync="subscribeSuccessVisible"
+      :append-to-body="true"
+      top="25vh"
+    >
+      <div class="inner">
+        <em class="subsrcibe--success_lab"></em>
+        <h4>{{$t('footer.subscrSuccess.title')}}</h4>
+        <p class="subsrcibe--success_sub">{{$t('footer.subscrSuccess.sub')}}</p>
+        <p class="subsrcibe--success_email">{{email}}</p>
+        <p class="subsrcibe--success_txt">{{$t('footer.subscrSuccess.txt')}}</p>
+      </div>
+    </el-dialog>
+
+
   </div>
 </template>
 
@@ -96,6 +112,7 @@ export default {
     return {
       curRoute: '',
       extrVisible: ['home', 'roadmap', 'token'],
+      subscribeSuccessVisible: false,
       apps: [
         'https://twitter.com/Vibranium_VBN',
         'https://t.me/Vibranium_VBN',
@@ -113,18 +130,16 @@ export default {
     subscr(){
       if(this.email) {
         const subscribe = this.subscribe==1?-1:1
-        console.log(subscribe)
         this.$http('subscribe', {eth_address: this.account, subscribe: subscribe})
           .then(res => {
-            let tip 
-
-            if (this.subscribe == 1) {
-              tip = 'footer.subscribeTip'
+            // let tip 
+            if (this.subscribe != 1) {
+              this.subscribeSuccessVisible = true
             } else {
-              tip = 'footer.unsubscribeTip'
+              let tip = 'footer.unsubscribeTip'
+              this.$message({ type: 'success', message: this.$t(tip) })
             }
             this.$store.commit('user/subscribe', subscribe)
-            this.$message({ type: 'success', message: this.$t(tip) })
           })
       } else {
         this.$globalBus.$emit('EMAIL_DIALOG_VISIBLE')
@@ -177,12 +192,6 @@ $extrInner: (
   $--page-lg-width: (width:40px, height:40px, marginRight: 20px),
 );
 
-/* $local: (
-  $--page-xs-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
-  $--page-sm-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
-  $--page-md-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
-  $--page-lg-width: (width:120px, height:31px, lineHeight: 31px, fontsize:14px),
-); */
 
 @include b(footer) {
   color: $--color-white-07;
@@ -190,15 +199,12 @@ $extrInner: (
 
   @include e(top) {
     @include displayFlex();
-    // width: 90%; 
     margin-left: auto;
     margin-right: auto;
     align-items: flex-end;
 
     @include m(logo) {
       @include mediaAdapt($logoList);
-      // width: 260px;
-      // height: 56px;
       position: relative;
       a {
         position: absolute;
@@ -226,7 +232,6 @@ $extrInner: (
     }
     
     @include m(localeBtn) {
-      // @include mediaAdapt($local);
       display: inline-block;
       text-align: center;
       background-color: $--color-white-01;
@@ -242,7 +247,6 @@ $extrInner: (
   }
 
   @include e(bottom) {
-    // width: 90%;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
@@ -299,8 +303,7 @@ $extrInner: (
   }
 
   &--email_btn {
-    // width: 130px;
-    min-width: 130px;
+    width: 140px;
     padding-left: 10px;
     padding-right: 10px;
     height: 31px;
@@ -320,5 +323,67 @@ $extrInner: (
       }
     }
   }
+
+
 }
+
+@include b(subsrcibe) {
+  @include e(success) {
+    ::v-deep .el-dialog {
+      width: 377px;
+      max-width: 90%;
+      position: relative;
+      &__header { display: none; }
+
+      &__body {
+        padding: 0;
+      }
+    }
+
+    .inner {
+      position: relative;
+      padding: 25px 40px;
+      background-color: #4B5056;
+      border: 2px solid #99A9BD;
+      color: $--color-white;
+      text-align: center;
+      font-family: OrbitronRegular;
+    }
+    @include m(lab) {
+      width: 40px;
+      height: 40px;
+      display: block;
+      margin: 0 auto 20px;
+      background: url(/image/label_subscribe_success.png) no-repeat center/cover;
+    }
+
+    h4 {
+      font-size: 20px;
+      white-space: nowrap;
+      font-family: OrbitronBlack;
+      margin-bottom: 8px;
+    }
+
+    @include m(sub) {
+      font-family: OrbitronRegular;
+      line-height: 125%;
+      font-size: 12px;
+      color: $--color-white-07;
+      margin-bottom: 10px;
+      word-break: break-word;
+    }
+
+    @include m(email) {
+      font-size: 18px;
+      color: #FFC43A;
+    }
+
+    @include m(txt) {
+      font-size: 12px;
+      color: $--color-white-07;
+    }
+
+  }
+}
+
 </style>

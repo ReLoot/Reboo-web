@@ -10,7 +10,7 @@
       <div class="roadMap--tb_wrap">
         <!-- thead -->
         <div class="roadMap--thead">
-          <cus-divider dStyle="blue" />
+          <cus-divider-ein dStyle="blue" />
           <el-row class="roadMap--thead_row">
             <el-col 
               class="roadMap--thead_cell"
@@ -22,7 +22,7 @@
               {{$t(item)}}
             </el-col>
           </el-row>
-          <cus-divider dStyle="blue" />
+          <cus-divider-ein dStyle="blue" />
         </div>
         <!-- tbody -->
         <div class="roadMap--tbody">
@@ -55,7 +55,7 @@
                   </div>
                 </el-col>
               </el-row>
-              <cus-divider dStyle="blue" />
+              <cus-divider-ein dStyle="blue" />
             </div>
           </template>
         </div>

@@ -8,7 +8,9 @@ export default {
     "nickName": localStorage.getItem('nickName') || null,
     "subscribe": localStorage.getItem('subscribe') || 0,
     "enableRecived": localStorage.getItem('enableRecived') || true,
+    "nft": '',
     "balance": 0,
+    "balance_ntf": 0,
     "landBox": [],
     "buildingBox": [],
     "landCard": [],
@@ -21,7 +23,9 @@ export default {
     subscribe: state => state.subscribe || localStorage.getItem('subscribe'),
     nickName: state => state.nickName || localStorage.getItem('nickName'),
     enableRecived: state => state.enableRecived,
+    nft: state => state.nft,
     balance: state => state.balance,
+    balance_ntf: state => state.balance_ntf,
     landBox: state => state.landBox,
     buildingBox: state => state.buildingBox,
     landCard: state => state.landCard,
@@ -52,8 +56,15 @@ export default {
       localStorage.setItem('enableRecived', sta)
       Vue.set(state, 'enableRecived', sta)
     },
+    nft(state, obj) {
+      // Vue.set(state, 'nft', obj)
+      state.nft = {...obj}
+    },
     balance(state, num) {
       Vue.set(state, 'balance', parseFloat(num))
+    },
+    balance_ntf(state, num) {
+      Vue.set(state, 'balance_ntf', parseFloat(num))
     },
     landBox(state, arr) {
       Vue.set(state, 'landBox', arr)
@@ -70,15 +81,16 @@ export default {
   },
   actions: {
     cleanAccount({commit}){
-      let account_ = ''
-      localStorage.removeItem('account')
-      localStorage.removeItem('email')
-      localStorage.removeItem('gid')
-      localStorage.removeItem('nickName')
-      commit('account', account_)
-      commit('email', account_)
-      commit('subscribe', 0)
-      commit('gid', 0)
+      localStorage.clear()
+      // let account_ = ''
+      // localStorage.removeItem('account')
+      // localStorage.removeItem('email')
+      // localStorage.removeItem('gid')
+      // localStorage.removeItem('nickName')
+      // commit('account', account_)
+      // commit('email', account_)
+      // commit('subscribe', 0)
+      // commit('gid', 0)
     }
   }
 }

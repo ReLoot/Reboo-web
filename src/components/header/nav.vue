@@ -28,27 +28,12 @@
         <el-dropdown-menu slot="dropdown">
           <!-- <el-dropdown-item command="show_wallet" >{{$t('header.dropItem1')}}</el-dropdown-item> -->
           <el-dropdown-item command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
-          <!-- <el-dropdown-item command="toReceiveNFN" v-if="enableRecived && email">Receive NFT</el-dropdown-item>
-          <el-dropdown-item command="toIDCard" v-if="!enableRecived" >MY ID CARD</el-dropdown-item> -->
+          <el-dropdown-item command="toReceiveNFN" v-if="enableRecived && email">Receive NFT</el-dropdown-item>
+          <el-dropdown-item command="toIDCard" v-if="!enableRecived" >MY ID CARD</el-dropdown-item>
           <el-dropdown-item command="logout" >{{$t('header.dropItem4')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-
-    <!-- <el-dialog
-      class="account--infocard"
-      :visible.sync="dialogVisible"
-      :append-to-body="true"
-      top="25vh"
-    >
-      <h3>{{$t('header.dialogTitle1')}}</h3>
-      <em class="box"></em>
-      <div class="address">
-        <h4>{{$t('header.dialogTitle2')}}</h4>
-        <div class="view">{{account}}</div>
-      </div>
-    </el-dialog> -->
-
 
     <el-dialog
       class="account--dialog"

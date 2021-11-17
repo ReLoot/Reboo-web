@@ -3,11 +3,6 @@ import ElementUI from 'element-ui'
 import App from './App.vue'
 import router from '@/router'
 
-// template
-import cusBtnEin from '@/components/button/btn_style_ein'
-import cusDivider from '@/components/divider/divider_ein'
-import cusNoData from '@/components/warning/tmp_nodata_1'
-
 import store from '@/store'
 import {metaMaskUtils} from '@/utils/metaMaskUtil'
 import {landContractClass, buildingContractClass} from '@/utils/contractUtils'
@@ -21,17 +16,14 @@ import '@/style/rewrite.scss'
 import '@/assets/style/font-awesome.min.css';
 import '@/assets/style/font-orbitron.css';
 
-Vue.use(ElementUI)
+import '@/utils/publicComponents'
 
-Vue.component('cusBtnEin', cusBtnEin)
-Vue.component('cusDivider', cusDivider)
-Vue.component('cusNoData', cusNoData)
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
 Vue.prototype.$http = cus_http
 Vue.prototype.$mu = new metaMaskUtils()
-
 
 Vue.prototype.$landContract = new landContractClass()
 Vue.prototype.$buildingContract = new buildingContractClass()

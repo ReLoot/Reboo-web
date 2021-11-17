@@ -31,7 +31,7 @@ const sysToast = (err, type='error') => {
 }
 
 
-class contractConstruct {
+class cardContractConstruct {
   constructor(options) {
     if (options)
       Object.assign(this, options)
@@ -64,30 +64,30 @@ class contractConstruct {
     }
   }
 
-  async payForOne() {
-    const accoutn_ = this.accountCheck()
-    if (!accoutn_) return false
-  }
-
   async payForBox(amount) {
     const account_ = this.accountCheck()
     if (!account_) return false
 
-    const vbn_require_amount = 2
+    const vbn_require_amount = 1
     const {balanceFormart} = await this.getVbnBalance()
     const vbnContract = await this.getVbnContractOption()
     const mainContract = await this.mainContractOption()
     
-    amount = amount < 2?2:parseInt(amount)
-    
+    // amount = amount < 2?2:parseInt(amount)
     if (balanceFormart <= vbn_require_amount*amount) {
       sysToast('No enough balance for pay')
       return false
     }
+
     try {
       await vbnContract.methods.approve(this.mainContractAddress, new BN(String(vbn_require_amount*amount*Math.pow(10, 18)))).send({from: account_})
-      await mainContract.methods.mintMulti(account_, amount).send({from: account_})
-      sysToast('Buy successed !', 'success')
+      if (amount <= 1) {
+        await mainContract.methods.mint(account_).send({from: account_})
+      } else {
+        await mainContract.methods.mintMulti(account_, amount).send({from: account_})
+      }
+
+      sysToast('Buy successed!', 'success')
     } catch (err) {
       sysToast(err)
     }
@@ -98,7 +98,9 @@ class contractConstruct {
     if (!account_) return false
 
     const mainContract = await this.mainContractOption()
-    const list = await mainContract.methods.getOwnerTokenIDs(account_, 0, 10000).call()
+    const nft_balance = await mainContract.methods.balanceOf(account_).call()
+    // console.log("nft_balance:", nft_balance)
+    const list = await mainContract.methods.getOwnerTokenIDs(account_, 0, nft_balance).call()
     return list
   }
 
@@ -159,7 +161,7 @@ class contractConstruct {
 }
 
 /* 领土宝箱 | 置地卡 */
-export class landContractClass extends contractConstruct{
+export class landContractClass extends cardContractConstruct{
   constructor() {
     const landContractOption = async () => await getContract(ml_abi, land_contract_address)
     super({
@@ -176,7 +178,7 @@ export class landContractClass extends contractConstruct{
 }
 
 /* 建筑宝箱 | 粒子探测器 */
-export class buildingContractClass extends contractConstruct{
+export class buildingContractClass extends cardContractConstruct{
   constructor() {
     const buildingContractOption = async () => await getContract(ml_abi, building_contract_address)
     super({
@@ -189,5 +191,12 @@ export class buildingContractClass extends contractConstruct{
         cards: 'user/buildingCard'
       }
     })
+  }
+}
+
+/* 获取NFT */
+export class receiveNFT extends cardContractConstruct {
+  constructor() {
+    return false
   }
 }

@@ -49,6 +49,9 @@ export default {
             // res.data
             this.$store.commit('user/email', res.data.email)
             this.$store.commit('user/subscribe', res.data.subscribe)
+            this.$store.commit('user/gid', res.data.game_no)
+            this.$store.commit('user/nft', res.data.nft)
+            this.$store.commit('user/nickName', res.data.name)
           }
         }).catch(err => {
           // console.log(err)

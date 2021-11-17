@@ -108,6 +108,7 @@ $containerList: (
     border-radius: 0;
     font-family: OrbitronRegular;
     letter-spacing: 1px;
+    font-size: 12px;
   }
 
   &-group__append, &-group__prepend {
@@ -118,5 +119,27 @@ $containerList: (
     -webkit-user-select: none;
     user-select: none;
     border-radius: 0;
+    .el-input__inner {
+      border-right: 0;
+    }
+
+    a {
+      cursor: pointer;
+      transition: all 0.25s;
+      display: block;
+      &:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &.is-disabled {
+    .el-input__inner {
+      border-color: rgba(208, 230, 238, 0.3);
+      background-color: rgba(50, 74, 104, 0.3);
+      color: rgba(208, 230, 238, 0.7);
+      cursor: default;
+    }
   }
 }

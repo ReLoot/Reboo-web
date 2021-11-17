@@ -29,6 +29,11 @@ export default {
         unsubscribeTip: '您已成功订阅活动，活动通知将发送到您的邮箱',
         subscribe: '订阅邮箱',
         unsubscribe: '取消订阅',
+        subscrSuccess: {
+            title: '订阅活动',
+            sub: '您已成功订阅活动，活动通知将发送到您的邮箱',
+            txt: '敬请留意!'
+        }
 
     },
     home: {

@@ -31,6 +31,11 @@ export default {
         unsubscribeTip: 'You have unsubscribed from notifications',
         subscribe: 'Subscribe',
         unsubscribe: 'Unsubscribe',
+        subscrSuccess: {
+            title: 'Subscribe to events',
+            sub: 'You have successfully subscribed to the event, and event notifications will be sent to your email',
+            txt: 'Please pay attention!'
+        }
     },
     home: {
         bannerTxt: 'From Here<br/>To The Sea Of Stars',

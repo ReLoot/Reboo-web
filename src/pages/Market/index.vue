@@ -22,7 +22,7 @@
           </div>
         </el-col>
       </el-row>
-      <cus-divider dStyle="white" />
+      <cus-divider-ein dStyle="white" />
       <template v-if="curIdx == 0">
         <cus-store />
       </template>

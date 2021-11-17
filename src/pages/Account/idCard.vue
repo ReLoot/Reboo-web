@@ -3,7 +3,7 @@
     <div class="container">
       <div class="user--hd">
         <h2>Personal Information</h2>
-        <cus-divider dStyle="white" />
+        <cus-divider-ein dStyle="white" />
       </div>
 
        <el-row :gutter="30" class="user--cardwrap">
@@ -48,7 +48,7 @@
          </el-col>
        </el-row>
 
-      <cus-divider dStyle="white" />
+      <cus-divider-ein dStyle="white" />
        
     </div>
   </div>

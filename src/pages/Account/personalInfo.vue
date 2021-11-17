@@ -3,7 +3,7 @@
     <div class="container">
       <div class="user--hd">
         <h2>{{$t('personal.hd')}}</h2>
-        <cus-divider dStyle="white" />
+        <cus-divider-ein dStyle="white" />
       </div>
       <div class="user--bd">
         <a class="avatar"><img src="/image/avatar.png" /></a>
@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <cus-divider dStyle="white" />
+      <cus-divider-ein dStyle="white" />
 
     </div>
   </div>

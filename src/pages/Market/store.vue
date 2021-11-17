@@ -71,7 +71,7 @@
         </el-col>
       </el-row>
 
-      <cus-divider dStyle="white" />
+      <cus-divider-ein dStyle="white" />
       <div class="store--pay">
         <div class="store--pay_preview">
           <span>{{$t('common.total')}}: </span>
@@ -87,7 +87,7 @@
           <span v-if="pageLoading" class="pause">{{$t('market.storePaying')}}</span>
         </div>
       </div>
-      <cus-divider dStyle="white" style="margin-bottom: 40px" />
+      <cus-divider-ein dStyle="white" style="margin-bottom: 40px" />
     </div>
   </div>
 </template>
@@ -121,8 +121,8 @@ export default {
       rankList: [['market.tr1Cell1','market.tr1Cell2'], 'S', 'SS', 'SSS'],
       processList: [['market.tr2Cell1', 'market.tr2Cell2'], [50, 60], [35, 30], [15, 10]],
       price: 1,
-      num: 2,
-      min: 2,
+      num: 1,
+      min: 1,
       max: 10,
     }
   },

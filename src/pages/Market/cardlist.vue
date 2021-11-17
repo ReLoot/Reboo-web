@@ -48,7 +48,7 @@
             </div>
           </el-col>
         </el-row>
-        <cus-no-data v-else />
+        <cus-nodata v-else />
 
     </div>
   </div>
