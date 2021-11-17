@@ -26,10 +26,9 @@
       <el-dropdown v-if="account" class="header--append_account" @command="accountHandler" placement="top" trigger="click">
         <a class="header--append_avatar"></a>
         <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item command="show_wallet" >{{$t('header.dropItem1')}}</el-dropdown-item> -->
           <el-dropdown-item command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
-          <el-dropdown-item command="toReceiveNFN" v-if="enableRecived && email">Receive NFT</el-dropdown-item>
-          <el-dropdown-item command="toIDCard" v-if="!enableRecived" >MY ID CARD</el-dropdown-item>
+          <!-- <el-dropdown-item command="toReceiveNFN" v-if="enableRecived && email">Receive NFT</el-dropdown-item>
+          <el-dropdown-item command="toIDCard" v-if="!enableRecived" >MY ID CARD</el-dropdown-item> -->
           <el-dropdown-item command="logout" >{{$t('header.dropItem4')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
