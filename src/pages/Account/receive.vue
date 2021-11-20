@@ -61,7 +61,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-
+import {nftContract} from '@/utils/contract_nft'
 export default {
   computed: {
     ...mapGetters('user', {
@@ -70,6 +70,9 @@ export default {
       nft: 'nft',
       nickName: 'nickName'
     }),
+    ...mapGetters('common', {
+      loadingWarden: 'loadingWarden'
+    })
   },
   data(){
     return {
@@ -119,26 +122,29 @@ export default {
   },
   methods: {
     getGameID() {
-      if (this.gid) return false
+      // if (this.gid && this.gid != 0) return false
+      const request_name = 'get_game_id'
+      if(this.loadingWarden.indexOf(request_name) > -1) return false
       let vaild = this.$refs['registForm'].validateField('nickname', async err => {
-        if(!err) {
-          let res = await this.$http('get_game_id', {
+        if(err) return false
+        try {
+          let res = await this.$http(request_name, {
             name: this.formData.nickname,
             eth_address: this.account
           })
-          console.log(res)
+        } catch (err) {
+          this.$message({message: err.response.data.msg||err, type: 'error'})
         }
       })
     },
     async formSbumit(){
-      if (Boolean(String(this.nickName)) && Boolean(this.gid)) return false
-      this.$refs['registForm'].validate((valid) => {
-        if (valid) {
-          return false
-        } else {
-          console.log('error submit!!');
+      if (!this.nickName || !this.gid || this.gid == 0) return false
+      this.$refs['registForm'].validate(async valid => {
+        if (!valid) {
+          console.log('Please finish personal infomation!');
           return false;
         }
+        this.$nftContract.claim()
       });
 
     }

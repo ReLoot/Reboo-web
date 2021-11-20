@@ -134,7 +134,6 @@ export default {
       this.num = this.min
     },
     async pay() {
-      console.log(this.account)
       if(!this.account) {
         this.$message({
           message: this.$t('common.nopermission'),

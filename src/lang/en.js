@@ -4,7 +4,13 @@ export default {
         price: 'price',
         quantity: 'quantity',
         total: 'total',
-        nopermission: 'No permission'
+        nopermission: 'No permission',
+        countDown: {
+            day: 'd',
+            hour: 'h',
+            min: 'm',
+            sec: 's',
+        }
     },
     header: {
         btn: 'Connect Wallet',
@@ -151,5 +157,31 @@ export default {
     personal: {
         hd: 'Personal Information',
         bindBtn: 'BIND',
+    },
+    ido: {
+        hd: '',
+        sub: 'Vibranium has announced an upcoming IDO, more details will be announced soon, stay tuned!',
+        tbLab1: 'Token price',
+        tbLab2: 'Pre-sale start time(UTC)',
+        tbLab3: 'Pre-sale end time(UTC)',
+        tbLab4: 'Token Distribution',
+        tbLab5: 'Market value',
+        tbLab6: 'Token circulation',
+        tbVal: 'To be determined',
+        item0: 'IDO Total Amount',
+        item1: 'Individual quota',
+        item2: 'Token price',
+        item3: 'IDO Date',
+        item4: 'IDO Countdown',
+        item5: 'Received VNB',
+        item6: 'Schedule',
+        btn1: 'BUY NOW',
+        btn2: 'Finished',
+        // aa: '-',
+        // aa: '-',
+        // aa: '-',
+        // aa: '-',
+        // aa: '-',
+        // aa: '-',
     }
 }

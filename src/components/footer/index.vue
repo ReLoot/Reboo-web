@@ -199,6 +199,7 @@ $extrInner: (
 
   @include e(top) {
     @include displayFlex();
+    flex-wrap: nowrap;
     margin-left: auto;
     margin-right: auto;
     align-items: flex-end;

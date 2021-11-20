@@ -44,10 +44,7 @@
 import cusStore from './store'
 import boxList from './boxlist'
 import cardList from './cardlist'
-// import {landContractClass, buildingContractClass} from '@/utils/contractUtils'
 
-// const landCtr = new landContractClass()
-// const buildCtr = new buildingContractClass()
 import {mapGetters} from 'vuex'
 export default {
   computed: {
@@ -71,12 +68,6 @@ export default {
       }]
     }
   },
-  // async created() {
-  //   const balance = await landCtr.getVbnBalance()
-
-  //   landCtr.classifyItem()
-  //   buildCtr.classifyItem()
-  // },
   methods: {
     tabsTrigger(cur) {
       this.curIdx = cur

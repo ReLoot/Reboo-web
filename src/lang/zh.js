@@ -4,7 +4,13 @@ export default {
         price: '价格',
         quantity: '数量',
         total: '总共',
-        nopermission: 'No Permission'
+        nopermission: 'No Permission',
+        countDown: {
+            day: '天',
+            hour: '时',
+            min: '分',
+            sec: '秒',
+        }
     },
     header: {
         btn: '链接钱包',
@@ -135,5 +141,28 @@ export default {
     personal: {
         hd: '个人信息',
         bindBtn: '绑定',
+    },
+    ido: {
+        hd:'',
+        sub: 'VBN已宣布IDO，更多细节即将推送，请关注！',
+        tbLab1: '代币价格',
+        tbLab2: '预售开始时间(UTC)',
+        tbLab3: '预售结束时间(UTC)',
+        tbLab4: '代币分配',
+        tbLab5: '初始市值',
+        tbLab6: '初始代币流通',
+        tbVal: '待定',
+        item0: 'IDO 总量',
+        item1: '个人可分配额度',
+        item2: '代币价格',
+        item3: 'IDO 日期',
+        item4: 'IDO 倒计时',
+        item5: '收到的 VNB',
+        item6: '进度',
+        btn1: '立即购买',
+        btn2: '已结束',
+        // aa: '-',
+        // aa: '-',
+        // aa: '-',
     }
 }

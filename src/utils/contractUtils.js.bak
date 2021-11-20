@@ -1,5 +1,5 @@
 import detectEthereumProvider from "@metamask/detect-provider"
-import storage from '@/store/index'
+import store from '@/store/index'
 import {Message} from 'element-ui'
 import $http from '@/utils/http'
 
@@ -15,7 +15,7 @@ const land_contract_address = process.env.VUE_APP_LAND_CONTRACT
 
 const BN =  new Web3().utils.BN
 
-// const account_ = storage.getters["user/account"]
+// const account_ = store.getters["user/account"]
 
 const getContract = async (abi, contract_address) => {
   const provider = await detectEthereumProvider()
@@ -56,7 +56,7 @@ class cardContractConstruct {
     const unit = Math.pow(10, 9)
     const balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
     
-    storage.commit('user/balance', balance_)
+    store.commit('user/balance', balance_)
     
     return {
       balance,
@@ -127,15 +127,15 @@ class cardContractConstruct {
         .then(res => {
           if (res && res.code == 0) {
             cardList.push(res.data)
-            // storage.commit(this.store.cards, cardList)
+            // store.commit(this.store.cards, cardList)
           }
           if (res && res.code == -11) {
             boxList.push(item)
-            // storage.commit(this.store.boxes, boxList)
+            // store.commit(this.store.boxes, boxList)
           }
           if(idx == allBox.length-1) {
-            storage.commit(this.store.cards, cardList)
-            storage.commit(this.store.boxes, boxList)
+            store.commit(this.store.cards, cardList)
+            store.commit(this.store.boxes, boxList)
           }
           
       }).catch(err => {
@@ -149,7 +149,7 @@ class cardContractConstruct {
   }
 
   accountCheck() {
-    const account_ = storage.getters["user/account"]
+    const account_ = store.getters["user/account"]
     if(!account_) {
       // sysToast('Please Connect Metamaks Wallet')
       return false

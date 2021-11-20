@@ -1,10 +1,11 @@
-export const mergeArray = (arr1, arr2) => {
+export const mergeArray = (arr1, arr2, repeat=false) => {
   let arr = arr1.concat(arr2)
   return Array.from(new Set(arr))
 }
 
-export const removeArrTarget = (tagArr, arr2) => {
-  tagArr = tagArr.filter(item => (arr2.indexOf(item) == -1))
+export const removeArrTarget = (tagArr, str) => {
+  // tagArr = tagArr.filter(item => (tagArr.indexOf(str) > -1))
+  tagArr = tagArr.filter(item => (item == str))
   return tagArr
 }
 

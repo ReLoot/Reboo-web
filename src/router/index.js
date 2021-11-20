@@ -78,17 +78,24 @@ const routes = (() => {
           component: ()=>import('@/pages/Market'),
         }]
       },{
-        path: '/PersonalInfo',
+        path: '/personalInfo',
         name: 'personalInfo',
         component: ()=>import('@/pages/Account/personalInfo'),
       },{
-        path: 'ID_Card',
+        path: '/idCard',
         name: 'idcard',
         component: ()=>import('@/pages/Account/idCard')
       },{
-        path: '/ReceiveNFT',
+        path: '/receiveNFT',
         name: 'receivenft',
         component: ()=>import('@/pages/Account/receive')
+      },{
+        path: 'ido',
+        name: 'ido',
+        component: ()=>import('@/pages/IDO'),
+        meta: {
+          view: 'IDO'
+        }
       }]
     }]
   }

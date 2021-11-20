@@ -2,6 +2,7 @@ import Vue from 'vue'
 export default {
   namespaced: true,
   state: {
+    "userInfo": localStorage.getItem('USERINFO') || {},
     "account": localStorage.getItem('account') || '',
     "email": localStorage.getItem('email') || '',
     "gid": localStorage.getItem('gid') || null,
@@ -9,6 +10,7 @@ export default {
     "subscribe": localStorage.getItem('subscribe') || 0,
     "enableRecived": localStorage.getItem('enableRecived') || true,
     "nft": '',
+    "nft_benefit": 0,       // 0为没有权限领取
     "balance": 0,
     "balance_ntf": 0,
     "landBox": [],
@@ -17,6 +19,7 @@ export default {
     "buildingCard": []
   },
   getters: {
+    userInfo: state => state.userInfo || localStorage.getItem('USERINFO'),
     account: state => state.account || localStorage.getItem('account'),
     gid: state => state.gid || localStorage.getItem('gid'),
     email: state => state.email || localStorage.getItem('email'),
@@ -24,14 +27,17 @@ export default {
     nickName: state => state.nickName || localStorage.getItem('nickName'),
     enableRecived: state => state.enableRecived,
     nft: state => state.nft,
+    nft_benefit: state => state.nft_benefit,
     balance: state => state.balance,
-    balance_ntf: state => state.balance_ntf,
     landBox: state => state.landBox,
     buildingBox: state => state.buildingBox,
     landCard: state => state.landCard,
     buildingCard: state => state.buildingCard
   },
   mutations: {
+    userInfo(state, options) {
+      Vue.set(state, 'userInfo', options)
+    },
     account(state, str) {
       localStorage.setItem('account', str)
       Vue.set(state, 'account', str)
@@ -60,11 +66,11 @@ export default {
       // Vue.set(state, 'nft', obj)
       state.nft = {...obj}
     },
+    nft_benefit(state, sta) {
+      state.nft_benefit = sta
+    },
     balance(state, num) {
       Vue.set(state, 'balance', parseFloat(num))
-    },
-    balance_ntf(state, num) {
-      Vue.set(state, 'balance_ntf', parseFloat(num))
     },
     landBox(state, arr) {
       Vue.set(state, 'landBox', arr)
@@ -80,8 +86,12 @@ export default {
     }
   },
   actions: {
+    updateUserInfo({commit, state}, options) {
+      commit('userInfo', Object.assign(state, options))
+    },  
     cleanAccount({commit}){
       localStorage.clear()
+      window.location.reload()    // temporary
       // let account_ = ''
       // localStorage.removeItem('account')
       // localStorage.removeItem('email')

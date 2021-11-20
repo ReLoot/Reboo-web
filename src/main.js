@@ -5,7 +5,6 @@ import router from '@/router'
 
 import store from '@/store'
 import {metaMaskUtils} from '@/utils/metaMaskUtil'
-import {landContractClass, buildingContractClass} from '@/utils/contractUtils'
 
 import {initI18n} from '@/utils/i18n'
 import cus_http from '@/utils/http'
@@ -17,6 +16,7 @@ import '@/assets/style/font-awesome.min.css';
 import '@/assets/style/font-orbitron.css';
 
 import '@/utils/publicComponents'
+import '@/utils/contract'
 
 Vue.use(ElementUI)
 
@@ -25,11 +25,10 @@ Vue.config.productionTip = false
 Vue.prototype.$http = cus_http
 Vue.prototype.$mu = new metaMaskUtils()
 
-Vue.prototype.$landContract = new landContractClass()
-Vue.prototype.$buildingContract = new buildingContractClass()
 Vue.prototype.$globalBus = new Vue()
 // const i18n = initI18n('zh') //jsCookie.get('lang')?jsCookie.get('lang'):process.env.VUE_APP_LANG
 const i18n = initI18n(localStorage.getItem('lang')||'en') //jsCookie.get('lang')?jsCookie.get('lang'):process.env.VUE_APP_LANG
+
 
 new Vue({
   router,
