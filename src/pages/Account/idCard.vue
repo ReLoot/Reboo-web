@@ -11,20 +11,22 @@
            <div class="user--card">
              <div class="user--card_inner front">
                <div class="card--item t_l">
-                 <label>Nick name</label>
-                 <p>{{nickName}}</p>
+                 <label>{{$t('receive.cardItem1')}}</label>
+                 <p>{{nickName | barReplace}}</p>
                </div>
-               <!-- <div class="card--item t_r">
-                 <label>Time</label>
-                 <p>10/24</p>
-               </div> -->
+               <div class="card--item t_r">
+                 <label>{{$t('receive.cardItem2')}}</label>
+                 <p>
+                   <span>--</span>
+                 </p>
+               </div>
                <div class="card--item b_l">
-                 <label>Game ID</label>
-                 <p>{{nft.game_no}}</p>
+                 <label>{{$t('receive.cardItem3')}}</label>
+                 <p>{{nft.game_no | barReplace}}</p>
                </div>
                <div class="card--item b_r">
-                 <label>Card Number</label>
-                 <p>{{nft.card_no}}</p>
+                 <label>{{$t('receive.cardItem4')}}</label>
+                 <p>{{nft.card_no | barReplace}}</p>
                </div>
              </div>
            </div>
@@ -61,6 +63,9 @@
 import {mapGetters} from 'vuex'
 import copy from 'copy-to-clipboard';
 export default {
+  filters: {
+    barReplace: str => str?str:'--'
+  },
   computed: {
     ...mapGetters('user', {
       nickName: 'nickName',

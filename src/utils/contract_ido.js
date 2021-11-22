@@ -41,7 +41,9 @@ export class idoContractClass extends contractBootstrap {
     if(!account_) return false
     
     const mainContract = await super.contractMaker()
-    return await mainContract.methods.candidate().call({from: account_})
+    const qua = await mainContract.methods.candidate().call({from: account_})
+    store.commit('user/ido_partake', qua)
+    return qua
   }
   
   // 发行总量
@@ -53,15 +55,25 @@ export class idoContractClass extends contractBootstrap {
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           {balanceFormart} = await this.getVbnBalance()
     
-    if (balanceFormart <= amount) {
+    if (balanceFormart < amount) {
       super.msgLog('Not enough balance for pay')
       return false
     }
+
+    const qua_ = await this.checkQualification()
+    if(qua_) {
+      super.msgLog('Each account is only allowed to claim once','warning')
+      return false
+    }
     
-    // amount 300
-    await vbnContract.methods.approve(this.options.contract_address,new BN(String(amount*Math.pow(10, 18)))).send({from: account_})
-    mainContract.methods.buyShares(new BN(amount)).send({from: account_})
-    // 300,0001
+    try {
+      const amount_ = new BN(String(amount*Math.pow(10, 18)))
+      await vbnContract.methods.approve(this.options.contract_address,amount_).send({from: account_})
+      await mainContract.methods.buyShares(amount_).send({from: account_})
+      await this.checkQualification()
+    } catch (err) {
+      super.msgLog(err)
+    }
   }
 
   async getProgress(piece, total) {
@@ -74,7 +86,7 @@ export class idoContractClass extends contractBootstrap {
     return {
       amount: participantAmount*piece || 0,
       people: participantAmount,
-      progress: participantAmount*piece/total*100 || 0
+      percent: participantAmount/total*100 || 0
     }
   }
 

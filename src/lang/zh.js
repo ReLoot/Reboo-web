@@ -10,7 +10,8 @@ export default {
             hour: '时',
             min: '分',
             sec: '秒',
-        }
+        },
+        loading: 'Loading...'
     },
     header: {
         btn: '链接钱包',
@@ -32,8 +33,8 @@ export default {
     },
     footer: {
         linkBlock: '更多游戏介绍和详情请查看白皮书',
-        subscribeTip: '你已成功取消订阅',
-        unsubscribeTip: '您已成功订阅活动，活动通知将发送到您的邮箱',
+        subscribeTip: '您已成功订阅活动，活动通知将发送到您的邮箱',
+        unsubscribeTip: '你已成功取消订阅',
         subscribe: '订阅邮箱',
         unsubscribe: '已订阅',
         subscrSuccess: {
@@ -142,6 +143,17 @@ export default {
         hd: '个人信息',
         bindBtn: '绑定',
     },
+    receive:{
+        title: '欢迎来到Vibranium',
+        sub: '领取你的星际NFT',
+        sub2: '恭喜！这只是极少数用户可以拥有的 NFT 身份凭证',
+        cardItem1: '昵称',
+        cardItem2: '日期',
+        cardItem3: '游戏 ID',
+        cardItem4: '卡片号码',
+        btn1: '获取GID',
+        btn2: '领取NFT'
+    },
     ido: {
         hd:'',
         sub: 'VBN已宣布IDO，更多细节即将推送，请关注！',
@@ -161,8 +173,11 @@ export default {
         item6: '进度',
         btn1: '立即购买',
         btn2: '已结束',
-        // aa: '-',
-        // aa: '-',
-        // aa: '-',
+        artP1: 'Vibranium 是基于 BSC 的一款元宇宙区块链游戏，也是一款整合了 P2E、社交和战略制定的大型多人在线模拟游戏（MMOSLG）。通过将区块链技术融入传统游戏，Vibranium 旨在与百万玩家一起创造一个高度自由和真实的元宇宙。',
+        artP2: 'Vibranium 现已开放 IDO 白名单申请，11月24日开启IDO',
+        artP3: '本期 Vibranium IDO 将发行总共 5 万枚 VBN 代币，总价值 30 万美元，无锁定期。IDO 白名单将采用超额认购，共开放 2000 个白名单名额，最终只会有 1000 名用户获得 IDO 资格，每个用户享有 300USDT 的购买额度。',
+        artP4: '参与 Vibranium IDO 的用户将会随机获得一张 Vibranium 星球的创始居民身份ID证，该身份证同时也是一个 NFT。',
+        artP5: '所有申请白名单并加入 Discord 社区的用户，将有机会获得空投奖励和价值10,000 美元的 NFT 福利!',
+        tipSub: '您使用以下地址参与IDO购买并接收VBN',
     }
 }

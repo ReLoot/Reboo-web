@@ -19,7 +19,7 @@
         <el-col :sm="12" :md="24" :lg="12">
           <div class="ido--bd_lpart">
             <p class="sub" >{{$t('ido.item0')}}</p>
-            <h4>{{poolTotal}} USDT</h4>
+            <h4>{{maxMember*piece}} USDT</h4>
             <ul>
               <li v-for="(item, idx) in leftItems" :key="`litem_${idx}`" >
                 <label>{{$t(item.label)}}</label>
@@ -46,22 +46,20 @@
                 <li >
                   <label>{{$t('ido.item5')}}</label>
                   <em />
-                  <span>-- VBN</span>
+                  <span>{{50*price}} VBN</span>
                 </li>
               </template >
-
-                
               
               <template v-if="step == 1 || step == 2">
                 <!-- progress -->
                 <li class="progress" >
                   <label>{{$t('ido.item6')}}</label>
                   <div class="progress--wrap">
-                    <em class="progress--bar" :style="{width:`${progress}%`}"></em>
+                    <em class="progress--bar" :style="{width:`${progress.percent}%`}"></em>
                     <div class="progress--append">
-                      <span>{{progress}}</span>
+                      <span>{{progress.amount}}</span>
                       <span>/</span>
-                      <span>{{poolTotal}}</span>
+                      <span>{{maxMember*piece}}</span>
                     </div>
                   </div>
                 </li>
@@ -82,13 +80,18 @@
                   <cus-btn-ein 
                     @click.native="pay"
                     class="form_submit"
-                    :class="{disabled: step==2}"
+                    :class="{disabled: step==2 || !ido_qua || !ido_partake || loadingWarden.indexOf('IDO_PAYING') > -1}"
                     bg="/image/account/btn_form.png"
                   >
                     <template v-if="step == 1">
-                      {{$t('ido.btn1')}}
+                      <template v-if="loadingWarden.indexOf('IDO_PAYING') > -1">
+                        {{$t('common.loading')}}
+                      </template>
+                      <template v-else>
+                        {{$t('ido.btn1')}}
+                      </template>
                     </template>
-                    <template v-else>
+                    <template v-if="step == 2">
                       {{$t('ido.btn2')}}
                     </template>
                   </cus-btn-ein>
@@ -116,46 +119,80 @@
         <h4 class="ido--desc_title">IDO Application</h4>
         <img class="ido--desc_banner" src="/image/ido/view_1.jpg" />
         <div class="ido--desc_ctn"> 
-          <p>Thank you for your interest in the Vibranium LaunchPad.</p>
-          <p>Please fill out the application form. All information provided must be a true and accurate representation of the project and organisation. There are no costs associated with the application and interview process.</p>
-          <p>Once you submit the application, a member of our team will contact you regarding next steps.</p>
-          <p>Discord: <a>https://discord.com/invite/kERPbw3EhR</a></p>
-          <p>Twitter: <a>https://twitter.com/Vibranium_VBN</a></p>
-          <p>Tg:<a>https://t.me/Vibranium_VBN</a></p>
+          <p>{{$t('ido.artP1')}}</p>
+          <p>{{$t('ido.artP2')}}</p>
+          <p>{{$t('ido.artP3')}}</p>
+          <p>{{$t('ido.artP4')}}</p>
+          <p>{{$t('ido.artP5')}}</p>
         </div>
       </div>
-
     </div>
+
+    <el-dialog
+      class="ido--tipblock"
+      :visible.sync="tipVisible"
+      :append-to-body="true"
+      top="25vh"
+    >
+      <div class="inner">
+        <h4>Warn</h4>
+        <p class="ido--tipblock_sub">{{$t('ido.tipSub')}}</p>
+        <p class="ido--tipblock_ctn">{{account}}</p>
+        <cus-btn-ein 
+          @click.native="tipVisible = !tipVisible"
+          class="ido--tipblock_btn"
+        >Confirm</cus-btn-ein>
+      </div>
+    </el-dialog>
+
+
   </div>
 </template>
 
 <script>
 import countDown from '@/components/timer/countDownTurn'
+import {mapGetters} from 'vuex'
 export default {
   components: {countDown},
+  computed: {
+      ...mapGetters('user', {
+          account: 'account',
+          ido_qua: 'ido_qua',
+          ido_partake: 'ido_partake'
+      }),
+      ...mapGetters('common', {
+        loadingWarden: 'loadingWarden'
+      })
+  },
   data(){
     return {
+      tipVisible: false,
       step: localStorage.getItem('test_ido_step') || 0,
       startTimeStamp: 1637899200,
-      poolTotal: 300000,
-      progress: 0,
+      progress: {
+        amount: 0,
+        people: 0,
+        percent: 0
+      },
+      maxMember: 10,
+      price: 6,
       piece: 300,
       leftItems: [{
         label: 'ido.item1',
-        val: 'MAX 300 USDT'
+        val: 'MAX 300 USD'
       },{
         label: 'ido.item2',
-        val: '$ 0.135'
+        val: '6 USD'
       }],
       rightItems: [{
         label: 'ido.tbLab1',
-        val: '1 VBN = $ 0.135 '
+        val: '1 VBN = 6 USD'
       },{
         label: 'ido.tbLab2',
-        val: '11/26 2021, 12:00 PM'
-      },{
+        val: '11/23 2021, 10:00 AM'
+    },{
         label: 'ido.tbLab3',
-        val: '11/26 26th 2021, 12:00 PM'
+        val: '11/26 2021, 10:00 AM'
       },{
         label: 'ido.tbLab4',
         val: 'ido.tbVal'
@@ -169,32 +206,39 @@ export default {
     }
   },
   async mounted() {
-    // console.log(this.$idoContract.checkQualification)
-    const p = await this.$idoContract.getProgress()
+    const p = await this.$idoContract.getProgress(this.piece, this.maxMember)
+    if (p.people == this.maxMember) this.step = 2
     setTimeout(() => {
-      this.progress = p.progress
+      this.progress = {...p}
     },250)
   },
   methods: {
     async pay() {
-      if (this.step == 2) return false
+      // this.addLoading()
+      if(!this.ido_partake) return false
+      if(this.progress.people == this.maxMember) {
+        this.$message({
+          message: 'Maximum number of participants reached',
+          type: 'error'
+        })
+        return false
+      }
+      if(this.loadingWarden.indexOf('IDO_PAYING') > -1) return false
+
+      this.$store.dispatch('common/addLoading', 'IDO_PAYING')
+      if (this.step == 2 || !this.ido_qua) return false
       try {
-        const res = await this.$idoContract.pay(this.piece)
+        await this.$idoContract.pay(this.piece)
+        this.progress = await this.$idoContract.getProgress(this.piece, this.maxMember*this.piece)
+        this.$store.dispatch('common/deleteLoading', 'IDO_PAYING')
+        this.tipVisible = true
       } catch (err) {
+        this.$store.dispatch('common/deleteLoading', 'IDO_PAYING')
         this.$message({
           message: err,
           type: 'error'
         })
       }
-      // const qua = await this.$idoContract.checkQualification()
-      // if(qua) {
-      //   return true
-      // } else {
-      //   this.$message({
-      //     message: 'You are not eligible to buy',
-      //     type: 'warning'
-      //   })
-      // }
     },
     TESTstepChange(ss) {
       localStorage.setItem('test_ido_step', ss)
@@ -258,9 +302,13 @@ $navHeight: (
         white-space: nowrap;
         align-items: baseline;
         margin-bottom: 6px;
-        label, span {
-          padding: 8px;
+        label{
+          padding: 8px 8px 8px 0;
+        } 
+        span {
+          padding: 8px 0 8px 8px;
         }
+
         em {
           flex: 1;
           display: inline-block;
@@ -358,5 +406,89 @@ $navHeight: (
 
 @include b(timeCountWrap) {
   margin-top: 30px;
+}
+
+
+.el-input {
+  ::v-deep &-group__append, &-group__prepend {
+    border-color: rgba(208, 230, 238, 0.3);
+    background-color: rgba(24, 33, 44, 0.3);
+    color: rgba(208, 230, 238, 0.3);
+    -webkit-user-select: none;
+    user-select: none;
+    span {
+      padding: 0 !important;
+      cursor: default;
+      vertical-align: -2px;
+    }
+  }
+
+  &-group--append {
+    ::v-deep .el-input__inner {
+      border-right: 0 none;
+      background-color: rgba(24, 33, 44, 0.3);
+      font-size: 12px;
+    }
+  }
+}
+
+
+
+@include b(ido) {
+  @include e(tipblock) {
+    ::v-deep .el-dialog {
+      width: 377px;
+      max-width: 90%;
+      position: relative;
+      &__header { display: none; }
+
+      &__body {
+        padding: 0;
+      }
+    }
+
+    .inner {
+      position: relative;
+      padding: 25px 40px;
+      background-color: #4B5056;
+      border: 2px solid #99A9BD;
+      color: $--color-white;
+      text-align: center;
+      font-family: OrbitronRegular;
+    }
+
+    h4 {
+      font-size: 24px;
+      white-space: nowrap;
+      font-family: OrbitronBlack;
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
+
+    @include m(sub) {
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    @include m(ctn) {
+      font-family: OrbitronRegular;
+      line-height: 125%;
+      font-size: 14px;
+      color: $--color-yellow;
+      word-break: break-all;
+      margin-bottom: 35px;
+    }
+
+
+    @include m(btn) {
+      width: 200px;
+      height: 40px;
+      background: #2D8A92;
+      border: 2px solid #58DFD7;
+      font-family: OrbitronRegular;
+      font-size: 16px;
+    }
+
+  }
 }
 </style>

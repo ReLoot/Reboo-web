@@ -67,7 +67,6 @@
       </div>
     </div>
 
-
     <el-dialog
       class="subsrcibe--success"
       :visible.sync="subscribeSuccessVisible"

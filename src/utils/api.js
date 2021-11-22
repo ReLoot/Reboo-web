@@ -13,5 +13,5 @@ export default {
     bind_email: {url: baseUrl2+'/v1/user/bind_email', methods:'post'},
     getEmailCode: {url: baseUrl2+'/v1/verification/code', methods:'get'},
     get_game_id: {url: baseUrl2+'/v1/user/game_id', methods: 'post'},
-    recive_nft: {}
+    whiteList: {url: baseUrl2+'/v1/address/in_whitelist', methods: 'get'}
 }

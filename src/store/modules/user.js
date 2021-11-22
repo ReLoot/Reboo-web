@@ -8,9 +8,10 @@ export default {
     "gid": localStorage.getItem('gid') || null,
     "nickName": localStorage.getItem('nickName') || null,
     "subscribe": localStorage.getItem('subscribe') || 0,
-    "enableRecived": localStorage.getItem('enableRecived') || true,
     "nft": '',
     "nft_benefit": 0,       // 0为没有权限领取
+    "ido_qua": false,       // ido qua
+    "ido_partake": false,   // taked part in ido
     "balance": 0,
     "balance_ntf": 0,
     "landBox": [],
@@ -25,9 +26,10 @@ export default {
     email: state => state.email || localStorage.getItem('email'),
     subscribe: state => state.subscribe || localStorage.getItem('subscribe'),
     nickName: state => state.nickName || localStorage.getItem('nickName'),
-    enableRecived: state => state.enableRecived,
     nft: state => state.nft,
     nft_benefit: state => state.nft_benefit,
+    ido_qua: state=>state.ido_qua,       // ido qua
+    ido_partake: state=>state.ido_partake,   // taked part in ido
     balance: state => state.balance,
     landBox: state => state.landBox,
     buildingBox: state => state.buildingBox,
@@ -58,16 +60,18 @@ export default {
       localStorage.setItem('subscribe', sta)
       Vue.set(state, 'subscribe', sta)
     },
-    enableRecived(state, sta) {
-      localStorage.setItem('enableRecived', sta)
-      Vue.set(state, 'enableRecived', sta)
-    },
     nft(state, obj) {
       // Vue.set(state, 'nft', obj)
       state.nft = {...obj}
     },
     nft_benefit(state, sta) {
       state.nft_benefit = sta
+    },
+    ido_qua(state, sta) {
+      state.ido_qua = sta
+    },
+    ido_partake(state, sta) {
+      state.ido_partake = !sta
     },
     balance(state, num) {
       Vue.set(state, 'balance', parseFloat(num))
@@ -91,7 +95,7 @@ export default {
     },  
     cleanAccount({commit}){
       localStorage.clear()
-      window.location.reload()    // temporary
+      // window.location.reload()    // temporary
       // let account_ = ''
       // localStorage.removeItem('account')
       // localStorage.removeItem('email')

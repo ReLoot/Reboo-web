@@ -27,8 +27,10 @@
         <a class="header--append_avatar"></a>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
-          <el-dropdown-item command="toReceiveNFN" v-if="enableRecived && email">Receive NFT</el-dropdown-item>
-          <el-dropdown-item command="toIDCard" v-if="!enableRecived" >MY ID CARD</el-dropdown-item>
+          <template v-if="!ido_partake">
+            <el-dropdown-item command="toReceiveNFN" v-if="nft_benefit == 1">{{$t('header.dropItem2')}}</el-dropdown-item>
+            <el-dropdown-item command="toIDCard" v-if="nft_benefit == 0" >{{$t('header.dropItem3')}}</el-dropdown-item>
+          </template>
           <el-dropdown-item command="logout" >{{$t('header.dropItem4')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -44,6 +46,9 @@
       <el-form > 
         <el-form-item>
           <el-input v-model="formData.email" placeholder="Mail address" />
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="formData.pass_code" placeholder="ID Card Priate Code" />
         </el-form-item>
         <el-form-item>
           <el-input v-model="formData.code" placeholder="Code" >
@@ -72,16 +77,11 @@ export default {
   computed: {
       ...mapGetters('user', {
           account: 'account',
-          enableRecived: 'enableRecived',
-          email: 'email'
+          email: 'email',
+          nft_benefit: 'nft_benefit',
+          ido_qua: 'ido_qua',
+          ido_partake: 'ido_partake'
       }),
-      // bindEmailVisible(){
-      //   if (this.$store.getters['user/account'] && !this.$store.getters['user/email']){
-      //     return true
-      //   }else{
-      //     return false
-      //   }
-      // },
   },
   watch: {
     $route: {
@@ -93,13 +93,13 @@ export default {
   },
   data(){
     return {
-      // dialogVisible: false,       // wallet address Dialog
       bindEmailVisible: false,   // Email Dialog
       curRoute: '',
       navs: this.$router.options.routes[1]['children'],
       formData: {
         email: '',
-        code: ''
+        code: '',
+        pass_code: ''
       },
       count: 60,
       countSet: 60,
@@ -116,23 +116,24 @@ export default {
       if(this.account) {
         this.$landContract.init()
         this.$buildingContract.init()
-        if(!this.email) {
-          this.bindEmailVisible = true
-        }
+        // if(!this.email) {
+        //   this.bindEmailVisible = true
+        // }
       }
     })
   },
   methods: {
     async walletConnect() {
       await this.$mu.initlization()
-      this.$http('login', {eth_address: this.account}).then(loginInfo => {
-        if (loginInfo.data) {
-          this.$store.commit('common/token', loginInfo.data.token)
-          this.$store.commit('user/subscribe', loginInfo.data.user_info.subscribe)
-          this.$store.commit('user/email', loginInfo.data.user_info.email || '')
-          window.location.reload()
-        }
-      })
+      if (this.account)
+        this.$http('login', {eth_address: this.account}).then(loginInfo => {
+          if (loginInfo.data) {
+            this.$store.commit('common/token', loginInfo.data.token)
+            this.$store.commit('user/subscribe', loginInfo.data.user_info.subscribe)
+            this.$store.commit('user/email', loginInfo.data.user_info.email || '')
+            window.location.reload()
+          }
+        })
     },
     bindEmail(){
       if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
@@ -142,12 +143,22 @@ export default {
         })
         return false
       }
+
+      if (!this.formData.pass_code) {
+        this.$message({
+          message: "Please fill in your ID card private code",
+          type: 'error'
+        })
+        return false
+      }
+
       if(this.loading) return false
       this.loading = true
       this.$http('bind_email', {
         eth_address: this.account,
         email: this.formData.email,
-        code: this.formData.code
+        code: this.formData.code,
+        pass_code: this.formData.pass_code
       }).then(res => {
         this.$store.commit('user/email', this.formData.email)
         this.bindEmailVisible = false
@@ -197,9 +208,6 @@ export default {
 
     },
     accountHandler(type) {
-      // if(type == 'show_wallet') {
-      //   this.dialogVisible = true
-      // }
       if (type == 'toPersonalInfo') {
         this.$router.push({name: 'personalInfo'})
       }
