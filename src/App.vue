@@ -56,18 +56,12 @@ export default {
 
         const whiteList = await this.$http('whiteList', params)
         if (whiteList && whiteList.data) 
-            // this.$store.commit('user/ido_qua', Boolean(parseInt(whiteList.data.is_white)))
-            this.$store.commit('user/ido_qua', true)
-
+            this.$store.commit('user/ido_qua', Boolean(parseInt(whiteList.data.is_white)))
+            
         await this.$idoContract.checkQualification()
-
-        // console.log(this.$store.getters['user/ido_qua'])
-        // console.log(this.$store.getters['user/ido_partake'])
       } catch (err) {
         console.error(err)
       }
-
-
     }
   }
 }

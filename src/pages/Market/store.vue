@@ -56,7 +56,7 @@
 
             <!-- quatity -->
             <div class="store--quantity">
-              <h4 class="">{{$t('common.quantity')}} : (up to 10)</h4>
+              <h4 class="">{{$t('common.quantity')}} : (up to {{max}})</h4>
               <div class="store--quantity_formItems">
                 <el-input-number 
                   class="store--quantity_count" 
@@ -128,30 +128,65 @@ export default {
       max: 10,
     }
   },
+  async created() {
+    const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+    this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
+  },
   methods: {
-    tabsTrigger(cur) {
+    async tabsTrigger(cur) {
       this.curTabIdx = cur
       this.num = this.min
+      const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+      this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
     },
     async pay() {
+      if (this.pageLoading) return false
       if(!this.account) {
-        this.$message({
-          message: this.$t('common.nopermission'),
-          type: 'error'
-        })
+        this.$message({ message: this.$t('common.nopermission'), type: 'error' })
         return false
       }
+
       this.pageLoading = true
-      if(this.curTabIdx == 0) {
-        await this.$landContract.payForBox(this.num)
-        await this.$landContract.init()
-      }
-      if(this.curTabIdx == 1) {
-        await this.$buildingContract.payForBox(this.num)
-        await this.$buildingContract.init()
+      try {
+        const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+        if (checkDomain.data.remain == 0) {
+          this.pageLoading = false
+          this.$message({ message:'You have reached your daily limit today', type: 'warning'})
+          return false
+        }
+
+        let payOptions
+        if(this.curTabIdx == 0) {
+          payOptions = await this.$landContract.payForBox(this.num)
+          await this.$landContract.init()
+        }
+        if(this.curTabIdx == 1) {
+          payOptions = await this.$buildingContract.payForBox(this.num)
+          await this.$buildingContract.init()
+        }
+        
+        if (payOptions) {
+          const pusreObj = await this.$http('boxPurchase', { 
+            eth_address: this.account, 
+            transactionHash:payOptions.transactionHash, 
+            blockNumber:String(payOptions.blockNumber), 
+            box_num: this.num,
+            type: this.curTabIdx+1 
+          })
+          this.max = pusreObj.data.remain
+          if(pusreObj.data.remain == 0) {
+            this.min = pusreObj.data.remain
+            this.num = pusreObj.data.remain
+          }
+          
+        }
+
+        this.pageLoading = false
+      } catch (err) {
+        this.pageLoading = false
+        console.error(err)
       }
 
-      this.pageLoading = false
     }
   }
 }

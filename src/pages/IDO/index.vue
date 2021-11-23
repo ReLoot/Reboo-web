@@ -3,23 +3,24 @@
     <div class="container">
       <!--  -->
       <!--  -->
-      <div style="margin-bottom:30px">
+      <!-- <div style="margin-bottom:30px">
         测试按钮：
         <el-button @click="TESTstepChange(0)">未开始</el-button>
+        <el-button @click="TESTstepChange(3)">预约中</el-button>
         <el-button @click="TESTstepChange(1)">进行中</el-button>
         <el-button @click="TESTstepChange(2)">已结束</el-button>
-      </div>
+      </div> -->
       <!--  -->
       <!--  -->
       <div class="ido--hd">
-        <h2>Project key indicato</h2>
+        <h2>Project key indicator</h2>
         <p class="sub">{{$t('ido.sub')}}</p>
       </div>
       <el-row class="ido--bd" :gutter="40" >
         <el-col :sm="12" :md="24" :lg="12">
           <div class="ido--bd_lpart">
             <p class="sub" >{{$t('ido.item0')}}</p>
-            <h4>{{maxMember*piece}} USDT</h4>
+            <h4>{{progress.maxMember*piece}} BUSD</h4>
             <ul>
               <li v-for="(item, idx) in leftItems" :key="`litem_${idx}`" >
                 <label>{{$t(item.label)}}</label>
@@ -27,22 +28,22 @@
                 <span>{{item.val}}</span>
               </li>
 
-              <template v-if="step == 0">
+              <template v-if="step == 0 || step == 3">
                 <li >
                   <label>{{$t('ido.item3')}}</label>
                   <em />
-                  <span style="letter-spacing:0;">11/26 2021, 12:00 PM UTC</span>
+                  <span style="letter-spacing:0;">11/24 2021, 10:00 AM</span>
                 </li>
-
               </template>
+
               <template v-if="step == 0">
                 <li class="timeCountWrap">
                   <label >{{$t('ido.item4')}}</label>
-                  <count-down :date="startTimeStamp" />
+                  <count-down :date="startTimeStamp" @stopRunning="timeCountEnd" />
                 </li>
               </template>
 
-              <template v-if="step == 2">
+              <template v-if="step == 1 || step == 2" >
                 <li >
                   <label>{{$t('ido.item5')}}</label>
                   <em />
@@ -59,7 +60,7 @@
                     <div class="progress--append">
                       <span>{{progress.amount}}</span>
                       <span>/</span>
-                      <span>{{maxMember*piece}}</span>
+                      <span>{{progress.maxMember*piece}}</span>
                     </div>
                   </div>
                 </li>
@@ -69,36 +70,61 @@
                 <li class="amountShow">
                   <el-input value="300" :disabled="true">
                     <template slot="append">
-                      <span>USDT</span>
+                      <span>BUSD</span>
                     </template>
                   </el-input>
                 </li>
               </template>
               <template v-if="step == 1 || step == 2">
                 <li>
-                  <!-- <el-button>BUY NOW</el-button> -->
                   <cus-btn-ein 
-                    @click.native="pay"
+                    @click.native="payApply"
                     class="form_submit"
-                    :class="{disabled: step==2 || !ido_qua || !ido_partake || loadingWarden.indexOf('IDO_PAYING') > -1}"
+                    v-if="step == 1"
+                    :class="{disabled: !ido_qua || !ido_unpartake || loadingWarden.indexOf('IDO_PAYING') > -1}"
                     bg="/image/account/btn_form.png"
                   >
                     <template v-if="step == 1">
                       <template v-if="loadingWarden.indexOf('IDO_PAYING') > -1">
                         {{$t('common.loading')}}
                       </template>
+                      <template v-else-if="!ido_unpartake">
+                        {{$t('ido.btn3')}}
+                      </template>
                       <template v-else>
                         {{$t('ido.btn1')}}
                       </template>
                     </template>
-                    <template v-if="step == 2">
-                      {{$t('ido.btn2')}}
-                    </template>
                   </cus-btn-ein>
+                  <cus-btn-ein 
+                    v-if="step == 2" 
+                    class="form_submit disabled" 
+                    bg="/image/account/btn_form.png"
+                    style="margin-top: 30px"
+                  >{{$t('ido.btn2')}}</cus-btn-ein>
                 </li>
               </template>
 
-
+              <template v-if="step == 3">
+                <li>
+                  <label>{{$t('ido.item7')}}</label>
+                  <em />
+                  <span style="letter-spacing:0;">{{reserveAmount}}/{{maxMember}}</span>
+                </li>
+                <cus-btn-ein 
+                    class="form_submit" 
+                    bg="/image/account/btn_form.png"
+                    style="margin-top: 30px"
+                    @click.native="reserve"
+                  >
+                  <template v-if="loadingWarden.indexOf('reserveApply') > -1">
+                    {{$t('common.loading')}}
+                  </template>
+                  <template v-else>
+                    {{$t('ido.btn4')}}
+                  </template>
+                </cus-btn-ein>
+              </template>
             </ul>
           </div>
         </el-col>
@@ -139,7 +165,7 @@
         <p class="ido--tipblock_sub">{{$t('ido.tipSub')}}</p>
         <p class="ido--tipblock_ctn">{{account}}</p>
         <cus-btn-ein 
-          @click.native="tipVisible = !tipVisible"
+          @click.native="pay"
           class="ido--tipblock_btn"
         >Confirm</cus-btn-ein>
       </div>
@@ -158,88 +184,163 @@ export default {
       ...mapGetters('user', {
           account: 'account',
           ido_qua: 'ido_qua',
-          ido_partake: 'ido_partake'
+          ido_unpartake: 'ido_unpartake'
       }),
       ...mapGetters('common', {
-        loadingWarden: 'loadingWarden'
-      })
+        loadingWarden: 'loadingWarden',
+      }),
   },
   data(){
     return {
       tipVisible: false,
       step: localStorage.getItem('test_ido_step') || 0,
-      startTimeStamp: 1637899200,
+      maxMember: 0,
+      reserveAmount: 0,
+      reservedPromise: 0,
+      // reserveTimeStamp: 1637740800,
+      reserveTimeStamp: 1637686800,
+      startTimeStamp: 1637690910,
+      endTimeStamp: 1637920800,
       progress: {
         amount: 0,
         people: 0,
-        percent: 0
+        percent: 0,
+        maxMember: 0
       },
-      maxMember: 10,
+      // maxMember: 0,
       price: 6,
       piece: 300,
       leftItems: [{
         label: 'ido.item1',
-        val: 'MAX 300 USD'
+        val: 'MAX 300 BUSD'
       },{
         label: 'ido.item2',
-        val: '6 USD'
-      }],
+        val: '6 BUSD'
+      }
+      // ,{
+      //   label: 'ido.itemEx1',
+      //   val: '50'
+      // }
+      ],
       rightItems: [{
         label: 'ido.tbLab1',
-        val: '1 VBN = 6 USD'
+        val: '1 VBN = 6 BUSD'
       },{
         label: 'ido.tbLab2',
-        val: '11/23 2021, 10:00 AM'
-    },{
+        val: '11/24 2021, 10:00 AM'
+      },{
         label: 'ido.tbLab3',
         val: '11/26 2021, 10:00 AM'
       },{
         label: 'ido.tbLab4',
-        val: 'ido.tbVal'
+        val: '9,000,000'
       },{
         label: 'ido.tbLab5',
-        val: 'ido.tbVal'
+        val: '54,000,000 USD'
       },{
         label: 'ido.tbLab6',
-        val: 'ido.tbVal'
+        val: '58,000'
       }]
     }
   },
-  async mounted() {
-    const p = await this.$idoContract.getProgress(this.piece, this.maxMember)
-    if (p.people == this.maxMember) this.step = 2
-    setTimeout(() => {
-      this.progress = {...p}
-    },250)
+  created() {
+    this.getPgrss()
+    this.reserveStatus()
+    this.stepSet()
   },
   methods: {
+    stepSet() {
+      const curTime = new Date().getTime()/1000
+      switch (true) {
+        case curTime >= this.endTimeStamp:
+          this.step = 2
+          break
+        case curTime >= this.startTimeStamp:
+          this.step = 1
+          break
+        case curTime >= this.reserveTimeStamp && this.reservedPromise == 1:
+          this.step = 3
+          break
+        default:
+          this.step = 0
+          break
+      }
+    },
+    async getPgrss() {
+      const p = await this.$idoContract.getProgress(this.piece)
+      if (p) {
+        if (p.people == p.maxMember) this.step = 2
+        this.progress = {...p}
+      }
+    },
+    payApply() {
+      if (!this.ido_qua) {
+        this.$message({message: this.$t('common.nopermission'), type: 'warning'})
+        return false
+      }
+      if(this.loadingWarden.indexOf('IDO_PAYING') == -1 && this.ido_unpartake && this.ido_qua) 
+        this.tipVisible = true
+    },
     async pay() {
-      // this.addLoading()
-      if(!this.ido_partake) return false
-      if(this.progress.people == this.maxMember) {
+      this.tipVisible = false
+      if(!this.ido_unpartake) return false
+      if(this.progress.people == this.progress.maxMember) {
         this.$message({
           message: 'Maximum number of participants reached',
           type: 'error'
         })
         return false
       }
+ 
       if(this.loadingWarden.indexOf('IDO_PAYING') > -1) return false
+      if (!this.ido_qua) {
+        this.$message({ message: 'You have no qualifications', type: 'warning' })
+        return false
+      }
 
-      this.$store.dispatch('common/addLoading', 'IDO_PAYING')
-      if (this.step == 2 || !this.ido_qua) return false
       try {
-        await this.$idoContract.pay(this.piece)
-        this.progress = await this.$idoContract.getProgress(this.piece, this.maxMember*this.piece)
-        this.$store.dispatch('common/deleteLoading', 'IDO_PAYING')
-        this.tipVisible = true
+        let res = await this.$idoContract.pay(this.piece)
+        if (res) {
+          this.progress = await this.$idoContract.getProgress(this.piece, this.progress.maxMember*this.piece)
+          this.$globalBus.$emit('RECEIVE_NFT_DIALOG_VISIBLE')
+          this.$message({ message:'Purchare successed', type:'success' })
+        }
       } catch (err) {
-        this.$store.dispatch('common/deleteLoading', 'IDO_PAYING')
-        this.$message({
-          message: err,
-          type: 'error'
-        })
+        this.$message({message:err, type:'error'})
       }
     },
+    reserve() {
+      if(!this.reservedPromise) return false
+      if (!this.account  || this.loadingWarden.indexOf('reserveApply') > -1) return false
+      this.$http('reserveApply', { eth_address: this.account })
+        .then(({code, data, msg}) => { 
+          if(code == 200)
+            this.$message({message: 'Congratulations, Reserve successed!', type: 'success'})    //预约提示优化
+            // this.$route.replace({name: ''})
+            // window.location.href = '/receiveNFT'
+            this.step = 0
+        }).catch((err) => {
+          this.$message({message: err.response?err.response.data.msg:err, type: 'error'})
+        })
+    },
+    reserveStatus() {
+      this.$http('reserveStatus' , { eth_address: this.account })
+        .then(({code, data, msg}) => {
+          if(code == 200) {
+            console.log(data)
+            this.maxMember = data.max_reserved
+            this.reserveAmount = data.total_reserved
+            this.reservedPromise = data.can_reserved
+            if (data.can_reserved == 1) {
+              this.stepSet()
+            }
+          }
+        })
+    },
+    timeCountEnd() {
+      this.stepSet()
+    },
+    /* test code */
     TESTstepChange(ss) {
       localStorage.setItem('test_ido_step', ss)
       window.location.reload()
@@ -293,7 +394,7 @@ $navHeight: (
       h4 {
         font-family: OrbitronRegular;
         font-size: 30px;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
       }
 
       li {
@@ -369,7 +470,7 @@ $navHeight: (
 
 @include b(progress) {
   align-items:center !important;
-  margin-bottom: 20px !important;
+  margin-bottom: 10px !important;
   @include e(wrap) {
     flex: 1;
     width: 100%;
@@ -401,7 +502,7 @@ $navHeight: (
 }
 
 @include b(amountShow) {
-  margin-bottom: 30px !important;
+  margin-bottom: 20px !important;
 }
 
 @include b(timeCountWrap) {
@@ -468,6 +569,7 @@ $navHeight: (
     @include m(sub) {
       margin-bottom: 8px;
       font-size: 12px;
+      line-height: 125%;
     }
 
     @include m(ctn) {

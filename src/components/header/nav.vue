@@ -16,6 +16,17 @@
     </ul>
 
     <div class="header--append">
+
+      <el-dropdown class="header--locale" @command="changeLang" placement="bottom" trigger="click">
+        <a class="header--locale_btn">
+          {{locale}}<i class="el-icon-caret-bottom el-icon--right"></i>
+        </a>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="en" >English</el-dropdown-item>
+          <el-dropdown-item command="zh" >简体中文</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
       <cus-btn-ein 
         class="wc"
         bg="/image/btn_banner.png"
@@ -23,11 +34,12 @@
         @click.native="walletConnect"
       >{{$t('header.btn')}}</cus-btn-ein>
 
+
       <el-dropdown v-if="account" class="header--append_account" @command="accountHandler" placement="top" trigger="click">
         <a class="header--append_avatar"></a>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
-          <template v-if="!ido_partake">
+          <template v-if="!ido_unpartake">
             <el-dropdown-item command="toReceiveNFN" v-if="nft_benefit == 1">{{$t('header.dropItem2')}}</el-dropdown-item>
             <el-dropdown-item command="toIDCard" v-if="nft_benefit == 0" >{{$t('header.dropItem3')}}</el-dropdown-item>
           </template>
@@ -58,7 +70,6 @@
             </template>
           </el-input>
         </el-form-item>
-          <!-- @click.native="walletConnect" -->
         
         <cus-btn-ein 
           @click.native="bindEmail"
@@ -66,6 +77,30 @@
           bg="/image/account/btn_form.png"
         >{{$t('header.submit')}}</cus-btn-ein>
       </el-form>
+    </el-dialog>
+
+    <el-dialog
+      class="receivenft--tipblock"
+      :visible.sync="receiveNFTVisible"
+      :append-to-body="true"
+      @close="closeRNTips(0)"
+      top="25vh"
+    >
+      <div class="inner">
+        <h4>Receive NFT</h4>
+        <p class="receivenft--tipblock_sub">
+          Congratulations on obtaining a founding ID card for the planet Vibranium, 
+          which is also an NFT. Get it now!
+        </p>
+
+        <cus-btn-ein 
+          @click.native="closeRNTips"
+          class="receivenft--tipblock_btn"
+        >GET IT</cus-btn-ein>
+        <div >
+          <el-checkbox v-model="receiveNFTnomore">Don't remind again</el-checkbox>
+        </div>
+      </div>
     </el-dialog>
 
   </header>
@@ -80,8 +115,11 @@ export default {
           email: 'email',
           nft_benefit: 'nft_benefit',
           ido_qua: 'ido_qua',
-          ido_partake: 'ido_partake'
+          ido_unpartake: 'ido_unpartake'  // false is buy ido
       }),
+      locale(){
+          return this.$i18n.locale == 'en' ? 'English' : '简体中文'
+      },
   },
   watch: {
     $route: {
@@ -94,6 +132,8 @@ export default {
   data(){
     return {
       bindEmailVisible: false,   // Email Dialog
+      receiveNFTVisible: false,
+      receiveNFTnomore: false,
       curRoute: '',
       navs: this.$router.options.routes[1]['children'],
       formData: {
@@ -110,15 +150,20 @@ export default {
     this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
       this.bindEmailVisible = !this.bindEmailVisible
     })
+    this.$globalBus.$on('RECEIVE_NFT_DIALOG_VISIBLE', () => {
+      this.receiveNFTVisible = !this.receiveNFTVisible
+    })
   },
   mounted() {
     this.$nextTick(() => {
       if(this.account) {
         this.$landContract.init()
         this.$buildingContract.init()
-        // if(!this.email) {
-        //   this.bindEmailVisible = true
-        // }
+
+        setTimeout(() => {
+          if(parseInt(localStorage.getItem('RECEIVE_NFT_TIPS_SHOW')) != 1 && this.nft_benefit == 1 && !this.ido_unpartake) 
+            this.receiveNFTVisible = true
+        }, 2000)
       }
     })
   },
@@ -225,7 +270,21 @@ export default {
         this.$store.dispatch('common/cleanToken')
         window.location.href = '/home'
       }
-
+    },
+    changeLang(lang) {
+      this.$i18n.locale = lang
+      localStorage.setItem('lang', lang)
+    },
+    closeRNTips(handleType) {
+      if (this.receiveNFTnomore) {
+        localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 1)
+      } else {
+        localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 0)
+      }
+      if(handleType != 0) {
+        this.$router.push({'name': 'receivenft'})
+      }
+      this.receiveNFTVisible = false
     }
   }
 }

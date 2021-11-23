@@ -18,6 +18,11 @@ export class idoContractClass extends contractBootstrap {
     })
   }
 
+  async getTotal() {
+    const mainContract = await super.contractMaker()
+    return await mainContract.methods._maxCandidate().call()
+  }
+
   /* 获取VBN数量 */
   async getVbnBalance () {
     const account_ = this.accountCheck()
@@ -34,7 +39,7 @@ export class idoContractClass extends contractBootstrap {
       balanceFormart: balance_
     }
   }
-
+ 
   // 是否有资格购买
   async checkQualification() {
     const account_ = super.accountCheck()
@@ -42,7 +47,7 @@ export class idoContractClass extends contractBootstrap {
     
     const mainContract = await super.contractMaker()
     const qua = await mainContract.methods.candidate().call({from: account_})
-    store.commit('user/ido_partake', qua)
+    store.commit('user/ido_unpartake', qua)
     return qua
   }
   
@@ -51,42 +56,53 @@ export class idoContractClass extends contractBootstrap {
     const account_ = super.accountCheck()
     if(!account_) return false
     
+    store.dispatch('common/addLoading', 'IDO_PAYING')
+
     const mainContract = await super.contractMaker(),
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           {balanceFormart} = await this.getVbnBalance()
     
     if (balanceFormart < amount) {
       super.msgLog('Not enough balance for pay')
+      store.dispatch('common/deleteLoading', 'IDO_PAYING')
       return false
     }
 
     const qua_ = await this.checkQualification()
     if(qua_) {
       super.msgLog('Each account is only allowed to claim once','warning')
+      store.dispatch('common/deleteLoading', 'IDO_PAYING')
       return false
     }
     
+
     try {
       const amount_ = new BN(String(amount*Math.pow(10, 18)))
+      let res
       await vbnContract.methods.approve(this.options.contract_address,amount_).send({from: account_})
-      await mainContract.methods.buyShares(amount_).send({from: account_})
+      res = await mainContract.methods.buyShares(amount_).send({from: account_})
       await this.checkQualification()
+      store.dispatch('common/deleteLoading', 'IDO_PAYING')
+      return res
     } catch (err) {
+      store.dispatch('common/deleteLoading', 'IDO_PAYING')
       super.msgLog(err)
     }
   }
 
-  async getProgress(piece, total) {
+  async getProgress(piece) {
     const account_ = super.accountCheck()
     if(!account_) return false
     
+    const maxMember = await this.getTotal()
     const mainContract = await super.contractMaker()
     let participantAmount = await mainContract.methods.totalCandidates().call()
     participantAmount = parseInt(participantAmount)
     return {
       amount: participantAmount*piece || 0,
       people: participantAmount,
-      percent: participantAmount/total*100 || 0
+      percent: participantAmount/maxMember*100 || 0,
+      maxMember: maxMember
     }
   }
 

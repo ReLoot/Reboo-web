@@ -5,12 +5,14 @@ export default {
   state: {
     "lang": null,
     "token": localStorage.getItem('token') || null,
-    "loadingWarden": []
+    "loadingWarden": [],
+    "idoMaxCandidate": 0,
   },
   getters: {
     lang: state => state.lang || localStorage.getItem('lang'),
     token: state => state.token,
-    loadingWarden: state => state.loadingWarden
+    loadingWarden: state => state.loadingWarden,
+    idoMaxCandidate: state => state.idoMaxCandidate,
   },
   mutations: {
     lang(state, str) {
@@ -24,6 +26,9 @@ export default {
     loadingWarden (state, arr) {
       Vue.set(state, 'loadingWarden', arr)
     },
+    idoMaxCandidate(state, num) {
+      Vue.set(state, 'idoMaxCandidate', num)
+    }
   },
   actions: {
     cleanToken({commit}){

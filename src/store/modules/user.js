@@ -11,13 +11,13 @@ export default {
     "nft": '',
     "nft_benefit": 0,       // 0为没有权限领取
     "ido_qua": false,       // ido qua
-    "ido_partake": false,   // taked part in ido
+    "ido_unpartake": true,   //no taked part in ido
     "balance": 0,
     "balance_ntf": 0,
     "landBox": [],
     "buildingBox": [],
     "landCard": [],
-    "buildingCard": []
+    "buildingCard": [],
   },
   getters: {
     userInfo: state => state.userInfo || localStorage.getItem('USERINFO'),
@@ -29,12 +29,12 @@ export default {
     nft: state => state.nft,
     nft_benefit: state => state.nft_benefit,
     ido_qua: state=>state.ido_qua,       // ido qua
-    ido_partake: state=>state.ido_partake,   // taked part in ido
+    ido_unpartake: state=>state.ido_unpartake,   // taked part in ido
     balance: state => state.balance,
     landBox: state => state.landBox,
     buildingBox: state => state.buildingBox,
     landCard: state => state.landCard,
-    buildingCard: state => state.buildingCard
+    buildingCard: state => state.buildingCard,
   },
   mutations: {
     userInfo(state, options) {
@@ -70,8 +70,8 @@ export default {
     ido_qua(state, sta) {
       state.ido_qua = sta
     },
-    ido_partake(state, sta) {
-      state.ido_partake = !sta
+    ido_unpartake(state, sta) {
+      state.ido_unpartake = !sta
     },
     balance(state, num) {
       Vue.set(state, 'balance', parseFloat(num))
@@ -87,6 +87,12 @@ export default {
     },
     buildingCard(state, arr) {
       Vue.set(state, 'buildingCard', arr)
+    },
+    landBoxRemain(state, num) {
+      Vue.set(state, 'landBoxRemain', num)
+    },
+    buildBoxRemain(state, num) {
+      Vue.set(state, 'buildBoxRemain', num)
     }
   },
   actions: {

@@ -54,18 +54,20 @@ class cardContract extends contractBootstrap{
       return false
     }
 
-    // try {
+    try {
       await vbnContract.methods.approve(this.options.contract_address, new BN(String(vbn_require_amount*amount*Math.pow(10, 18)))).send({from: account_})
+      let res
       if (amount <= 1) {
-        await mainContract.methods.mint(account_).send({from: account_})
+        res = await mainContract.methods.mint(account_).send({from: account_})
       } else {
-        await mainContract.methods.mintMulti(account_, amount).send({from: account_})
+        res = await mainContract.methods.mintMulti(account_, amount).send({from: account_})
       }
 
       super.msgLog('Buy successed!', 'success')
-    // } catch (err) {
-    //   super.msgLog(err)
-    // }
+      return res
+    } catch (err) {
+      super.msgLog(err)
+    }
   }
 
   async getAllList() {
