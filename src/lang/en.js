@@ -4,7 +4,14 @@ export default {
         price: 'price',
         quantity: 'quantity',
         total: 'total',
-        nopermission: 'No permission'
+        nopermission: 'You do not have permission to participate',
+        countDown: {
+            day: 'd',
+            hour: 'h',
+            min: 'm',
+            sec: 's',
+        },
+        loading: 'Loading...'
     },
     header: {
         btn: 'Connect Wallet',
@@ -23,8 +30,6 @@ export default {
         sendCode: 'Send Code',
         sendCodeTip: 'The verification code has been sent to the mailbox ',
         submit: 'Submit'
-
-
     },
     footer: {
         linkBlock: 'For more game introduction and details please check',
@@ -101,10 +106,9 @@ export default {
     token: {
         desc: 'VBN is a token issued entirely for Vibranium. It exists as a hard currency in the form of energy crystals in the game.\
         It can be used for consumption, development, war, participation in decision-making in the game, etc., to enhance your game status and increase your potential profit ability.',
-        btn1: 'Trade at DexGuru',
+        btn1: 'Trade at Pancake',
         btn2: 'Trade at BscScan',
-        // btn1: 'Comming Soon',
-        altr: 'Comming Soon',
+        altr: 'Coming Soon',
         bk2Hd: 'Token Function',
         bk2Item1: 'VBN is the circulating currency in this game for trading on equipment, spaceship, land, etc.',
         bk2Link1: 'Purchase game props',
@@ -151,5 +155,46 @@ export default {
     personal: {
         hd: 'Personal Information',
         bindBtn: 'BIND',
+    },
+    receive:{
+        title: 'Welcome To Vibranium',
+        sub: 'Claim your Interstellar ID NFT',
+        sub2: 'Congratulations! This is only an NFT identity credential that a very small number of users can have',
+        cardItem1: 'Nick name',
+        cardItem2: 'Date',
+        cardItem3: 'Game ID',
+        cardItem4: 'Card Number',
+        btn1: 'GET GID',
+        btn2: 'Receive NFT'
+    },
+    ido: {
+        hd: '',
+        sub: 'Vibranium has announced an upcoming IDO, more details will be announced soon, stay tuned!',
+        tbLab1: 'VBN price',
+        tbLab2: 'Pre-sale start time(UTC)',
+        tbLab3: 'Pre-sale end time(UTC)',
+        tbLab4: 'Total Number Of VBN',
+        tbLab5: 'Market value',
+        tbLab6: 'VBN circulation',
+        tbVal: 'To be determined',
+        item0: 'IDO Total Amount',
+        item1: 'Individual quota',
+        item2: 'VBN price',
+        item3: 'IDO Date',
+        item4: 'IDO Countdown',
+        item5: 'Received VBN',
+        item6: 'Schedule',
+        item7: 'Reserved',
+        itemEx1: 'VBN',
+        btn1: 'BUY NOW',
+        btn2: 'Finished',
+        btn3: 'You had pruchased',
+        btn4: 'Reserve',
+        artP1: 'Vibranium is a meta-universe blockchain game based on BSC. It is also a massively multiplayer online simulation game (MMOSLG) that integrates P2E, social networking and strategy formulation. By incorporating blockchain technology into traditional games, Vibranium aims to create a highly free and real meta-universe with millions of players.',
+        artP2: 'Vibranium is now open for IDO whitelist application, and IDO will be opened on November 24',
+        artP3: 'In this issue, Vibranium IDO will issue a total of 50,000 VBN tokens with a total value of 300,000 U.S. dollars and no lock-up period. The IDO whitelist will be oversubscribed, and a total of 2,000 whitelists will be opened. In the end, only 1,000 users will be eligible for IDO, and each user will have a purchase limit of 300USDT.',
+        artP4: 'Participating in Vibranium IDO users will randomly get a Vibranium Planet\'s founding resident ID card, which is also an NFT.',
+        artP5: 'All users who apply for the whitelist and join the Discord community will have the opportunity to receive airdrop rewards and NFT benefits worth $10,000!',
+        tipSub: 'You use the following address to participate in IDO purchases and receive VBN',
     }
 }

@@ -49,7 +49,7 @@ $avatarList: (
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.3);
   border-bottom: 1px solid rgba(255,255,255,0.1);
   z-index: 99;
   @include e(logo) {
@@ -91,10 +91,12 @@ $avatarList: (
   }
 
   @include e(append) {
-    @include clearfix();
+    // @include clearfix();
+    @include displayFlex();
     @include pvcenter();
     @include mediaAdapt($appendList);
     position: abosulte;
+    align-items: center;
     .wc {
       @include mediaAdapt($wcList);
       font-family: OrbitronRegular;
@@ -104,6 +106,28 @@ $avatarList: (
       @include mediaAdapt($avatarList);
       display: block;
       background: url(/image/avatar.png) no-repeat center/cover;
+    }
+  }
+
+  @include e(locale) {
+    margin-right: 40px;
+    @include m(btn) {
+      display: inline-block;
+      text-align: center;
+      // background-color: rgba(0,0,0,0.4);
+      // border: 1px solid $--color-white-04;
+      border: 0 none;
+      display: block;
+      color: $--color-white-07;
+      cursor: pointer;
+      min-width:100px;
+      height:31px;
+      line-height:31px;
+      font-size:14px;
+      padding-left: 20px;
+      padding-right: 10px;
+      // border-radius: 5px;
+      font-family: OrbitronRegular;
     }
   }
 }
@@ -204,5 +228,58 @@ $avatarList: (
         }
       }
     }
+  }
+}
+
+
+
+@include b(receivenft) {
+  @include e(tipblock) {
+    ::v-deep .el-dialog {
+      width: 400px;
+      max-width: 90%;
+      position: relative;
+      &__header { display: none; }
+
+      &__body {
+        padding: 0;
+      }
+    }
+
+    .inner {
+      position: relative;
+      padding: 25px 40px;
+      background-color: #4B5056;
+      border: 2px solid #99A9BD;
+      color: $--color-white;
+      text-align: center;
+      font-family: OrbitronRegular;
+    }
+
+    h4 {
+      font-size: 24px;
+      white-space: nowrap;
+      font-family: OrbitronBlack;
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
+
+    @include m(sub) {
+      margin-bottom: 8px;
+      font-size: 12px;
+      line-height: 125%;
+      word-break: break-word;
+      margin-bottom: 30px;
+    }
+
+    @include m(btn) {
+      width: 200px;
+      height: 40px;
+      background: #2D8A92;
+      border: 2px solid #58DFD7;
+      font-family: OrbitronRegular;
+      font-size: 16px;
+    }
+
   }
 }

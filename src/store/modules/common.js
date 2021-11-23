@@ -5,12 +5,14 @@ export default {
   state: {
     "lang": null,
     "token": localStorage.getItem('token') || null,
-    "loading": []
+    "loadingWarden": [],
+    "idoMaxCandidate": 0,
   },
   getters: {
     lang: state => state.lang || localStorage.getItem('lang'),
     token: state => state.token,
-    loading: state => state.loading
+    loadingWarden: state => state.loadingWarden,
+    idoMaxCandidate: state => state.idoMaxCandidate,
   },
   mutations: {
     lang(state, str) {
@@ -21,9 +23,12 @@ export default {
       localStorage.setItem('token', str)
       state.token = str
     },
-    loading (state, arr) {
-      Vue.set(state, 'loading', arr)
+    loadingWarden (state, arr) {
+      Vue.set(state, 'loadingWarden', arr)
     },
+    idoMaxCandidate(state, num) {
+      Vue.set(state, 'idoMaxCandidate', num)
+    }
   },
   actions: {
     cleanToken({commit}){
@@ -33,10 +38,10 @@ export default {
     addLoading({commit, state}, obj) {
       let arr
       if (typeof obj == 'string')
-        arr = new Array().push(obj)
+        arr = [obj]
       else
         arr = obj
-      commit('loading', mergeArray(state.loading, arr))
+      commit('loadingWarden', mergeArray(state.loadingWarden, arr))
     },
     deleteLoading({commit, state}, obj) {
       let arr
@@ -44,7 +49,7 @@ export default {
         arr = new Array().push(obj)
       else 
         arr = obj
-      commit('loading', removeArrTarget(state.loading, arr))
+      commit('loadingWarden', removeArrTarget(state.loadingWarden, arr))
     }
   }
 }

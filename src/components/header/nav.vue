@@ -5,7 +5,7 @@
       <template v-for="(item, idx) in navs" >
 
         <router-link 
-          v-if="item.meta"
+          v-if="item.meta && item.meta.view"
           tag="li"
           :key="`navs_${idx}`"
           :class="{active: curRoute == item.name}"
@@ -16,6 +16,17 @@
     </ul>
 
     <div class="header--append">
+
+      <el-dropdown class="header--locale" @command="changeLang" placement="bottom" trigger="click">
+        <a class="header--locale_btn">
+          {{locale}}<i class="el-icon-caret-bottom el-icon--right"></i>
+        </a>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="en" >English</el-dropdown-item>
+          <el-dropdown-item command="zh" >简体中文</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
       <cus-btn-ein 
         class="wc"
         bg="/image/btn_banner.png"
@@ -23,12 +34,15 @@
         @click.native="walletConnect"
       >{{$t('header.btn')}}</cus-btn-ein>
 
+
       <el-dropdown v-if="account" class="header--append_account" @command="accountHandler" placement="top" trigger="click">
         <a class="header--append_avatar"></a>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
-          <!-- <el-dropdown-item command="toReceiveNFN" v-if="enableRecived && email">Receive NFT</el-dropdown-item>
-          <el-dropdown-item command="toIDCard" v-if="!enableRecived" >MY ID CARD</el-dropdown-item> -->
+          <template v-if="!ido_unpartake">
+            <el-dropdown-item command="toReceiveNFN" v-if="nft_benefit == 1">{{$t('header.dropItem2')}}</el-dropdown-item>
+            <el-dropdown-item command="toIDCard" v-if="nft_benefit == 0" >{{$t('header.dropItem3')}}</el-dropdown-item>
+          </template>
           <el-dropdown-item command="logout" >{{$t('header.dropItem4')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -46,6 +60,9 @@
           <el-input v-model="formData.email" placeholder="Mail address" />
         </el-form-item>
         <el-form-item>
+          <el-input v-model="formData.pass_code" placeholder="ID Card Priate Code" />
+        </el-form-item>
+        <el-form-item>
           <el-input v-model="formData.code" placeholder="Code" >
             <template slot="append">
             <a v-if="count == 60" @click="getCode">{{$t('header.sendCode')}}</a>
@@ -53,7 +70,6 @@
             </template>
           </el-input>
         </el-form-item>
-          <!-- @click.native="walletConnect" -->
         
         <cus-btn-ein 
           @click.native="bindEmail"
@@ -61,6 +77,30 @@
           bg="/image/account/btn_form.png"
         >{{$t('header.submit')}}</cus-btn-ein>
       </el-form>
+    </el-dialog>
+
+    <el-dialog
+      class="receivenft--tipblock"
+      :visible.sync="receiveNFTVisible"
+      :append-to-body="true"
+      @close="closeRNTips(0)"
+      top="25vh"
+    >
+      <div class="inner">
+        <h4>Receive NFT</h4>
+        <p class="receivenft--tipblock_sub">
+          Congratulations on obtaining a founding ID card for the planet Vibranium, 
+          which is also an NFT. Get it now!
+        </p>
+
+        <cus-btn-ein 
+          @click.native="closeRNTips"
+          class="receivenft--tipblock_btn"
+        >GET IT</cus-btn-ein>
+        <div >
+          <el-checkbox v-model="receiveNFTnomore">Don't remind again</el-checkbox>
+        </div>
+      </div>
     </el-dialog>
 
   </header>
@@ -72,16 +112,14 @@ export default {
   computed: {
       ...mapGetters('user', {
           account: 'account',
-          enableRecived: 'enableRecived',
-          email: 'email'
+          email: 'email',
+          nft_benefit: 'nft_benefit',
+          ido_qua: 'ido_qua',
+          ido_unpartake: 'ido_unpartake'  // false is buy ido
       }),
-      // bindEmailVisible(){
-      //   if (this.$store.getters['user/account'] && !this.$store.getters['user/email']){
-      //     return true
-      //   }else{
-      //     return false
-      //   }
-      // },
+      locale(){
+          return this.$i18n.locale == 'en' ? 'English' : '简体中文'
+      },
   },
   watch: {
     $route: {
@@ -93,13 +131,15 @@ export default {
   },
   data(){
     return {
-      // dialogVisible: false,       // wallet address Dialog
       bindEmailVisible: false,   // Email Dialog
+      receiveNFTVisible: false,
+      receiveNFTnomore: false,
       curRoute: '',
       navs: this.$router.options.routes[1]['children'],
       formData: {
         email: '',
-        code: ''
+        code: '',
+        pass_code: ''
       },
       count: 60,
       countSet: 60,
@@ -110,29 +150,35 @@ export default {
     this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
       this.bindEmailVisible = !this.bindEmailVisible
     })
+    this.$globalBus.$on('RECEIVE_NFT_DIALOG_VISIBLE', () => {
+      this.receiveNFTVisible = !this.receiveNFTVisible
+    })
   },
   mounted() {
     this.$nextTick(() => {
       if(this.account) {
         this.$landContract.init()
         this.$buildingContract.init()
-        if(!this.email) {
-          this.bindEmailVisible = true
-        }
+
+        setTimeout(() => {
+          if(parseInt(localStorage.getItem('RECEIVE_NFT_TIPS_SHOW')) != 1 && this.nft_benefit == 1 && !this.ido_unpartake) 
+            this.receiveNFTVisible = true
+        }, 2000)
       }
     })
   },
   methods: {
     async walletConnect() {
       await this.$mu.initlization()
-      this.$http('login', {eth_address: this.account}).then(loginInfo => {
-        if (loginInfo.data) {
-          this.$store.commit('common/token', loginInfo.data.token)
-          this.$store.commit('user/subscribe', loginInfo.data.user_info.subscribe)
-          this.$store.commit('user/email', loginInfo.data.user_info.email || '')
-          window.location.reload()
-        }
-      })
+      if (this.account)
+        this.$http('login', {eth_address: this.account}).then(loginInfo => {
+          if (loginInfo.data) {
+            this.$store.commit('common/token', loginInfo.data.token)
+            this.$store.commit('user/subscribe', loginInfo.data.user_info.subscribe)
+            this.$store.commit('user/email', loginInfo.data.user_info.email || '')
+            window.location.reload()
+          }
+        })
     },
     bindEmail(){
       if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
@@ -142,12 +188,22 @@ export default {
         })
         return false
       }
+
+      if (!this.formData.pass_code) {
+        this.$message({
+          message: "Please fill in your ID card private code",
+          type: 'error'
+        })
+        return false
+      }
+
       if(this.loading) return false
       this.loading = true
       this.$http('bind_email', {
         eth_address: this.account,
         email: this.formData.email,
-        code: this.formData.code
+        code: this.formData.code,
+        pass_code: this.formData.pass_code
       }).then(res => {
         this.$store.commit('user/email', this.formData.email)
         this.bindEmailVisible = false
@@ -197,9 +253,6 @@ export default {
 
     },
     accountHandler(type) {
-      // if(type == 'show_wallet') {
-      //   this.dialogVisible = true
-      // }
       if (type == 'toPersonalInfo') {
         this.$router.push({name: 'personalInfo'})
       }
@@ -217,7 +270,21 @@ export default {
         this.$store.dispatch('common/cleanToken')
         window.location.href = '/home'
       }
-
+    },
+    changeLang(lang) {
+      this.$i18n.locale = lang
+      localStorage.setItem('lang', lang)
+    },
+    closeRNTips(handleType) {
+      if (this.receiveNFTnomore) {
+        localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 1)
+      } else {
+        localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 0)
+      }
+      if(handleType != 0) {
+        this.$router.push({'name': 'receivenft'})
+      }
+      this.receiveNFTVisible = false
     }
   }
 }

@@ -13,5 +13,11 @@ export default {
     bind_email: {url: baseUrl2+'/v1/user/bind_email', methods:'post'},
     getEmailCode: {url: baseUrl2+'/v1/verification/code', methods:'get'},
     get_game_id: {url: baseUrl2+'/v1/user/game_id', methods: 'post'},
-    recive_nft: {}
+    whiteList: {url: baseUrl2+'/v1/address/in_whitelist', methods: 'get'},
+    boxCount: {url: baseUrl2+'/v1/transaction/box_daily_count', methods: 'get'},        // box count
+    boxPurchase: {url: baseUrl2+'/v1/transaction/box_purchase', methods: 'post'},        // box buy
+    // re/user/reserve_status
+    reserveStatus: {url: baseUrl2+'/v1/user/reserve_status', methods: 'get'},
+    reserveApply: {url: baseUrl2+'/v1/user/reserve', methods: 'post'},
+    receiveNFT: {url: baseUrl2+'/v1/transaction/receive_nft', methods: 'post'}
 }

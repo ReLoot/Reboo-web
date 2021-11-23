@@ -39,23 +39,29 @@ export default {
       }
     }
   },
-  created(){
+  async created(){
     if (localStorage.getItem('token') && this.account) {
       this.$mu.initlization()
-      this.$http('user_info', { eth_address: this.account })
-        .then(res => {
-          // console.log(res)
-          if(res.data) {
-            // res.data
-            this.$store.commit('user/email', res.data.email)
-            this.$store.commit('user/subscribe', res.data.subscribe)
-            this.$store.commit('user/gid', res.data.game_no)
-            this.$store.commit('user/nft', res.data.nft)
-            this.$store.commit('user/nickName', res.data.name)
-          }
-        }).catch(err => {
-          // console.log(err)
-        })
+      let params = {eth_address: this.account}
+      try {
+        const userInfo = await this.$http('user_info', params)
+        if (userInfo && userInfo.data) {
+          this.$store.commit('user/email', userInfo.data.email)
+          this.$store.commit('user/subscribe', userInfo.data.subscribe)
+          this.$store.commit('user/gid', userInfo.data.game_no)
+          this.$store.commit('user/nft', userInfo.data.nft)
+          this.$store.commit('user/nft_benefit', userInfo.data.nft_benefit)
+          this.$store.commit('user/nickName', userInfo.data.name)
+        }
+
+        const whiteList = await this.$http('whiteList', params)
+        if (whiteList && whiteList.data) 
+            this.$store.commit('user/ido_qua', Boolean(parseInt(whiteList.data.is_white)))
+            
+        await this.$idoContract.checkQualification()
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }

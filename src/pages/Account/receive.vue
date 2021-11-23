@@ -3,53 +3,73 @@
     <div class="container">
       <div class="user--hd">
         <h2>Welcome To Vibranium</h2>
-        <h2>Claim your Interstellar ID NFT</h2>
-        <p class="sub">Congratulations! This is only an NFT identity credential that a very small number of users can have</p>
+        <h2>{{$t('receive.sub')}}</h2>
+        <p class="sub">{{$t('receive.sub2')}}</p>
       </div>
 
       <div class="user--bd">
         <el-row :gutter="30">
           <el-col :md="14">
-
             <h4>Example Card</h4>
             <div class="user--card">
               <div class="user--card_inner front" >
-                <div class="card--item t_l" v-if="cardInfo.nickname" >
-                  <label>Nick name</label>
-                  <p>{{cardInfo.nickname}}</p>
+                <div class="card--item t_l"  >
+                  <label>{{$t('receive.cardItem1')}}</label>
+                  <p>{{cardInfo.nickname | barReplace}}</p>
                 </div>
-                <div class="card--item b_l" v-if="cardInfo.game_no" >
-                  <label>Game ID</label>
-                  <p>{{cardInfo.game_no}}</p>
+                <div class="card--item t_r">
+                  <label>{{$t('receive.cardItem2')}}</label>
+                  <p >{{cardInfo.time | barReplace}}</p>
                 </div>
-                <div class="card--item b_r" v-if="cardInfo.card_no" >
-                  <label>Card Number</label>
-                  <p>{{cardInfo.card_no}}</p>
+                <div class="card--item b_l">
+                  <label>{{$t('receive.cardItem3')}}</label>
+                  <p>{{cardInfo.game_no | barReplace}}</p>
+                </div>
+                <div class="card--item b_r">
+                  <label>{{$t('receive.cardItem4')}}</label>
+                  <p>{{cardInfo.card_no | barReplace}}</p>
                 </div>
               </div>
             </div>
           </el-col>
-
-          <el-col :md="10">
-            <el-form ref="registForm" :model="formData" > 
-              <el-form-item label="Nick Name" prop="nickname" required>
-                <el-input v-model="formData.nickname" :disabled="Boolean(nickName)" />
-              </el-form-item>
-              <el-form-item label="Game ID" prop="gid" required>
-                <el-input v-model="formData.gid" disabled >
-                  <template slot="append">
-                    <a @click="getGameID">GET GID</a>
-                   </template>
-                </el-input>
-              </el-form-item>
-              
-              <cus-btn-ein 
-                @click.native="formSbumit"
-                class="form_submit"
-                bg="/image/account/btn_form.png"
-              >Receive NFT</cus-btn-ein>
-            </el-form>
-          </el-col>
+          
+          <template v-if="memberAmount==-1||memberAmount>1000">
+            <el-col :md="10">
+              <div class="temp">COMING SOON...</div>
+            </el-col>
+          </template>
+          <template v-else >
+            <el-col :md="10">
+              <el-form ref="registForm" :model="formData" > 
+                <el-form-item label="Nick Name" prop="nickname" required>
+                  <el-input v-model="formData.nickname" :disabled="Boolean(nickName)"  />
+                </el-form-item>
+                <el-form-item label="Game ID" prop="gid" required>
+                  <el-input v-model="formData.gid" disabled >
+                    <template slot="append">
+                      <a @click="getGameID" >
+                        <span v-if="loadingWarden.indexOf('get_game_id') > -1">{{$t('common.loading')}}</span>
+                        <span v-else >{{$t('receive.btn1')}}</span>
+                      </a>
+                    </template>
+                  </el-input>
+                </el-form-item>
+                <cus-btn-ein 
+                  @click.native="formSbumit"
+                  class="form_submit"
+                  :class="{disabled: this.loadingWarden.indexOf('receive_nft') > -1}"
+                  bg="/image/account/btn_form.png"
+                >
+                  <template v-if="this.loadingWarden.indexOf('receive_nft') > -1">
+                    {{$t('common.loading')}}
+                  </template>
+                  <template v-else>
+                    {{$t('receive.btn2')}}
+                  </template>
+                </cus-btn-ein>
+              </el-form>
+            </el-col>
+          </template>
         </el-row>
       </div>
 
@@ -61,8 +81,11 @@
 
 <script>
 import {mapGetters} from 'vuex'
-
+import {nftContract} from '@/utils/contract_nft'
 export default {
+  filters: {
+    barReplace: str => str?str:'--'
+  },
   computed: {
     ...mapGetters('user', {
       account: 'account',
@@ -70,6 +93,14 @@ export default {
       nft: 'nft',
       nickName: 'nickName'
     }),
+    ...mapGetters('common', {
+      loadingWarden: 'loadingWarden'
+    }),
+  },
+  async created() {
+    this.formData.gid = this.gid
+    this.formData.nickname = this.nickName
+    this.memberAmount = await this.$nftContract.currentAmount()
   },
   data(){
     return {
@@ -77,6 +108,7 @@ export default {
         nickname: '',
         game_no: '',
         card_no: '',
+        time: ''
       },
       formData: {
         nickname: '',
@@ -86,7 +118,8 @@ export default {
           nickname: [
               {required: true, trigger:'change'},
           ],
-      }
+      },
+      memberAmount: -1
     }
   },
   watch: {
@@ -113,31 +146,50 @@ export default {
       this.formData.nickname = n 
     }
   },
-  created() {
-    this.formData.gid = this.gid
-    this.formData.nickname = this.nickName
-  },
   methods: {
     getGameID() {
-      if (this.gid) return false
+      if(this.formData.gid) return false
+      const request_name = 'get_game_id'
+      if(this.loadingWarden.indexOf(request_name) > -1) return false
       let vaild = this.$refs['registForm'].validateField('nickname', async err => {
-        if(!err) {
-          let res = await this.$http('get_game_id', {
+        if(err) return false
+        try {
+          let res = await this.$http(request_name, {
             name: this.formData.nickname,
             eth_address: this.account
           })
-          console.log(res)
+          if (res)
+            this.formData.gid = res.data.game_no
+        } catch (err) {
+          this.$message({message: err.response.data.msg||err, type: 'error'})
         }
       })
     },
     async formSbumit(){
-      if (Boolean(String(this.nickName)) && Boolean(this.gid)) return false
-      this.$refs['registForm'].validate((valid) => {
-        if (valid) {
-          return false
-        } else {
-          console.log('error submit!!');
+      if(this.loadingWarden.indexOf('receive_nft') > -1) return false
+      if (!this.formData.nickname || !this.formData.gid ) return false
+      this.$store.dispatch('common/addLoading', 'receive_nft')
+      this.$refs['registForm'].validate(async valid => {
+        if (!valid) {
+          this.$message({message: 'Please finish personal infomation!', type: 'warning'});
           return false;
+        }
+        try {
+          let recieveOptions = await this.$nftContract.claim(this.formData.gid)
+          // console.log(recieveOptions)
+
+          if (recieveOptions) {
+            /* await this.$http('receiveNFT', {
+              eth_address:this.account, 
+              transactionHash:recieveOptions.transactionHash, 
+              blockNumber:String(recieveOptions.blockNumber),
+            }) */
+            this.$store.dispatch('common/deleteLoading', 'receive_nft')
+            window.location.href = '/idCard'
+          }
+
+        } catch (err) {
+          this.$store.dispatch('common/deleteLoading', 'receive_nft')
         }
       });
 
@@ -242,6 +294,15 @@ $navHeight: (
       }
     }
   }
+}
+
+.temp {
+  height: 327px;
+  line-height: 327px;
+  text-align: center;
+  color: $--color-white-01;
+  font-size: 24px;
+  font-family: OrbitronRegular;
 }
 
 ::v-deep .el-form {

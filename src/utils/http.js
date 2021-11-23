@@ -26,42 +26,39 @@ http.interceptors.response.use(function (response) {
 )
 
 const httpHandler = {
-  get (url, param={}) {
-    // for(let i in param) {
-    //   param[i] = encodeURI(param[i])
-    // }
+  get (url, param={}, name) {
+    store.dispatch('common/addLoading', name)
     return new Promise((resolve, reject) => {
       http({ method: 'get', url: url, params: param, body: param })
         .then(result => {
+            store.dispatch('common/deleteLoading', name)
             if (result.status === 200)
               resolve(result.data)
             else
               reject(result.data)
         }).catch(err => {
+          store.dispatch('common/deleteLoading', name)
           reject(err)
         })
     })
   },
-  post (url, param = {}) {
-    // for(let i in param) {
-    //   param[i] = encodeURI(param[i])
-    // }
+  post (url, param = {}, name) {
     return new Promise((resolve, reject) => {
+      store.dispatch('common/addLoading', name)
       http({ method: 'post', url: url, data: param })
         .then(({status, data}) => {
+            store.dispatch('common/deleteLoading', name)
             if (status === 200)
               resolve(data)
             else
               reject(data)
         }).catch(err => {
+            store.dispatch('common/deleteLoading', name)
             reject(err)
         })
     })
   },
-  put (url, param = {}) {
-    // for(let i in param) {
-    //   param[i] = encodeURI(param[i])
-    // }
+  put (url, param = {}, name) {
     return new Promise((resolve, reject) => {
       http({ method: 'put', url: url, data: param })
         .then(({status, data}) => {
@@ -80,7 +77,6 @@ const cus_http = (name, params) => {
     let tag_api = apis[name], 
         methods = tag_api['methods'],
         url = tag_api['url']
-    
     return httpHandler[methods](url, params, name)
 }
 

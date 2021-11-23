@@ -2,24 +2,34 @@
   <div class="user">
     <div class="container">
       <div class="user--hd">
-        <h2>{{$t('personal.hd')}}</h2>
+        <!-- <h2>{{$t('personal.hd')}}</h2> -->
+        <h2>Personal Information</h2>
         <cus-divider-ein dStyle="white" />
       </div>
       <div class="user--bd">
         <a class="avatar"><img src="/image/avatar.png" /></a>
-        <!-- <h4 class="user--name">{{username}}</h4> -->
         <div class="user--info" >
-          <div class="user--info_item" v-for="(item, key) in userOptions" :key="`user_info_${key}`">
-            <em :style="{backgroundImage: `url(/image/account/user_info_lab${key+1}.png)`}"></em>
+          <div class="user--info_item" v-if="gid">
+            <em :style="{backgroundImage: `url(/image/account/user_info_lab1.png)`}"></em>
             <div class="user--info_ctn" >
-              <p class="name">{{item.view}}</p>
-              <p class="props" v-if="item.view == 'Address'">{{account || '--'}}</p>
-              <p class="props" v-else-if="item.view == 'Email'">{{email || '--'}}</p>
-              <p class="props" v-else >{{item.val || '--'}}</p>
+              <p class="name">GAME ID</p>
+              <p class="props">{{gid || '--'}}</p>
             </div>
-
-            <el-button v-if="item.view == 'Email' && !email" plain type="primary" @click="emailDialogCall" >{{$t('personal.bindBtn')}}</el-button>
-            
+          </div>
+          <div class="user--info_item">
+            <em :style="{backgroundImage: `url(/image/account/user_info_lab2.png)`}"></em>
+            <div class="user--info_ctn" >
+              <p class="name">Email</p>
+              <p class="props">{{email || '--'}}</p>
+            </div>
+            <el-button v-if="!email" plain type="primary" @click="emailDialogCall" >{{$t('personal.bindBtn')}}</el-button>
+          </div>
+          <div class="user--info_item" v-if="account" >
+            <em :style="{backgroundImage: `url(/image/account/user_info_lab3.png)`}"></em>
+            <div class="user--info_ctn" >
+              <p class="name">Address</p>
+              <p class="props">{{account || '--'}}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -35,24 +45,13 @@ export default {
   computed: {
     ...mapGetters('user', {
       account: 'account',
-      email: 'email'
+      email: 'email',
+      gid: 'gid',
     }),
   },
   data(){
     return {
       username: 'Lily_9846',
-      userOptions: [
-      //   {
-      //   view: 'GAME ID',
-      //   val: 10001,
-      // },
-      {
-        view: 'Email',
-        val: 'lily9827@gmail.com'
-      },{
-        view: 'Address',
-        val: '0x43Ec0de64cf7b05270'
-      }]
     }
   },
   methods: {

@@ -8,7 +8,7 @@
             <p>{{$t('footer.linkBlock')}}</p>
           </div>
           <div class="item" >
-            <a href="https://docs.vibraniumslg.io/" >https://docs.vibraniumslg.io/</a>
+            <a href="https://docs.vibraniumslg.io/" target="_blank" >https://docs.vibraniumslg.io/</a>
           </div>
         </div>
         <cus-divider-ein dStyle="green" />
@@ -24,7 +24,7 @@
           <p><a  href="contact@vibraniumslg.com">Email:contact@vibraniumslg.com</a></p>
         </div>
         
-        <el-dropdown class="footer--top_locale" @command="changeLang" placement="top" trigger="click">
+        <!-- <el-dropdown class="footer--top_locale" @command="changeLang" placement="top" trigger="click">
           <a class="footer--top_localeBtn">
             {{locale}}<i class="el-icon-caret-bottom el-icon--right"></i>
           </a>
@@ -32,7 +32,7 @@
             <el-dropdown-item command="en" >English</el-dropdown-item>
             <el-dropdown-item command="zh" >中文简体</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>
+        </el-dropdown> -->
 
         <cus-btn-ein 
           class="footer--email_btn"
@@ -57,6 +57,7 @@
               :key="`app_list_${idx}`"  
               :style="{'backgroundImage': `url(/image/apps_0${idx+1}.png)`}"
               :href="item"
+              target="_blank"
             />
             <!-- @click="goLink(item)" -->
           </el-col>
@@ -66,7 +67,6 @@
         </el-row>
       </div>
     </div>
-
 
     <el-dialog
       class="subsrcibe--success"
@@ -92,7 +92,7 @@ import {mapGetters} from 'vuex'
 export default {
   computed: {
     locale(){
-        return this.$i18n.locale == 'en' ? 'English' : '中文简体'
+        return this.$i18n.locale == 'en' ? 'English' : '简体中文'
     },
     ...mapGetters('user', {
         account: 'account',
@@ -123,10 +123,10 @@ export default {
     }
   },
   methods: {
-    changeLang(lang) {
-      this.$i18n.locale = lang
-      localStorage.setItem('lang', lang)
-    },
+    // changeLang(lang) {
+    //   this.$i18n.locale = lang
+    //   localStorage.setItem('lang', lang)
+    // },
     subscr(){
       if(this.email) {
         const subscribe = this.subscribe==1?-1:1
@@ -199,6 +199,7 @@ $extrInner: (
 
   @include e(top) {
     @include displayFlex();
+    flex-wrap: nowrap;
     margin-left: auto;
     margin-right: auto;
     align-items: flex-end;
@@ -231,7 +232,7 @@ $extrInner: (
       }
     }
     
-    @include m(localeBtn) {
+    /* @include m(localeBtn) {
       display: inline-block;
       text-align: center;
       background-color: $--color-white-01;
@@ -243,7 +244,7 @@ $extrInner: (
       height:31px;
       line-height:31px;
       font-size:14px
-    }
+    } */
   }
 
   @include e(bottom) {
