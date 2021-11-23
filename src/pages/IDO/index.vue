@@ -47,7 +47,7 @@
                 <li >
                   <label>{{$t('ido.item5')}}</label>
                   <em />
-                  <span>{{50*price}} VBN</span>
+                  <span>50 VBN</span>
                 </li>
               </template >
               
@@ -197,9 +197,8 @@ export default {
       maxMember: 0,
       reserveAmount: 0,
       reservedPromise: 0,
-      // reserveTimeStamp: 1637740800,
-      reserveTimeStamp: 1637686800,
-      startTimeStamp: 1637690910,
+      reserveTimeStamp: 1637740800,
+      startTimeStamp: 1637748000,
       endTimeStamp: 1637920800,
       progress: {
         amount: 0,
