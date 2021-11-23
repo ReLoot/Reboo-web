@@ -197,8 +197,10 @@ export default {
       maxMember: 0,
       reserveAmount: 0,
       reservedPromise: 0,
-      reserveTimeStamp: 1637740800,
-      startTimeStamp: 1637748000,
+      // reserveTimeStamp: 1637740800,
+      reserveTimeStamp: 1637705400,
+      // startTimeStamp: 1637748000,
+      startTimeStamp: 1637706300,
       endTimeStamp: 1637920800,
       progress: {
         amount: 0,
