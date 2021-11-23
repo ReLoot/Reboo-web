@@ -157,8 +157,8 @@ export default {
   mounted() {
     this.$nextTick(() => {
       if(this.account) {
-        this.$landContract.init()
-        this.$buildingContract.init()
+        // this.$landContract.init()
+        // this.$buildingContract.init()
 
         setTimeout(() => {
           if(parseInt(localStorage.getItem('RECEIVE_NFT_TIPS_SHOW')) != 1 && this.nft_benefit == 1 && !this.ido_unpartake) 
