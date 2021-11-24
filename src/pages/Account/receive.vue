@@ -176,13 +176,7 @@ export default {
         }
         try {
           let recieveOptions = await this.$nftContract.claim(this.formData.gid)
-          // console.log(recieveOptions)
           if (recieveOptions) {
-            /* await this.$http('receiveNFT', {
-              eth_address:this.account, 
-              transactionHash:recieveOptions.transactionHash, 
-              blockNumber:String(recieveOptions.blockNumber),
-            }) */
             this.$store.dispatch('common/deleteLoading', 'receive_nft')
             window.location.href = '/idCard'
           }
