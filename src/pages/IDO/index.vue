@@ -326,7 +326,6 @@ export default {
       this.$http('reserveStatus' , { eth_address: this.account })
         .then(({code, data, msg}) => {
           if(code == 200) {
-            console.log(data)
             this.maxMember = data.max_reserved
             this.reserveAmount = data.total_reserved
             this.reservedPromise = data.can_reserved

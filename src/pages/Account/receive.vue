@@ -177,7 +177,6 @@ export default {
         try {
           let recieveOptions = await this.$nftContract.claim(this.formData.gid)
           // console.log(recieveOptions)
-
           if (recieveOptions) {
             /* await this.$http('receiveNFT', {
               eth_address:this.account, 
