@@ -61,14 +61,14 @@
         </div>
       </div>
 
-      <div class="roadMap--extr">
+      <!-- <div class="roadMap--extr">
         <p>{{$t('roadmap.extr')}}</p>
         <cus-btn-ein 
           class="rb"
           bg="/image/roadmap/btn_1.png"
           @click.native="link"
         >{{$t('roadmap.extrBtn')}}</cus-btn-ein>
-      </div>
+      </div> -->
 
     </div>
   </div>

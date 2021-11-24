@@ -99,7 +99,6 @@ class cardContractConstruct {
 
     const mainContract = await this.mainContractOption()
     const nft_balance = await mainContract.methods.balanceOf(account_).call()
-    // console.log("nft_balance:", nft_balance)
     const list = await mainContract.methods.getOwnerTokenIDs(account_, 0, nft_balance).call()
     return list
   }

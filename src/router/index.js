@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import options from './config'
+import store from '@/store/index'
 
 /* debug for error taost redict route */
 const originalPush = Router.prototype.push
@@ -84,13 +85,20 @@ const routes = (() => {
       },{
         path: '/idCard',
         name: 'idcard',
-        component: ()=>import('@/pages/Account/idCard')
+        component: ()=>import('@/pages/Account/idCard'),
+        meta: {
+          ido: 1,
+        }
       },{
         path: '/receiveNFT',
         name: 'receivenft',
-        component: ()=>import('@/pages/Account/receive')
+        component: ()=>import('@/pages/Account/receive'),
+        meta: {
+          ido: 1,
+          nft_recieved: 1
+        }
       },{
-        path: 'ido',
+        path: '/ido',
         name: 'ido',
         component: ()=>import('@/pages/IDO'),
         meta: {
@@ -102,6 +110,18 @@ const routes = (() => {
   return routes_
 })()
 
+const RouterOption = new Router({mode:'history', routes})
+RouterOption.beforeEach((to, from, next) => {
+  const ido_unpartake = store.getters['user/ido_unpartake']
+  // const nft_benefit = store.getters['user/nft_benefit']
+  if(to.meta.ido == 1 && ido_unpartake) {
+    next({name: 'home'})
+  }
+  // if(to.meta.nft_recieved == 1 && nft_benefit == 0) {
+  //   next({name: 'idcard'})
+  // }
+  next()
+})
 
 
-export default new Router({mode:'history', routes})
+export default RouterOption

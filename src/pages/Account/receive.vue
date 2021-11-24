@@ -10,7 +10,6 @@
       <div class="user--bd">
         <el-row :gutter="30">
           <el-col :md="14">
-
             <h4>Example Card</h4>
             <div class="user--card">
               <div class="user--card_inner front" >
@@ -33,37 +32,44 @@
               </div>
             </div>
           </el-col>
-          <el-col :md="10">
-            <el-form ref="registForm" :model="formData" > 
-              <el-form-item label="Nick Name" prop="nickname" required>
-                <el-input v-model="formData.nickname" :disabled="Boolean(nickName)"  />
-              </el-form-item>
-              <el-form-item label="Game ID" prop="gid" required>
-                <el-input v-model="formData.gid" disabled >
-                  <template slot="append">
-                    <a @click="getGameID" >
-                      <span v-if="loadingWarden.indexOf('get_game_id') > -1">{{$t('common.loading')}}</span>
-                      <span v-else >{{$t('receive.btn1')}}</span>
-                    </a>
-                   </template>
-                </el-input>
-              </el-form-item>
-              
-              <cus-btn-ein 
-                @click.native="formSbumit"
-                class="form_submit"
-                :class="{disabled: this.loadingWarden.indexOf('receive_nft') > -1}"
-                bg="/image/account/btn_form.png"
-              >
-                <template v-if="this.loadingWarden.indexOf('receive_nft') > -1">
-                  {{$t('common.loading')}}
-                </template>
-                <template v-else>
-                  {{$t('receive.btn2')}}
-                </template>
-              </cus-btn-ein>
-            </el-form>
-          </el-col>
+          
+          <template v-if="memberAmount==-1||memberAmount>1000">
+            <el-col :md="10">
+              <div class="temp">COMING SOON...</div>
+            </el-col>
+          </template>
+          <template v-else >
+            <el-col :md="10">
+              <el-form ref="registForm" :model="formData" > 
+                <el-form-item label="Nick Name" prop="nickname" required>
+                  <el-input v-model="formData.nickname" :disabled="Boolean(nickName)"  />
+                </el-form-item>
+                <el-form-item label="Game ID" prop="gid" required>
+                  <el-input v-model="formData.gid" disabled >
+                    <template slot="append">
+                      <a @click="getGameID" >
+                        <span v-if="loadingWarden.indexOf('get_game_id') > -1">{{$t('common.loading')}}</span>
+                        <span v-else >{{$t('receive.btn1')}}</span>
+                      </a>
+                    </template>
+                  </el-input>
+                </el-form-item>
+                <cus-btn-ein 
+                  @click.native="formSbumit"
+                  class="form_submit"
+                  :class="{disabled: this.loadingWarden.indexOf('receive_nft') > -1}"
+                  bg="/image/account/btn_form.png"
+                >
+                  <template v-if="this.loadingWarden.indexOf('receive_nft') > -1">
+                    {{$t('common.loading')}}
+                  </template>
+                  <template v-else>
+                    {{$t('receive.btn2')}}
+                  </template>
+                </cus-btn-ein>
+              </el-form>
+            </el-col>
+          </template>
         </el-row>
       </div>
 
@@ -89,7 +95,12 @@ export default {
     }),
     ...mapGetters('common', {
       loadingWarden: 'loadingWarden'
-    })
+    }),
+  },
+  async created() {
+    this.formData.gid = this.gid
+    this.formData.nickname = this.nickName
+    this.memberAmount = await this.$nftContract.currentAmount()
   },
   data(){
     return {
@@ -107,7 +118,8 @@ export default {
           nickname: [
               {required: true, trigger:'change'},
           ],
-      }
+      },
+      memberAmount: -1
     }
   },
   watch: {
@@ -134,10 +146,6 @@ export default {
       this.formData.nickname = n 
     }
   },
-  created() {
-    this.formData.gid = this.gid
-    this.formData.nickname = this.nickName
-  },
   methods: {
     getGameID() {
       if(this.formData.gid) return false
@@ -159,26 +167,22 @@ export default {
     },
     async formSbumit(){
       if(this.loadingWarden.indexOf('receive_nft') > -1) return false
-      if (!this.formData.nickName || !this.formData.gid ) return false
+      if (!this.formData.nickname || !this.formData.gid ) return false
       this.$store.dispatch('common/addLoading', 'receive_nft')
       this.$refs['registForm'].validate(async valid => {
         if (!valid) {
-          console.log('Please finish personal infomation!');
+          this.$message({message: 'Please finish personal infomation!', type: 'warning'});
           return false;
         }
         try {
-          let res = await this.$nftContract.claim()
-          this.$store.dispatch('common/deleteLoading', 'receive_nft')
-          if (res){
-            // this.$router.replace({name: 'idcard'})
+          let recieveOptions = await this.$nftContract.claim(this.formData.gid)
+          if (recieveOptions) {
+            this.$store.dispatch('common/deleteLoading', 'receive_nft')
             window.location.href = '/idCard'
           }
+
         } catch (err) {
           this.$store.dispatch('common/deleteLoading', 'receive_nft')
-          this.$message({
-            message: err,
-            type: 'error'
-          })
         }
       });
 
@@ -283,6 +287,15 @@ $navHeight: (
       }
     }
   }
+}
+
+.temp {
+  height: 327px;
+  line-height: 327px;
+  text-align: center;
+  color: $--color-white-01;
+  font-size: 24px;
+  font-family: OrbitronRegular;
 }
 
 ::v-deep .el-form {

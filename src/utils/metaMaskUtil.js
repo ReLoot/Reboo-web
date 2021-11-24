@@ -80,7 +80,6 @@ export class metaMaskUtils {
   }
 
   onAccountChanged(account_) {
-    // console.log(!account_ , account_, storage.getters['user/account'])
     // if(!account_ && account_ !== storage.getters['user/account']) {
       this.clearCatch()
       window.location.reload()

@@ -56,7 +56,7 @@
 
             <!-- quatity -->
             <div class="store--quantity">
-              <h4 class="">{{$t('common.quantity')}} : (up to 10)</h4>
+              <h4 class="">{{$t('common.quantity')}} : (up to {{max}})</h4>
               <div class="store--quantity_formItems">
                 <el-input-number 
                   class="store--quantity_count" 
@@ -78,14 +78,14 @@
           <span>{{num*price|tofixed2}} VBN</span>
         </div>
         <div class="store--pay_append">
-          <cus-btn-ein 
+          <!-- <cus-btn-ein 
             class="pay"
             bg="/image/market/btn_1.png"
             v-if="!pageLoading"
             @click.native="pay"
-          >BUY NOW</cus-btn-ein>
+          >BUY NOW</cus-btn-ein> -->
            <!-- v-if="pageLoading" -->
-          <span v-if="pageLoading" class="pause">{{$t('market.storePaying')}}</span>
+          <span class="pause">{{$t('market.storePaying')}}</span>
         </div>
       </div>
       <cus-divider-ein dStyle="white" style="margin-bottom: 40px" />
@@ -122,36 +122,71 @@ export default {
       }],
       rankList: [['market.tr1Cell1','market.tr1Cell2'], 'S', 'SS', 'SSS'],
       processList: [['market.tr2Cell1', 'market.tr2Cell2'], [50, 60], [35, 30], [15, 10]],
-      price: 1,
+      price: 0,
       num: 1,
       min: 1,
       max: 10,
     }
   },
+  async created() {
+    const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+    this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
+  },
   methods: {
-    tabsTrigger(cur) {
+    async tabsTrigger(cur) {
       this.curTabIdx = cur
       this.num = this.min
+      const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+      this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
     },
     async pay() {
+      if (this.pageLoading) return false
       if(!this.account) {
-        this.$message({
-          message: this.$t('common.nopermission'),
-          type: 'error'
-        })
+        this.$message({ message: this.$t('common.nopermission'), type: 'error' })
         return false
       }
+
       this.pageLoading = true
-      if(this.curTabIdx == 0) {
-        await this.$landContract.payForBox(this.num)
-        await this.$landContract.init()
-      }
-      if(this.curTabIdx == 1) {
-        await this.$buildingContract.payForBox(this.num)
-        await this.$buildingContract.init()
+      try {
+        const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+        if (checkDomain.data.remain == 0) {
+          this.pageLoading = false
+          this.$message({ message:'You have reached your daily limit today', type: 'warning'})
+          return false
+        }
+
+        let payOptions
+        if(this.curTabIdx == 0) {
+          payOptions = await this.$landContract.payForBox(this.num)
+          await this.$landContract.init()
+        }
+        if(this.curTabIdx == 1) {
+          payOptions = await this.$buildingContract.payForBox(this.num)
+          await this.$buildingContract.init()
+        }
+        
+        if (payOptions) {
+          const pusreObj = await this.$http('boxPurchase', { 
+            eth_address: this.account, 
+            transactionHash:payOptions.transactionHash, 
+            blockNumber:String(payOptions.blockNumber), 
+            box_num: this.num,
+            type: this.curTabIdx+1 
+          })
+          this.max = pusreObj.data.remain
+          if(pusreObj.data.remain == 0) {
+            this.min = pusreObj.data.remain
+            this.num = pusreObj.data.remain
+          }
+          
+        }
+
+        this.pageLoading = false
+      } catch (err) {
+        this.pageLoading = false
+        console.error(err)
       }
 
-      this.pageLoading = false
     }
   }
 }

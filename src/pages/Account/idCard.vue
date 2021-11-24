@@ -16,9 +16,7 @@
                </div>
                <div class="card--item t_r">
                  <label>{{$t('receive.cardItem2')}}</label>
-                 <p>
-                   <span>--</span>
-                 </p>
+                 <p>{{nft.receive_time | barReplace}}</p>
                </div>
                <div class="card--item b_l">
                  <label>{{$t('receive.cardItem3')}}</label>
