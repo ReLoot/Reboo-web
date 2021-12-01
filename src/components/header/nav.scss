@@ -31,8 +31,8 @@ $wcList: (
   $--page-lg-width:(width: 157px, height: 41px, fontsize:14px),
 );
 $appendList: (
-  $--page-xs-width:(right: 40px),
-  $--page-sm-width:(right: 40px),
+  $--page-xs-width:(right: 20px),
+  $--page-sm-width:(right: 25px),
   $--page-md-width:(right: 50px),
   $--page-lg-width:(right: 60px),
 );
@@ -101,6 +101,11 @@ $avatarList: (
       @include mediaAdapt($wcList);
       font-family: OrbitronRegular;
     }
+    
+    @include m(menubtn){
+      font-size: 24px;
+      color: $--color-white-07;
+    }
 
     @include m(avatar) {
       @include mediaAdapt($avatarList);
@@ -137,6 +142,7 @@ $avatarList: (
     ::v-deep .el-dialog {
       width: 500px;
       height: 258px;
+      max-width: 90%;
       background: url(/image/wallet_card.png) no-repeat center/cover;
       &__close {
         color: $--color-black;
@@ -189,6 +195,7 @@ $avatarList: (
   @include e(dialog) {
     ::v-deep .el-dialog { 
       width: 428px;
+      max-width: 90%;
       // height: 379px;
       background: #2C3541;
       border: 2px solid #99A9BD;
@@ -204,7 +211,7 @@ $avatarList: (
       }
 
       &__body {
-        padding: 40px 50px 80px;
+        padding: 40px 30px 80px;
         position: relative;
         color: $--color-white;
         h3 {

@@ -28,7 +28,7 @@
                 <cus-btn-ein
                   class="card_btn"
                   @click.native="boxSelect(item)"
-                >OPEN</cus-btn-ein>
+                >WAIT</cus-btn-ein>
               </div>
             </div>
           </el-col>
@@ -43,7 +43,6 @@
       :visible.sync="boxDialogVisible"
       :append-to-body="true"
       @closed="boxDialogClose"
-      top="25vh"
     >
       <div class="mainCtn">
         <h4>{{$t(cardTabs[listType])}} X1 </h4>
@@ -129,35 +128,37 @@ export default {
       }
     },
     boxSelect(id) {
-      if(this.pageLoading) return false
-      this.pageLoading = true
+      this.$message(this.$t('token.altr'))
+      return false
+      // if(this.pageLoading) return false
+      // this.pageLoading = true
 
-      this.gifURL = this.listType==0?'/image/market/box_land.gif':'/image/market/box_building.gif'
-      this.curItemID = id
+      // this.gifURL = this.listType==0?'/image/market/box_land.gif':'/image/market/box_building.gif'
+      // this.curItemID = id
 
-      const contractObj = this.listType == 0 ? this.$landContract : this.$buildingContract
-      // let id = this.curItemID
-      this.pageLoading = true
-      contractObj.openBox(id)
-        .then(res => {
-          this.boxDialogVisible = true
-          if (res.data.rarity == 'SS')
-            this.boxCardRank = 2
-          else if (res.data.rarity == 'SSS')
-            this.boxCardRank = 3
-          else
-            this.boxCardRank = 1
+      // const contractObj = this.listType == 0 ? this.$landContract : this.$buildingContract
+      // // let id = this.curItemID
+      // this.pageLoading = true
+      // contractObj.openBox(id)
+      //   .then(res => {
+      //     this.boxDialogVisible = true
+      //     if (res.data.rarity == 'SS')
+      //       this.boxCardRank = 2
+      //     else if (res.data.rarity == 'SSS')
+      //       this.boxCardRank = 3
+      //     else
+      //       this.boxCardRank = 1
 
-          this.pageLoading = false
-          contractObj.classifyItem()
+      //     this.pageLoading = false
+      //     contractObj.classifyItem()
 
-        }).catch(err => {
-          this.pageLoading = false
-          this.$message({
-            message: err,
-            type: 'error'
-          })
-        })
+      //   }).catch(err => {
+      //     this.pageLoading = false
+      //     this.$message({
+      //       message: err,
+      //       type: 'error'
+      //     })
+      //   })
     },
     boxDialogClose() {
       this.gifURL = ''
@@ -168,7 +169,12 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
-
+$cardBtn: (
+  $--page-xs-width:(fontsize: 14px),
+  $--page-sm-width:(fontsize: 16px),
+  $--page-md-width:(fontsize: 16px),
+  $--page-lg-width:(fontsize: 18px),
+);
 @include b(dataList) {
   @include e(hd) {
     margin: 20px 0 40px;
@@ -187,6 +193,8 @@ export default {
       -webkit-transition: all 0.25s;
       transition: all 0.25s;
       box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+      margin-left: auto;
+      margin-right: auto;
       &:hover {
         transform: scale(1.02);
         box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);
@@ -243,17 +251,21 @@ export default {
     }
   }
   .card_btn {
+    @include mediaAdapt($cardBtn);
+    -webkit-user-select: none;
+    user-select: none;
     width: 80%;
-    height: 44px;
-    line-height: 44px;
-    font-size: 24px;
+    // height: 44px;
+    // line-height: 44px;
+    height: 13.1%;
     position: absolute;
-    bottom: 22px;
+    bottom: 6.5%;
     left: 50%;
     margin-left: -40%;
     background-color: #2D8A92;
     border: 2px solid #3DB5AE;
-    font-size: 18px;
+
+    opacity: 0.2;
   }
 }
 
@@ -261,16 +273,13 @@ export default {
 @include b(box) {
   @include e(infocard) {
     ::v-deep .el-dialog {
+      max-width: 86%;
       width: 413px;
-      height: 526px;
+      // height: 526px;
       background: url(/image/market/box_dialog_bg.png) no-repeat center/cover;
-      &__close {
-        display: none;
-      }
+      &__close { display: none; }
 
-      &__header {
-        display: none;
-      }
+      &__header { display: none; }
 
       &__body {
         padding: 0;
@@ -280,10 +289,12 @@ export default {
         color: $--color-white;
         
         .mainCtn {
+          width: 100%;
+          padding-bottom: 127%;
           h4 {
             width: 100%;
             position: absolute;
-            top: 120px;
+            top: 22%;
             text-align: center;
             font-size: 20px;
             text-align: center;
@@ -297,16 +308,20 @@ export default {
         .anm {
           position: absolute;
           width: 100%;
-          top: 160px;
+          top: 30.4%;
           left: 0;
         }
 
         .cardItem {
           position: absolute;
-          width: 165px;
-          height: 204px;
-          margin-left: -82.5px;
-          margin-top: -102px;
+          width: 40%;
+          // height: 204px;
+          padding-bottom: 49.4%;
+          // margin-left: -82.5px;
+          // margin-top: -102px;
+          // margin-left: -82.5px;
+          margin-left: -20%;
+          margin-top: -24.7%;
           top: 50%;
           left: 50%;
           background: no-repeat center/cover;
@@ -348,15 +363,20 @@ export default {
 
         .dialogBtn {
           position: absolute;
-          bottom: 60px;
+          // bottom: 60px;
+          // width: 182px;
+          // height: 45px;
+          width: 44%;
+          height: 8.5%;
+          bottom: 11.5%;
           left: 50%;
-          margin-left: -91px;
-          width: 182px;
-          height: 45px;
-          font-size: 18px;
+          // margin-left: -91px;
+          margin-left: -22%;
+          font-size: 16px;
           font-family: OrbitronRegular;
-          background: #3DB5AE;
+          background-color: #3DB5AE;
           border: 1px solid #2D8A92;
+          border-radius: 2px;
         }
 
       }

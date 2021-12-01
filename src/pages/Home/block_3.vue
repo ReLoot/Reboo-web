@@ -71,15 +71,8 @@ export default {
   }
 }
 
-// $ctnList: (
-//   $--page-xs-width: (bottom: 35px),
-//   $--page-sm-width: (bottom: 35px),
-//   $--page-md-width: (bottom: 40px),
-//   $--page-lg-width: (bottom: 50px),
-// );
-
 $cardList: (
-  $--page-xs-width: (maxwidth: 300px),
+  $--page-xs-width: (maxwidth: 360px),
   $--page-sm-width: (maxwidth: 100%),
   $--page-md-width: (width: 630px, max-width: 100%),
   $--page-lg-width: (width: 650px, max-width: 100%),
@@ -90,6 +83,12 @@ $cardInner: (
   $--page-sm-width: (marginTop: 50px),
   $--page-md-width: (marginTop: 50px),
   $--page-lg-width: (marginTop: 60px),
+);
+$cardInnerDesc: (
+  $--page-xs-width: (paddingRight:20px, left:15px, ),
+  $--page-sm-width: (paddingRight:45.25%, left:20px),
+  $--page-md-width: (paddingRight:45.25%, left:30px),
+  $--page-lg-width: (paddingRight:45.25%, left:30px),
 );
 
 @include b(cards2) {
@@ -124,10 +123,10 @@ $cardInner: (
         transform-origin: center;
       }
       .desc {
+        @include mediaAdapt($cardInnerDesc);
         position: absolute;
-        left: 30px;
         bottom: 20px;
-        padding-right: 45.25%;
+        // padding-right: 45.25%;
         box-sizing: content-box;
         line-height: 120%;
         letter-spacing: 0;

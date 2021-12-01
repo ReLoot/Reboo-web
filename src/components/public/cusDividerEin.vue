@@ -70,7 +70,7 @@ export default {
     }
     @include m(white) {
       &:before, &:after, hr {
-        background-color: $--color-white;
+        background-color: $--color-white-04;
       }
     }
 

@@ -6,7 +6,7 @@
         {{$t('token.desc')}}
       </p>
 
-      <div class="token--banner_btns">
+      <div class="token--banner_btns hidden-sm-and-down">
         <cus-btn-ein 
         class="btn"
         bg="/image/token/btn_1.png"
@@ -69,6 +69,7 @@ $btnList: (
       margin-bottom: 35px;
       text-align: center;
       color: $--color-yellow;
+      line-height: 125%;
     }
 
     @include m(desc) {

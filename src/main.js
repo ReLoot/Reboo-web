@@ -4,10 +4,14 @@ import App from './App.vue'
 import router from '@/router'
 
 import store from '@/store'
-import {metaMaskUtils} from '@/utils/metaMaskUtil'
+import http from '@/utils/http'
 
 import {initI18n} from '@/utils/i18n'
-import cus_http from '@/utils/http'
+import {appVersionCheck} from '@/utils/bootstrap'
+
+// test code 
+// import VConsole from 'vconsole'
+// new VConsole()
 
 import 'element-ui/lib/theme-chalk/display.css';
 import '@/style/element-variables.scss'
@@ -18,17 +22,17 @@ import '@/assets/style/font-orbitron.css';
 import '@/utils/publicComponents'
 import '@/utils/contract'
 
+appVersionCheck()
+
+const i18n = initI18n(localStorage.getItem('lang')||'en') // process.env.VUE_APP_LANG
+
 Vue.use(ElementUI)
 
-Vue.config.productionTip = false
-
-Vue.prototype.$http = cus_http
-Vue.prototype.$mu = new metaMaskUtils()
-
+Vue.prototype.$http = http
 Vue.prototype.$globalBus = new Vue()
-// const i18n = initI18n('zh') //jsCookie.get('lang')?jsCookie.get('lang'):process.env.VUE_APP_LANG
-const i18n = initI18n(localStorage.getItem('lang')||'en') //jsCookie.get('lang')?jsCookie.get('lang'):process.env.VUE_APP_LANG
 
+
+Vue.config.productionTip = false
 
 new Vue({
   router,

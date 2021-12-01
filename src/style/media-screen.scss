@@ -4,6 +4,9 @@
     @if $key == 'background' {
       background: $attr;
     }
+    @if $key == 'display' {
+      display: $attr;
+    }
     @if $key == 'width' {
       width: $attr;
     }
@@ -63,6 +66,12 @@
     }
     @if $key == 'minwidth' {
       min-width: $attr;
+    }
+    @if $key == 'opacity' {
+      opacity: $attr;
+    }
+    @if $key == 'textAlign' {
+      text-align: $attr;
     }
   }
 }

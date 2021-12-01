@@ -41,6 +41,7 @@ export default {
       display: inline-block;
       -webkit-user-select: none;
       user-select: none;
+      user-select: none;
       position: relative;
       cursor: pointer;
       background: no-repeat center/cover;
@@ -69,7 +70,7 @@ export default {
       color: inherit;
       white-space: nowrap;
       vertical-align: -6px;
-      margin-top: 3px;
+      // margin-top: 3px;
     }
   }
 }

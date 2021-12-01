@@ -1,13 +1,10 @@
 import detectEthereumProvider from "@metamask/detect-provider"
 import storage from '@/store/index'
-import {Message} from 'element-ui'
 import Web3 from "web3"
-// import ml_abi from '@/utils/contract/miner_card.json'
-// import vb_abi from '@/utils/contract/Vib.json'
+import tp from 'tp-js-sdk'
 
-// const vbn_contract = process.env.VUE_APP_VBNcxzk
-// const building_contract = process.env.VUE_APP_BUILDING_CONTRACT
-// const land_contract = process.env.VUE_APP_LAND_CONTRACT
+
+import {showTipsMsg} from '@/utils/message'
 
 export class metaMaskUtils {
   provider_
@@ -25,6 +22,7 @@ export class metaMaskUtils {
   async initlization () {
     const provider_ = await new detectEthereumProvider()
     this.provider_ = provider_
+
     if (this.provider_) {
       let check_ = await this.networkCheck()
       if (!check_) return false
@@ -34,14 +32,14 @@ export class metaMaskUtils {
         this.account = new Web3().utils.toChecksumAddress(accounts[0])
         storage.commit('user/account', this.account)
         this.eventRegister()
-        // window.location.reload()
+        return this.account
       } catch (err) {
         console.error(err)
       }
 
     } else {
       const tips = 'Please install MetaMask'
-      this.showError(tips)
+      showTipsMsg(tips)
     }
   }
 
@@ -55,7 +53,7 @@ export class metaMaskUtils {
     let {networkId} = await this.getNetworkVersion()
     if(networkId != this.options.network) {
       let tips = `Current network ${networkId} is not supported, Please switch BSC network`
-      this.showError(tips)
+      showTipsMsg(tips)
       this.clearCatch()
       return false
     }
@@ -96,12 +94,4 @@ export class metaMaskUtils {
     storage.dispatch('user/cleanAccount')
   }
 
-  showError(err) {
-    Message({
-        showClose: true,
-        message: typeof(err)=='object'?JSON.stringify(err['message']||err):err,
-        type: 'error'
-    })
-    console.error(err)
-  }
 }

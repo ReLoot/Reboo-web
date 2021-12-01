@@ -3,7 +3,7 @@
     <div class="container">
       <bk-title bg="/image/token/bk_3_hd.png" title="Dual Token Model" color="#FFE02C" />
       <p class="token--bk_desc">{{$t('token.bk3Desc')}}</p>
-      <div class="tk--pie">
+      <div class="tk--pie hidden-sm-and-down">
         <div class="tk--pie_inner">
           <div class="tk--pie_view">
             <span class="unit">VBN</span>
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div class="tk--pie tk--pie02">
+      <div class="tk--pie tk--pie02 hidden-sm-and-down">
         <div class="tk--pie_inner">
           <div class="tk--pie_view">
             <span class="unit">DKMT</span>

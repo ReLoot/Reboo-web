@@ -1,20 +1,20 @@
 <template>
   <div class="footer">
     <div class="container">
-      <div class="footer--extr" v-if="extrVisible.indexOf(curRoute) !== -1">
+      <div class="footer--extr" v-if="extrVisible.includes(curRoute)">
         <cus-divider-ein dStyle="green" />
         <div class="footer--extr_inner">
           <div class="item" >
             <p>{{$t('footer.linkBlock')}}</p>
           </div>
-          <div class="item" >
-            <a href="https://docs.vibraniumslg.io/" target="_blank" >https://docs.vibraniumslg.io/</a>
+          <div class="item footer--extr_link" >
+            <a href="https://docs.vibraniumslg.io/" target="_blank" >https://docs.vibraniumslg.io</a>
           </div>
         </div>
         <cus-divider-ein dStyle="green" />
       </div>
 
-      <div class="footer--top">
+      <div class="footer--top hidden-md-and-down">
         <div class="footer--top_logo">
           <router-link :to="{name: 'home'}" />
           <img src="/image/logo.png" />
@@ -40,17 +40,17 @@
           @click.native="subscr"
           v-if="account"
         >
-          <!-- <span v-if="subscribe == 1">Unsubscribe</span> -->
-          <em  v-if="subscribe == 1" class="subscribe"></em>
+          <em  v-if="subscribe == 1" class="subscribed"></em>
           <em v-else class="unsubscribe"></em>
           <span v-if="subscribe == 1" >{{$t('footer.unsubscribe')}}</span>
           <span v-else >{{$t('footer.subscribe')}}</span>
         </cus-btn-ein>
-        
       </div>
+
       <div class="footer--bottom">
         <el-row >
-          <el-col :sm="14">
+          <!-- class="hidden-md-and-down"  -->
+          <el-col class="apps_wrap" style="margin-bottom:10px" :sm="14">
             <a
               class="apps"
               v-for="(item, idx) in apps" 
@@ -61,7 +61,7 @@
             />
             <!-- @click="goLink(item)" -->
           </el-col>
-          <el-col :sm="10">
+          <el-col style="margin-bottom:10px" :sm="10">
             <p class="footer--bottom_copyright">© 2021 Vibranium. All Rights Reserved</p>
           </el-col>
         </el-row>
@@ -92,7 +92,7 @@ import {mapGetters} from 'vuex'
 export default {
   computed: {
     locale(){
-        return this.$i18n.locale == 'en' ? 'English' : '简体中文'
+        return this.$i18n.locale == 'en' ? 'English' : '繁体中文'
     },
     ...mapGetters('user', {
         account: 'account',
@@ -107,6 +107,9 @@ export default {
         this.curRoute = to.name
       },
     }
+  },
+  created() {
+    this.$globalBus.$on('EMAIL_SUBSCRIBED', this.subscr)
   },
   data() {
     return {
@@ -123,10 +126,6 @@ export default {
     }
   },
   methods: {
-    // changeLang(lang) {
-    //   this.$i18n.locale = lang
-    //   localStorage.setItem('lang', lang)
-    // },
     subscr(){
       if(this.email) {
         const subscribe = this.subscribe==1?-1:1
@@ -179,17 +178,51 @@ $info: (
 );
 
 $apps: (
-  $--page-xs-width: (width:18px, height:18px, marginRight: 8px),
+  $--page-xs-width: (width:18px, height:18px, marginRight: 12px),
   $--page-sm-width: (width:28px, height:28px, marginRight: 12px),
   $--page-md-width: (width:32px, height:32px, marginRight: 16px),
   $--page-lg-width: (width:40px, height:40px, marginRight: 20px),
 );
 
+$appsWrap:(
+  $--page-xs-width: (textAlign: center),
+  $--page-sm-width: (textAlign: left),
+  $--page-md-width: (textAlign: left),
+  $--page-lg-width: (textAlign: left),
+);
+
+$extr: (
+  $--page-xs-width: (marginBottom: 10px),
+  $--page-sm-width: (marginBottom: 20px),
+  $--page-md-width: (marginBottom: 50px),
+  $--page-lg-width: (marginBottom: 50px),
+);
+
 $extrInner: (
-  $--page-xs-width: (width:18px, height:18px, marginRight: 8px),
-  $--page-sm-width: (width:28px, height:28px, marginRight: 12px),
-  $--page-md-width: (width:32px, height:32px, marginRight: 16px),
-  $--page-lg-width: (width:40px, height:40px, marginRight: 20px),
+  $--page-xs-width: (display: block),
+  $--page-sm-width: (display: block),
+  $--page-md-width: (display: flex),
+  $--page-lg-width: (display: flex),
+);
+
+$extrInnerP: (
+  $--page-xs-width: (fontsize:12px, width:80%, textAlign: center, marginLeft: auto, marginRight: auto, marginBottom: 10px),
+  $--page-sm-width: (fontsize:14px, width:60%, textAlign: center, marginLeft: auto, marginRight: auto, marginBottom: 10px),
+  $--page-md-width: (fontsize:14px, width:60%, textAlign: left, marginLeft: 10px, marginBottom: 0),
+  $--page-lg-width: (fontsize:14px, width:60%, textAlign: left, marginLeft: 10px, marginBottom: 0),
+);
+$extrInnerLink: (
+  $--page-xs-width: (fontsize:14px, lineHeight:125%, textAlign: center),
+  $--page-sm-width: (fontsize:20px, lineHeight:125%, textAlign: center),
+  $--page-md-width: (fontsize:20px, lineHeight: 56px),
+  $--page-lg-width: (fontsize:20px, lineHeight: 56px),
+);
+
+$copyRight: (
+  $--page-xs-width: (fontsize:12px, opacity: 0.5, lineHeight:150%),
+  $--page-sm-width: (fontsize:14px, opacity: 0.5, lineHeight:150%),
+  $--page-md-width: (fontsize:16px, opacity: 1, lineHeight:150%),
+  $--page-lg-width: (fontsize:16px, opacity: 1, lineHeight:150%),
 );
 
 
@@ -231,20 +264,6 @@ $extrInner: (
         }
       }
     }
-    
-    /* @include m(localeBtn) {
-      display: inline-block;
-      text-align: center;
-      background-color: $--color-white-01;
-      border: 1px solid $--color-white-04;
-      display: block;
-      color: $--color-white-07;
-      cursor: pointer;
-      width:120px;
-      height:31px;
-      line-height:31px;
-      font-size:14px
-    } */
   }
 
   @include e(bottom) {
@@ -257,23 +276,31 @@ $extrInner: (
       display: inline-block;
       vertical-align: middle;
       background: no-repeat center/cover;
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &_wrap {
+        @include mediaAdapt($appsWrap);
+      }
     }
 
     @include m(copyright) {
-      line-height: 64px;
-      text-align: right;
+      @include mediaAdapt($copyRight);
+      text-align: center;
       white-space: nowrap;
     }
   }
 
   @include e(extr) {
-    margin-bottom: 50px;
+    @include mediaAdapt($extr);
     width: 96%;
     margin-left: auto;
     margin-right: auto;
     
     @include m(inner) {
       @include displayFlex();
+      @include mediaAdapt($extrInner);
       align-items: center;
       background: rgba(28, 77, 74, 0.3);
       padding: 10px 20px;
@@ -283,23 +310,21 @@ $extrInner: (
       }
 
       p {
+        @include mediaAdapt($extrInnerP);
+        line-height: 125%;
         font-size: 14px;
         color: $--color-white-07;
-        width: 60%;
-        text-align: left;
-        margin-left: 10px;
       }
-      
-       a {
-         line-height: 56px;
-         font-size: 20px;
-         font-family: OrbitronBlack;
-         color: $--color-palegreen;
-         &:hover {
-           text-shadow: 0 0 5px $--color-palegreen;
-           cursor: pointer;
-         }
-       }
+    }
+
+    @include m(link) {
+      @include mediaAdapt($extrInnerLink);
+      font-family: OrbitronBlack;
+      color: $--color-palegreen;
+      &:hover {
+        text-shadow: 0 0 5px $--color-palegreen;
+        cursor: pointer;
+      }
     }
   }
 
@@ -307,7 +332,7 @@ $extrInner: (
     width: 160px;
     padding-left: 10px;
     padding-right: 10px;
-    height: 31px;
+    height: 43px;
     margin-left: 15px;
     em {
       display: inline-block;
@@ -316,7 +341,7 @@ $extrInner: (
       background: no-repeat center/cover;
       vertical-align: middle;
       margin-right: 5px;
-      &.subscribe {
+      &.subscribed {
         background-image: url(/image/lab_subscribe.png);
       }
       &.unsubscribe {

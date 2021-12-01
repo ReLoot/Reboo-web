@@ -98,17 +98,24 @@ $marketHdList: (
   $--page-lg-width:(padding: 28px 10px 25px),
 );
 
+$nav: (
+  $--page-xs-width:(textAlign: center),
+  $--page-sm-width:(textAlign: center),
+  $--page-md-width:(textAlign: left),
+  $--page-lg-width:(textAlign: left),
+);
+
 $navItem: (
-  $--page-xs-width:(marginRight: 18px, fontsize: 16px, lineHeight: 24px),
-  $--page-sm-width:(marginRight: 18px, fontsize: 16px, lineHeight: 24px),
+  $--page-xs-width:(marginRight: 18px, fontsize: 12px, lineHeight: 24px),
+  $--page-sm-width:(marginRight: 18px, fontsize: 14px, lineHeight: 24px),
   $--page-md-width:(marginRight: 20px, fontsize: 16px, lineHeight: 24px),
   $--page-lg-width:(marginRight: 28px, fontsize: 18px, lineHeight: 24px),
 );
 $countList: (
-  $--page-xs-width:(fontsize: 16px, lineHeight: 24px),
-  $--page-sm-width:(fontsize: 16px, lineHeight: 24px),
-  $--page-md-width:(fontsize: 16px, lineHeight: 24px),
-  $--page-lg-width:(fontsize: 18px, lineHeight: 24px),
+  $--page-xs-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: center),
+  $--page-sm-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: center),
+  $--page-md-width:(fontsize: 16px, lineHeight: 24px, marginTop:0),
+  $--page-lg-width:(fontsize: 18px, lineHeight: 24px, marginTop:0),
 );
 
 @include b(market) {
@@ -118,15 +125,23 @@ $countList: (
     font-family: OrbitronRegular;
     line-height: 40px;
     @include m(tabs) {
+      @include mediaAdapt($nav);
+      font-size: 0;
+      line-height: 1;
+
       li {
         @include mediaAdapt($navItem);
-        float: left;
+        // float: left;
+        display: inline-block;
         cursor: pointer;
         color: $--color-white-07;
         font-size: 22px;
         white-space: nowrap;
         &.active {
           color: $--color-aqua;
+        }
+        &:last-child {
+          margin-right: 0;
         }
       }
     }

@@ -2,7 +2,7 @@
   <div class="user">
     <div class="container">
       <div class="user--hd">
-        <h2>Personal Information</h2>
+        <h2>My identity NFT</h2>
         <cus-divider-ein dStyle="white" />
       </div>
 
@@ -111,11 +111,32 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$hd: (
+  $--page-xs-width:(fontsize: 16px),
+  $--page-sm-width:(fontsize: 20px),
+  $--page-md-width:(fontsize: 24px),
+  $--page-lg-width:(fontsize: 24px),
+);
+
 $navHeight: (
   $--page-xs-width:(paddingTop: 50px),
   $--page-sm-width:(paddingTop: 50px),
   $--page-md-width:(paddingTop: 63px),
   $--page-lg-width:(paddingTop: 76px),
+);
+
+$cardBackItem: (
+  $--page-xs-width:(bottom:28px),
+  $--page-sm-width:(bottom:36px),
+  $--page-md-width:(bottom:48px),
+  $--page-lg-width:(bottom:48px),
+);
+
+$bottom: (
+  $--page-xs-width:(bottom: 25px),
+  $--page-sm-width:(bottom: 35px),
+  $--page-md-width:(bottom: 45px),
+  $--page-lg-width:(bottom: 45px),
 );
 
 .container {
@@ -126,12 +147,12 @@ $navHeight: (
 @include b(user){
   @include e(hd) {
     font-family: OrbitronRegular;
-    margin-bottom: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     h2 {
-      font-size: 30px;
-      line-height: 200%;
-      height: 90px;
-      line-height: 90px;
+      @include mediaAdapt($hd);
+      margin-bottom: 15px;
+      line-height: 125%;
     }
   }
 
@@ -142,6 +163,8 @@ $navHeight: (
   @include e(card) {
     width: 468px;
     max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     @include m(inner) {
       width: 100%;
       padding-bottom: 60%;
@@ -159,7 +182,7 @@ $navHeight: (
       }
 
       .b_l, .b_r {
-        bottom: 45px;
+        @include mediaAdapt($bottom);
       }
 
       .t_l, .b_l {
@@ -171,6 +194,7 @@ $navHeight: (
         right: 40px;
         text-align: right;
       }
+
     }
   }
 }
@@ -184,10 +208,11 @@ $navHeight: (
     label {
       font-size: 12px;
       display: block;
+      white-space: nowrap;
       color: $--color-yellow;
     }
     p {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 }
@@ -195,14 +220,15 @@ $navHeight: (
 @include b(form) {
   @include e(item) {
     @include plcenter();
-    bottom: 48px;
+    @include mediaAdapt($cardBackItem);
+    // bottom: 48px;
     width: 83%;
     @include m(hd) {
       @include clearfix();
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       label {
         float: left;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 24px;
       }
       .el-button {

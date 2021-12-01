@@ -1,0 +1,102 @@
+import detectEthereumProvider from "@metamask/detect-provider"
+import storage from '@/store/index'
+import Web3 from "web3"
+import $http from '@/utils/http'
+
+import {showTipsMsg} from '@/utils/message'
+// import ml_abi from '@/utils/contract/miner_card.json'
+// import vb_abi from '@/utils/contract/Vib.json'
+
+// const vbn_contract = process.env.VUE_APP_VBNcxzk
+// const building_contract = process.env.VUE_APP_BUILDING_CONTRACT
+// const land_contract = process.env.VUE_APP_LAND_CONTRACT
+
+export class metaMaskUtils {
+  // provider_
+  account = storage.getters["user/account"]
+  
+  // constructor (params) {
+  //   this.options = {
+  //     network: process.env.VUE_APP_NETWORK
+  //   } 
+
+  //   if (typeof(params) == 'object')
+  //     Object.assign(this.options, params)
+  // }
+
+  static async initlization () {
+    const provider_ = await new detectEthereumProvider()
+    // this.provider_ = provider_
+    if (provider_) {
+      let check_ = await metaMaskUtils.networkCheck()
+      if (!check_) return false
+
+      try { 
+        const accounts = await provider_.request({ method: 'eth_requestAccounts' });
+        const account = new Web3().utils.toChecksumAddress(accounts[0])
+        storage.commit('user/account', account)
+        metaMaskUtils.eventRegister(account)
+      } catch (err) {
+        console.error(err)
+      }
+
+    } else {
+      const tips = 'Please install MetaMask'
+      showTipsMsg(tips)
+    }
+  }
+
+  static async getNetworkVersion (){
+    const provider_ = await new detectEthereumProvider()
+    const chainId = await provider_.request({method: 'eth_chainId'});
+    const networkId = await provider_.request({method: 'net_version'});
+    return { chainId, networkId }
+  }
+
+  static async networkCheck(){
+    let {networkId} = await metaMaskUtils.getNetworkVersion()
+    if(networkId != process.env.VUE_APP_NETWORK) {
+      let tips = `Current network ${networkId} is not supported, Please switch BSC network`
+      showTipsMsg(tips)
+      this.clearCatch()
+      return false
+    }
+    return true
+  }
+
+  static async eventRegister (account) {
+    const provider_ = await new detectEthereumProvider()
+    provider_.on('chainChanged', ()=>{
+      metaMaskUtils.onChainChanged()
+    })
+    provider_.on('accountsChanged', ()=>{
+      metaMaskUtils.onAccountChanged(account)
+    })
+    provider_.on('disconnect', ()=>{
+      metaMaskUtils.onDisconnect()
+    })
+  }
+
+  static onChainChanged() {
+    metaMaskUtils.clearCatch()
+    window.location.reload()
+  }
+
+  static onAccountChanged(account_) {
+    // if(!account_ && account_ !== storage.getters['user/account']) {
+      metaMaskUtils.clearCatch()
+      window.location.reload()
+    // }
+  }
+
+  static onDisconnect() {
+    metaMaskUtils.clearCatch()
+    window.location.reload()
+  }
+
+  clearCatch() {
+    localStorage.removeItem('account')
+    storage.dispatch('user/cleanAccount')
+  }
+
+}

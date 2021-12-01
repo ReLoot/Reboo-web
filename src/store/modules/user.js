@@ -101,16 +101,25 @@ export default {
     },  
     cleanAccount({commit}){
       localStorage.clear()
-      // window.location.reload()    // temporary
-      // let account_ = ''
-      // localStorage.removeItem('account')
-      // localStorage.removeItem('email')
-      // localStorage.removeItem('gid')
-      // localStorage.removeItem('nickName')
       // commit('account', account_)
       // commit('email', account_)
       // commit('subscribe', 0)
-      // commit('gid', 0)
+      // commit('gid', 0)"userInfo": localStorage.getItem('USERINFO') || {},
+      commit('account', '')
+      commit('email', '')
+      commit('gid', '')
+      commit('nickName', '')
+      commit('subscribe', 0)
+      commit('nft', '')
+      commit('nft_benefit', 0)
+      commit('ido_qua', false)
+      commit('ido_unpartake', true)
+      commit('balance', 0)
+      commit('balance_ntf', 0)
+      commit('landBox', [])
+      commit('buildingBox', [])
+      commit('landCard', [])
+      commit('buildingCard', [])
     }
   }
 }

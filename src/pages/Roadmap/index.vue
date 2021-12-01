@@ -134,7 +134,7 @@ $rb: (
 @include b(roadMap) {
   background: url(/image/roadmap/banner.jpg) no-repeat center/cover;
   h2 {
-    font-size: 70px;
+    font-size: 56px;
     line-height: 100%;
     font-family: OrbitronBlack;
     text-align: center;
@@ -157,14 +157,13 @@ $rb: (
       min-width: 100%;
       overflow-x: auto;
       overflow-y: hidden;
-      margin-bottom: 70px;
     }
   }
 
   @include e(thead) {
-    // width: 1340px;
     margin-left: auto;
     margin-right: auto;
+    min-width: 900px;
     @include m(row) {
       margin: 5px 12px;
       background-color: rgba(71,179,247,0.4);
@@ -172,20 +171,20 @@ $rb: (
     @include m(cell) {
       font-size: 15px;
       text-align: center;
-      height: 70px;
-      line-height: 70px;
+      height: 60px;
+      line-height: 60px;
       white-space: nowrap;
       word-wrap: break-word;
     }
   }
 
   @include e(tbody) {
-    // width: 1340px;
     margin-left: auto;
     margin-right: auto;
+    min-width: 900px;
     @include m(row) {
       .el-row{
-        padding: 52px 0;
+        padding: 42px 0;
         text-align: center;
       }
       .el-col {
@@ -198,7 +197,8 @@ $rb: (
         &:first-child {
           border-left: 0 none;
           font-family: OrbitronBlack;
-          font-size: 36px;
+          // font-size: 36px;
+          font-size: 30px;
         }
       }
     }

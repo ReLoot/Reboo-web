@@ -57,6 +57,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import {metaMaskUtils} from '@/utils/metaMaskUtil'
 import Web3 from 'web3'
 import ml_abi from '@/utils/contract/miner_card.json'
 import vb_abi from '@/utils/contract/Vib.json'
@@ -105,7 +106,8 @@ export default {
     }
   },
   async created(){
-    this.$mu.initlization()
+    const mu = new metaMaskUtils()
+    mu.initlization()
   },
   methods: {
     async buyToolBox(){

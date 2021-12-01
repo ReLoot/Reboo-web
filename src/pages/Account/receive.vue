@@ -48,7 +48,7 @@
                   <el-input v-model="formData.gid" disabled >
                     <template slot="append">
                       <a @click="getGameID" >
-                        <span v-if="loadingWarden.indexOf('get_game_id') > -1">{{$t('common.loading')}}</span>
+                        <span v-if="loadingWarden.includes('get_game_id')">{{$t('common.loading')}}</span>
                         <span v-else >{{$t('receive.btn1')}}</span>
                       </a>
                     </template>
@@ -57,10 +57,10 @@
                 <cus-btn-ein 
                   @click.native="formSbumit"
                   class="form_submit"
-                  :class="{disabled: this.loadingWarden.indexOf('receive_nft') > -1}"
+                  :class="{disabled: this.loadingWarden.includes('receive_nft')}"
                   bg="/image/account/btn_form.png"
                 >
-                  <template v-if="this.loadingWarden.indexOf('receive_nft') > -1">
+                  <template v-if="this.loadingWarden.includes('receive_nft')">
                     {{$t('common.loading')}}
                   </template>
                   <template v-else>
@@ -82,6 +82,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import {nftContract} from '@/utils/contract_nft'
+import {pageInitlization} from '@/utils/bootstrap'
 export default {
   filters: {
     barReplace: str => str?str:'--'
@@ -150,7 +151,7 @@ export default {
     getGameID() {
       if(this.formData.gid) return false
       const request_name = 'get_game_id'
-      if(this.loadingWarden.indexOf(request_name) > -1) return false
+      if(this.loadingWarden.includes(request_name)) return false
       let vaild = this.$refs['registForm'].validateField('nickname', async err => {
         if(err) return false
         try {
@@ -166,7 +167,7 @@ export default {
       })
     },
     async formSbumit(){
-      if(this.loadingWarden.indexOf('receive_nft') > -1) return false
+      if(this.loadingWarden.includes('receive_nft')) return false
       if (!this.formData.nickname || !this.formData.gid ) return false
       this.$store.dispatch('common/addLoading', 'receive_nft')
       this.$refs['registForm'].validate(async valid => {
@@ -178,7 +179,9 @@ export default {
           let recieveOptions = await this.$nftContract.claim(this.formData.gid)
           if (recieveOptions) {
             this.$store.dispatch('common/deleteLoading', 'receive_nft')
-            window.location.href = '/idCard'
+            // window.location.href = '/idCard'
+            await pageInitlization()
+            this.$router.replace({name: 'idcard'})
           }
 
         } catch (err) {
@@ -193,12 +196,45 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$hd: (
+  $--page-xs-width:(fontsize: 16px),
+  $--page-sm-width:(fontsize: 20px),
+  $--page-md-width:(fontsize: 24px),
+  $--page-lg-width:(fontsize: 24px),
+);
+
 $navHeight: (
   $--page-xs-width:(paddingTop: 50px),
   $--page-sm-width:(paddingTop: 50px),
   $--page-md-width:(paddingTop: 63px),
   $--page-lg-width:(paddingTop: 76px),
 );
+
+$top: (
+  $--page-xs-width:(top: 20px),
+  $--page-sm-width:(top: 25px),
+  $--page-md-width:(top: 30px),
+  $--page-lg-width:(top: 30px),
+);
+$left: (
+  $--page-xs-width:(left: 20px),
+  $--page-sm-width:(left: 30px),
+  $--page-md-width:(left: 40px),
+  $--page-lg-width:(left: 40px),
+);
+$right: (
+  $--page-xs-width:(right: 20px),
+  $--page-sm-width:(right: 30px),
+  $--page-md-width:(right: 40px),
+  $--page-lg-width:(right: 40px),
+);
+$bottom: (
+  $--page-xs-width:(bottom: 25px),
+  $--page-sm-width:(bottom: 35px),
+  $--page-md-width:(bottom: 45px),
+  $--page-lg-width:(bottom: 45px),
+);
+
 
 .container {
   @include mediaAdapt($navHeight);
@@ -211,18 +247,18 @@ $navHeight: (
     margin-top: 60px;
     margin-bottom: 20px;
     h2 {
-      font-size: 34px;
+      @include mediaAdapt($hd);
       line-height: 120%;
       margin-bottom: 10px;
     }
     p.sub {
       font-size: 12px;
-      white-space: nowrap;
+      // white-space: nowrap;
     }
   }
   
   @include e(bd) {
-    padding: 40px;
+    padding: 20px;
     background-color: rgba(38, 49, 63, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
     margin-bottom: 80px;
@@ -254,20 +290,25 @@ $navHeight: (
       }
 
       .t_l, .t_r {
-        top: 30px;
+        // top: 30px;
+        @include mediaAdapt($top);
       }
 
       .b_l, .b_r {
-        bottom: 45px;
+        // bottom: 45px;
+        @include mediaAdapt($bottom);
+
       }
 
       .t_l, .b_l {
-        left: 40px;
+        // left: 40px;
+        @include mediaAdapt($left);
         text-align: left;
       }
 
       .t_r, .b_r {
-        right: 40px;
+        @include mediaAdapt($right);
+        // right: 40px;
         text-align: right;
       }
 
@@ -282,7 +323,7 @@ $navHeight: (
           color: $--color-yellow;
         }
         p {
-          font-size: 14px;
+          font-size: 12px;
         }
       }
     }

@@ -12,7 +12,6 @@ Router.prototype.push = function push(location, onResolve, onReject) {
 
 Vue.use(Router)
 
-// console.log(process.env.VUE_APP_DEV_TYPE)
 const routes = (() => {
   let routes_
   const dev_type = process.env.VUE_APP_DEV_TYPE
@@ -112,11 +111,11 @@ const routes = (() => {
 
 const RouterOption = new Router({mode:'history', routes})
 RouterOption.beforeEach((to, from, next) => {
-  const ido_unpartake = store.getters['user/ido_unpartake']
-  // const nft_benefit = store.getters['user/nft_benefit']
-  if(to.meta.ido == 1 && ido_unpartake) {
-    next({name: 'home'})
-  }
+  // const ido_unpartake = store.getters['user/ido_unpartake']
+  // if(to.meta.ido == 1 && ido_unpartake) {
+  //   next({name: 'home'})
+  // }
+  
   // if(to.meta.nft_recieved == 1 && nft_benefit == 0) {
   //   next({name: 'idcard'})
   // }

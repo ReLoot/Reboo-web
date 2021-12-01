@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <a class="header--logo"></a>
-    <ul class="header--nav">
+    <ul class="header--nav hidden-md-and-down">
       <template v-for="(item, idx) in navs" >
 
         <router-link 
@@ -13,46 +13,65 @@
         >{{$t(item.meta.view)}}</router-link>
       </template>
 
+      <template v-if="account">
+        <router-link v-if="nft_benefit == 1" tag="li" :class="{active: curRoute == 'receivenft'}" :to="{name: 'receivenft'}" >{{$t('header.dropItem2')}}</router-link>
+        <router-link v-if="nft_benefit == 0" tag="li" :class="{active: curRoute == 'idcard'}" :to="{name: 'idcard'}" >{{$t('header.dropItem3')}}</router-link>
+      </template>
+
     </ul>
 
     <div class="header--append">
 
-      <el-dropdown class="header--locale" @command="changeLang" placement="bottom" trigger="click">
+      <el-dropdown 
+        class="header--locale hidden-md-and-down" 
+        @command="changeLang" 
+        placement="bottom" 
+        trigger="click"
+      >
         <a class="header--locale_btn">
           {{locale}}<i class="el-icon-caret-bottom el-icon--right"></i>
         </a>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="en" >English</el-dropdown-item>
-          <el-dropdown-item command="zh" >简体中文</el-dropdown-item>
+          <el-dropdown-item command="zh" >繁体中文</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
 
       <cus-btn-ein 
-        class="wc"
+        class="wc hidden-md-and-down"
         bg="/image/btn_banner.png"
         v-if="!account"
         @click.native="walletConnect"
       >{{$t('header.btn')}}</cus-btn-ein>
 
 
-      <el-dropdown v-if="account" class="header--append_account" @command="accountHandler" placement="top" trigger="click">
+      <el-dropdown 
+        v-if="account" 
+        class="header--append_account hidden-md-and-down" 
+        @command="accountHandler" 
+        placement="top" 
+        trigger="click"
+      >
         <a class="header--append_avatar"></a>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
-          <template v-if="!ido_unpartake">
+          <!-- <template v-if="!ido_unpartake">
             <el-dropdown-item command="toReceiveNFN" v-if="nft_benefit == 1">{{$t('header.dropItem2')}}</el-dropdown-item>
             <el-dropdown-item command="toIDCard" v-if="nft_benefit == 0" >{{$t('header.dropItem3')}}</el-dropdown-item>
-          </template>
+          </template> -->
           <el-dropdown-item command="logout" >{{$t('header.dropItem4')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
+      <div class="header--append_menubtn hidden-lg-and-up" @click="pageMenuTrigger">
+        <i class="fa fa-bars"></i>
+      </div>
     </div>
 
     <el-dialog
       class="account--dialog"
       :visible.sync="bindEmailVisible"
       :append-to-body="true"
-      top="25vh"
     >
       <h3>{{$t('header.bindEmailHd')}}</h3>
       <el-form > 
@@ -84,13 +103,11 @@
       :visible.sync="receiveNFTVisible"
       :append-to-body="true"
       @close="closeRNTips(0)"
-      top="25vh"
     >
       <div class="inner">
         <h4>Receive NFT</h4>
         <p class="receivenft--tipblock_sub">
-          Congratulations on obtaining a founding ID card for the planet Vibranium, 
-          which is also an NFT. Get it now!
+          {{$t('header.receivenfttip0')}}
         </p>
 
         <cus-btn-ein 
@@ -103,11 +120,29 @@
       </div>
     </el-dialog>
 
+
+    <el-dialog
+      class="receivenft--tipblock"
+      :visible.sync="nftGuidVisible"
+      :append-to-body="true"
+    >
+      <div class="inner">
+        <p class="receivenft--tipblock_sub" style="margin-top:30px">
+          {{$t('header.receivenfttip')}}
+        </p>
+
+        <cus-btn-ein 
+          @click.native="closeRNTips"
+          class="receivenft--tipblock_btn"
+        >GET IT</cus-btn-ein>
+      </div>
+    </el-dialog>
   </header>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import {pageInitlization} from '@/utils/bootstrap'
 export default {
   computed: {
       ...mapGetters('user', {
@@ -118,7 +153,7 @@ export default {
           ido_unpartake: 'ido_unpartake'  // false is buy ido
       }),
       locale(){
-          return this.$i18n.locale == 'en' ? 'English' : '简体中文'
+          return this.$i18n.locale == 'en' ? 'English' : '繁体中文'
       },
   },
   watch: {
@@ -128,11 +163,18 @@ export default {
         this.curRoute = to.name
       },
     },
+    account() {
+      setTimeout(() => {
+        if(parseInt(localStorage.getItem('RECEIVE_NFT_TIPS_SHOW')) != 1 && this.nft_benefit == 1 && !this.ido_unpartake) 
+          this.receiveNFTVisible = true
+      }, 2000)
+    }
   },
   data(){
     return {
       bindEmailVisible: false,   // Email Dialog
       receiveNFTVisible: false,
+      nftGuidVisible: false,
       receiveNFTnomore: false,
       curRoute: '',
       navs: this.$router.options.routes[1]['children'],
@@ -148,37 +190,19 @@ export default {
   },
   created() {
     this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
-      this.bindEmailVisible = !this.bindEmailVisible
+      if(this.nft_benefit == 1) {
+        this.nftGuidVisible = !this.nftGuidVisible
+      } else {
+        this.bindEmailVisible = !this.bindEmailVisible
+      }
     })
     this.$globalBus.$on('RECEIVE_NFT_DIALOG_VISIBLE', () => {
       this.receiveNFTVisible = !this.receiveNFTVisible
     })
   },
-  mounted() {
-    this.$nextTick(() => {
-      if(this.account) {
-        // this.$landContract.init()
-        // this.$buildingContract.init()
-
-        setTimeout(() => {
-          if(parseInt(localStorage.getItem('RECEIVE_NFT_TIPS_SHOW')) != 1 && this.nft_benefit == 1 && !this.ido_unpartake) 
-            this.receiveNFTVisible = true
-        }, 2000)
-      }
-    })
-  },
   methods: {
     async walletConnect() {
-      await this.$mu.initlization()
-      if (this.account)
-        this.$http('login', {eth_address: this.account}).then(loginInfo => {
-          if (loginInfo.data) {
-            this.$store.commit('common/token', loginInfo.data.token)
-            this.$store.commit('user/subscribe', loginInfo.data.user_info.subscribe)
-            this.$store.commit('user/email', loginInfo.data.user_info.email || '')
-            window.location.reload()
-          }
-        })
+      pageInitlization(true)
     },
     bindEmail(){
       if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
@@ -249,8 +273,6 @@ export default {
             }
           }, 1000)
         }
-
-
     },
     accountHandler(type) {
       if (type == 'toPersonalInfo') {
@@ -285,6 +307,10 @@ export default {
         this.$router.push({'name': 'receivenft'})
       }
       this.receiveNFTVisible = false
+      this.nftGuidVisible = false
+    },
+    pageMenuTrigger() {
+      this.$store.dispatch('common/pageMenuTrigger')
     }
   }
 }

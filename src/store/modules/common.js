@@ -7,12 +7,14 @@ export default {
     "token": localStorage.getItem('token') || null,
     "loadingWarden": [],
     "idoMaxCandidate": 0,
+    "pageMenuVisible": false,
   },
   getters: {
     lang: state => state.lang || localStorage.getItem('lang'),
     token: state => state.token,
     loadingWarden: state => state.loadingWarden,
     idoMaxCandidate: state => state.idoMaxCandidate,
+    pageMenuVisible: state => state.pageMenuVisible,
   },
   mutations: {
     lang(state, str) {
@@ -28,7 +30,10 @@ export default {
     },
     idoMaxCandidate(state, num) {
       Vue.set(state, 'idoMaxCandidate', num)
-    }
+    },
+    pageMenuVisible(state, sta) {
+      Vue.set(state, 'pageMenuVisible', sta)
+    },
   },
   actions: {
     cleanToken({commit}){
@@ -50,6 +55,10 @@ export default {
       else 
         arr = obj
       commit('loadingWarden', removeArrTarget(state.loadingWarden, arr))
-    }
+    },
+    pageMenuTrigger({commit, state}) {
+      let state_ = state.pageMenuVisible
+      commit('pageMenuVisible', !state_)
+    },
   }
 }

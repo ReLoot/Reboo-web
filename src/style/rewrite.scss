@@ -10,7 +10,7 @@ input, select, button, img, hr, br {
 html {
   background-color: #18212C;
   color: $--color-white;
-  min-width: $--page-md-width;
+  // min-width: $--page-md-width;
 }
 
 $bodyList: (
@@ -25,10 +25,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   position: relative;
   line-height: 175%;
-  
   letter-spacing: 1px;
   // min-width: $--page-md-width;
   margin: 0 auto;
+  -webkit-overflow-scrolling: none; 
+  overscroll-behavior-y: none;
 }
 
 
@@ -47,27 +48,21 @@ a, a:hover, a:active {
 
 
 $containerList: (
-  $--page-xs-width: (width: 100%),
-  $--page-sm-width: (width: 100%),
-  $--page-md-width: (width: $--page-md-width - 200px),
-  $--page-lg-width: (width: $--page-lg-width - 200px),
+  $--page-xs-width: (width: 100%, paddingBottom: 40px),
+  $--page-sm-width: (width: 100%, paddingBottom: 60px),
+  $--page-md-width: (width: $--page-md-width - 100px, paddingBottom: 80px),
+  $--page-lg-width: (width: $--page-lg-width - 200px, paddingBottom: 100px),
 );
 .container {
   @include mediaAdapt($containerList);
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 100px;
   margin-left: auto;
   margin-right: auto;
   max-width: 100%;
   
   // width: $--page-lg-width - 200px;
 }
-
-/* .rf-lab {
-  display: block;
-  background: no-repeat center/cover;
-} */
 
 // color
 @include b(color) {
@@ -80,6 +75,16 @@ $containerList: (
 }
 
 
+@include b(pages) {
+  @include e(menu) {
+    @include m(open) {
+      -webkit-transition: all 0.25s;
+      transition: all 0.25s;
+      -webkit-transform: translateX($--page-menu-width);
+      transform: translateX($--page-menu-width);
+    }
+  }
+}
 
 .el-dropdown-menu {
   background-color: rgba(0,0,0,0.7);
@@ -143,4 +148,8 @@ $containerList: (
       cursor: default;
     }
   }
+}
+
+.el-message {
+  min-width: 250px;
 }

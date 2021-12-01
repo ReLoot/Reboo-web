@@ -46,22 +46,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
-.container {
-  padding-top: 100px;
-}
-
-@include b(home) {
-  @include e(bk) {
-    @include m(desc) {
-      width: 90%;
-      margin: 40px auto 50px;
-      font-family: OrbitronRegular;
-    }
-  }
-}
-
+$container: (
+  $--page-xs-width: (paddingTop: 60px),
+  $--page-sm-width: (paddingTop: 60px),
+  $--page-md-width: (paddingTop: 80px),
+  $--page-lg-width: (paddingTop: 80px),
+);
 $cardList: (
-  $--page-xs-width: (width:385px, height:336px, paddingTop: 215px),
+  $--page-xs-width: (width:320px, height:279px, paddingTop: 178.7px),
   $--page-sm-width: (width:385px, height:336px, paddingTop: 215px),
   $--page-md-width: (width:385px, height:336px, paddingTop: 215px),
   $--page-lg-width: (width:465px, height:407px, paddingTop: 270px),
@@ -69,29 +61,42 @@ $cardList: (
 $ctnList: (
   // $--page-xs-width: (top: 95px),
   // $--page-sm-width: (top: 95px),
-  $--page-xs-width: (top: 187px),
+  $--page-xs-width: (top: 110px),
   $--page-sm-width: (top: 187px),
   $--page-md-width: (top: 187px),
   $--page-lg-width: (top: 230px),
 );
 
 $itemTitle: (
-  $--page-xs-width: (fontsize: 20px, marginBottom: 8px),
+  $--page-xs-width: (fontsize: 17px, marginBottom: 8px),
   $--page-sm-width: (fontsize: 20px, marginBottom: 8px),
-  $--page-md-width: (fontsize: 24px, marginBottom: 12px),
+  $--page-md-width: (fontsize: 23px, marginBottom: 12px),
   $--page-lg-width: (fontsize: 26px, marginBottom: 16px),
 );
+.container {
+  @include mediaAdapt($container);
+}
 
+@include b(home) {
+  @include e(bk) {
+    @include m(desc) {
+      width: 90%;
+      margin: 40px auto 20px;
+      font-family: OrbitronRegular;
+    }
+  }
+}
 @include b(cards) {
   text-align: center;
-  padding-top: 106px;
   @include clearfix();
   .el-col {
     overflow: visible;
+    margin-top: 120px;
   }
   @include e(wrap) {
     display: inline-block;
   }
+
   @include e(item) {
     @include mediaAdapt($cardList);
     position: relative;
@@ -103,7 +108,6 @@ $itemTitle: (
     @include m(toy) {
       @include plcenter();
       width: 105%;
-      padding-bottom: 80%;
       height: 0;
       top: -106px;
       em {
@@ -111,7 +115,7 @@ $itemTitle: (
         transform-origin: center;
         display: block;
         width: 100%;
-        height: 100%;
+        padding-bottom: 80%;
         position: absolute;
         top: 0;
         left: 0;

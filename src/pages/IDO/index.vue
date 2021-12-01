@@ -81,11 +81,11 @@
                     @click.native="payApply"
                     class="form_submit"
                     v-if="step == 1"
-                    :class="{disabled: !ido_qua || !ido_unpartake || loadingWarden.indexOf('IDO_PAYING') > -1}"
+                    :class="{disabled: !ido_qua || !ido_unpartake || loadingWarden.includes('IDO_PAYING')}"
                     bg="/image/account/btn_form.png"
                   >
                     <template v-if="step == 1">
-                      <template v-if="loadingWarden.indexOf('IDO_PAYING') > -1">
+                      <template v-if="loadingWarden.includes('IDO_PAYING')">
                         {{$t('common.loading')}}
                       </template>
                       <template v-else-if="!ido_unpartake">
@@ -117,7 +117,7 @@
                     style="margin-top: 30px"
                     @click.native="reserve"
                   >
-                  <template v-if="loadingWarden.indexOf('reserveApply') > -1">
+                  <template v-if="loadingWarden.includes('reserveApply')">
                     {{$t('common.loading')}}
                   </template>
                   <template v-else>
@@ -206,7 +206,6 @@ export default {
         percent: 0,
         maxMember: 0
       },
-      // maxMember: 0,
       price: 6,
       piece: 300,
       leftItems: [{
@@ -216,10 +215,6 @@ export default {
         label: 'ido.item2',
         val: '6 BUSD'
       }
-      // ,{
-      //   label: 'ido.itemEx1',
-      //   val: '50'
-      // }
       ],
       rightItems: [{
         label: 'ido.tbLab1',
@@ -277,7 +272,7 @@ export default {
         this.$message({message: this.$t('common.nopermission'), type: 'warning'})
         return false
       }
-      if(this.loadingWarden.indexOf('IDO_PAYING') == -1 && this.ido_unpartake && this.ido_qua) 
+      if(!this.loadingWarden.includes('IDO_PAYING') && this.ido_unpartake && this.ido_qua) 
         this.tipVisible = true
     },
     async pay() {
@@ -291,7 +286,7 @@ export default {
         return false
       }
  
-      if(this.loadingWarden.indexOf('IDO_PAYING') > -1) return false
+      if(this.loadingWarden.includes('IDO_PAYING')) return false
       if (!this.ido_qua) {
         this.$message({ message: 'You have no qualifications', type: 'warning' })
         return false
@@ -310,7 +305,7 @@ export default {
     },
     reserve() {
       if(!this.reservedPromise) return false
-      if (!this.account  || this.loadingWarden.indexOf('reserveApply') > -1) return false
+      if (!this.account  || this.loadingWarden.includes('reserveApply')) return false
       this.$http('reserveApply', { eth_address: this.account })
         .then(({code, data, msg}) => { 
           if(code == 200)
@@ -349,6 +344,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$hd: (
+  $--page-xs-width:(fontsize: 16px),
+  $--page-sm-width:(fontsize: 20px),
+  $--page-md-width:(fontsize: 24px),
+  $--page-lg-width:(fontsize: 24px),
+);
+
 $navHeight: (
   $--page-xs-width:(paddingTop: 50px*2),
   $--page-sm-width:(paddingTop: 50px*2),
@@ -366,7 +368,7 @@ $navHeight: (
   @include e(hd) {
     font-family: OrbitronRegular;
     h2 {
-      font-size: 34px;
+      @include mediaAdapt($hd);
       line-height: 125%;
       margin-bottom: 15px;
     }
@@ -445,7 +447,7 @@ $navHeight: (
 
   @include e(desc) {
     h4 {
-      font-size: 30px;
+      font-size: 24px;
       font-family: OrbitronRegular;
       margin-bottom: 30px;
     }

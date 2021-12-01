@@ -27,7 +27,6 @@ class cardContract extends contractBootstrap{
   async getVbnBalance () {
     const account_ = this.accountCheck()
     if (!account_) return false
-
     const vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           balance = await vbnContract.methods.balanceOf(account_).call(),
           unit = Math.pow(10, 9),

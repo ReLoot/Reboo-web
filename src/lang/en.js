@@ -29,7 +29,9 @@ export default {
         bindEmailIput: 'Please fill in the correct email format',
         sendCode: 'Send Code',
         sendCodeTip: 'The verification code has been sent to the mailbox ',
-        submit: 'Submit'
+        submit: 'Submit',
+        receivenfttip: 'You can bind the mailbox after receiving the ID card',
+        receivenfttip0: 'Congratulations on obtaining a founding ID card for the planet Vibranium,which is also an NFT. Get it now!',
     },
     footer: {
         linkBlock: 'For more game introduction and details please check',
@@ -149,7 +151,7 @@ export default {
         tr1Cell2: 'Particle Detector',
         tr2Cell1: 'Quantity Ratio',
         tr2Cell2: 'Quantity Ratio',
-        storePaying: 'Please wait',
+        storePaying: 'please wait',
         storePay: '',
     },
     personal: {

@@ -71,8 +71,8 @@ $itemList: (
   $--page-md-width:(marginBottom: 58px),
   $--page-lg-width:(marginBottom: 70px),
 );
-$itemEmList: (
-  $--page-xs-width:(width: 115px, height: 115px, marginRight: 18px),
+$itemEmListLable: (
+  $--page-xs-width:(width: 80px, height: 80px, marginRight: 10px),
   $--page-sm-width:(width: 96px, height: 96px, marginRight: 18px),
   $--page-md-width:(width: 96px, height: 96px, marginRight: 18px),
   $--page-lg-width:(width: 115px, height: 115px, marginRight: 20px),
@@ -86,7 +86,7 @@ $itemEmList: (
       @include mediaAdapt($itemList);
       max-width: 100%;
       em {
-        @include mediaAdapt($itemEmList);
+        @include mediaAdapt($itemEmListLable);
         display: block;
         margin-right: 30px;
         background: no-repeat center/cover;
@@ -105,14 +105,15 @@ $itemEmList: (
         left: 0;
         color: $--color-aqua;
         cursor: pointer;
+        font-size: 12px;
         &:hover {
           text-shadow: 0 0 10px $--color-aqua;
         }
       }
       i {
         display: inline-block;
-        height: 17px;
-        width: 7px;
+        height: 1em;
+        width: 0.5em;
         background: no-repeat center/cover;
         vertical-align: -2px;
       }

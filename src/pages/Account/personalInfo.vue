@@ -64,6 +64,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$hd: (
+  $--page-xs-width:(fontsize: 16px),
+  $--page-sm-width:(fontsize: 20px),
+  $--page-md-width:(fontsize: 24px),
+  $--page-lg-width:(fontsize: 24px),
+);
+
 $navHeight: (
   $--page-xs-width:(paddingTop: 50px),
   $--page-sm-width:(paddingTop: 50px),
@@ -79,12 +86,12 @@ $navHeight: (
 @include b(user){
   @include e(hd) {
     font-family: OrbitronRegular;
-    margin-bottom: 80px;
+    margin-top: 30px;
+    margin-bottom: 60px;
     h2 {
-      font-size: 30px;
-      line-height: 200%;
-      height: 90px;
-      line-height: 90px;
+      @include mediaAdapt($hd);
+      margin-bottom: 15px;
+      line-height: 125%;
     }
   }
 
@@ -119,14 +126,15 @@ $navHeight: (
   }
 
   @include e(info) {
-    margin-top: 34px;
+    margin-top: 20px;
     @include m(item) {
-      @include displayFlex();
+      // @include displayFlex();
       position: relative;
       width: 550px;
       max-width: 100%;
-      margin: 0 auto 40px;
-      border: 4px solid transparent;
+      margin: 0 auto 30px;
+      // border: 4px solid transparent;
+      border:3px solid $--color-white-07;
       padding: 10px;
       // border-image: url(/image/account/user_info_bd.png) 30 30 rounded;
 
@@ -145,12 +153,15 @@ $navHeight: (
         height: 40px;
         background: no-repeat center/cover;
         margin-right: 12px;
+        float: left;
       }
 
       p {
         line-height: 100%;
         margin-bottom: 10px;
         font-size: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &.name {
           opacity: 0.7;
         }

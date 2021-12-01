@@ -98,13 +98,16 @@ import tabsMarket from '@/components/tabs/tabs_market'
 import {mapGetters} from 'vuex'
 export default {
   filters: {
-    tofixed2:(num)=>parseInt(num).toFixed(2)
+    tofixed2:(num)=>parseFloat(num).toFixed(2)
   },
   computed: {
     ...mapGetters('user', {
       account: 'account',
       email: 'email',
     }),
+    price() {
+      return this.curTabIdx == 0?0.1:1
+    }
   },
   components: {
     tabsMarket,
@@ -122,15 +125,17 @@ export default {
       }],
       rankList: [['market.tr1Cell1','market.tr1Cell2'], 'S', 'SS', 'SSS'],
       processList: [['market.tr2Cell1', 'market.tr2Cell2'], [50, 60], [35, 30], [15, 10]],
-      price: 0,
+      // price: 10,
       num: 1,
       min: 1,
       max: 10,
     }
   },
   async created() {
-    const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
-    this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
+    if (this.account) {
+      const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+      this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
+    }
   },
   methods: {
     async tabsTrigger(cur) {
@@ -174,6 +179,7 @@ export default {
             type: this.curTabIdx+1 
           })
           this.max = pusreObj.data.remain
+          this.num = pusreObj.data.remain
           if(pusreObj.data.remain == 0) {
             this.min = pusreObj.data.remain
             this.num = pusreObj.data.remain
@@ -213,7 +219,7 @@ $cell: (
   $--page-lg-width:(height: 48px, lineHeight: 48px),
 );
 
-$payBtn: (
+$quantityBtn: (
   $--page-xs-width:(height: 30px, fontsize: 14px),
   $--page-sm-width:(height: 30px, fontsize: 14px),
   $--page-md-width:(height: 36px, fontsize: 16px),
@@ -225,6 +231,20 @@ $pay: (
   $--page-sm-width:(fontsize:16px, margin:15px 0, lineheight:40),
   $--page-md-width:(fontsize:18px, margin:18px 0, lineheight:49),
   $--page-lg-width:(fontsize:20px, margin:22px 0, lineheight:58),
+);
+
+$payBtn: (
+  $--page-xs-width:(fontsize:12px),
+  $--page-sm-width:(fontsize:14px),
+  $--page-md-width:(fontsize:16px),
+  $--page-lg-width:(fontsize:18px),
+);
+
+$viewbox: (
+  $--page-xs-width:(marginLeft: auto, marginRight: auto, maxwidth: 200px),
+  $--page-sm-width:(marginLeft: auto, marginRight: auto, maxwidth: 280px),
+  $--page-md-width:(marginLeft: 0, marginRight: auto, maxwidth: 300px),
+  $--page-lg-width:(marginLeft: 0, marginRight: auto, maxwidth: 317px),
 );
 
 @include b(store) {
@@ -239,7 +259,8 @@ $pay: (
   }
 
   @include e(viewbox) {
-    max-width: 317px;
+    @include mediaAdapt($viewbox);
+    // max-width: 317px;
     position: relative;
     margin-bottom: 30px;
     @include m(bg) {
@@ -343,10 +364,11 @@ $pay: (
       font-family: OrbitronBlack;
     }
     @include m(count){
-      background-color: $--color-white-01;
+      // background-color: $--color-white-01;
+      background-color: transparent;
     }
     @include m(btn) {
-      @include mediaAdapt($payBtn);
+      @include mediaAdapt($quantityBtn);
       border-radius: 0;
       border-width: 2px;
       border-style: solid;
@@ -379,10 +401,10 @@ $pay: (
     
     @include m(append) {
       .pay {
+        @include mediaAdapt($payBtn);
         font-family: OrbitronBlack;
-        width: 180px;
-        height: 47.25px;
-        font-size: 18px;
+        width: 10em;
+        height: 2.625em;
       }
       .pause {
         font-family: OrbitronBlack;
@@ -392,10 +414,10 @@ $pay: (
 }
 
 $number: (
-  $--page-xs-width:(width: 167px),
-  $--page-sm-width:(width: 167px),
-  $--page-md-width:(width: 167px),
-  $--page-lg-width:(width: 200px),
+  $--page-xs-width:(width: 167px, lineHeight: 30px),
+  $--page-sm-width:(width: 167px, lineHeight: 30px),
+  $--page-md-width:(width: 167px, lineHeight: 36px),
+  $--page-lg-width:(width: 200px, lineHeight: 42px),
 );
 
 $numberHandler: (

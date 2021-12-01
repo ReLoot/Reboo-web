@@ -1,6 +1,7 @@
 import axios from 'axios'
 import apis from './api'
 import store from '@/store'
+import {showTipsMsg} from '@/utils/message'
 
 var http = axios.create({
   baseURL: '/',
@@ -12,13 +13,20 @@ http.interceptors.request.use(function (config) {
     config.headers['Content-Type'] = 'application/json;charset=UTF-8'
   }
   config.headers['Authorization'] = 'Bearer '+store.getters['common/token']
-
   return config
 }, function (error) {
   return Promise.reject(error)
 })
 
 http.interceptors.response.use(function (response) {
+    // console.log(response)
+    // console.log('========================')
+    if (response && response.data.code == '401') {
+      store.dispatch('user/cleanAccount')
+      const warnning = 'Authentication failed'
+      showTipsMsg(warnning)
+      throw new Error(warnning)
+    }
     return response
   }, function (error) {
     return Promise.reject(error)

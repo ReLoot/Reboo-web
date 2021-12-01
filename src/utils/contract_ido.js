@@ -49,6 +49,7 @@ export class idoContractClass extends contractBootstrap {
   // 是否有资格购买
   async checkQualification() {
     const account_ = super.accountCheck()
+
     if(!account_) return false
     
     const mainContract = await super.contractMaker()

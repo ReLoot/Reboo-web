@@ -4,7 +4,6 @@ export const mergeArray = (arr1, arr2, repeat=false) => {
 }
 
 export const removeArrTarget = (tagArr, str) => {
-  // tagArr = tagArr.filter(item => (tagArr.indexOf(str) > -1))
   tagArr = tagArr.filter(item => (item == str))
   return tagArr
 }

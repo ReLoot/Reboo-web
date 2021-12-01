@@ -3,7 +3,7 @@ const getLangOptions = () => {
     let options = {}
 
     context.keys().forEach(element => {
-        if(element.indexOf('index') < 0) {
+        if(!element.includes('index')) {
             let lang = loadLang(element.replace(/\.\//g, ''))
             options = {...options, ...lang}
         }
