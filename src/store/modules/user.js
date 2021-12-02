@@ -13,7 +13,6 @@ export default {
     "ido_qua": false,       // ido qua
     "ido_unpartake": true,   //no taked part in ido
     "balance": 0,
-    "balance_ntf": 0,
     "landBox": [],
     "buildingBox": [],
     "landCard": [],
@@ -115,7 +114,6 @@ export default {
       commit('ido_qua', false)
       commit('ido_unpartake', true)
       commit('balance', 0)
-      commit('balance_ntf', 0)
       commit('landBox', [])
       commit('buildingBox', [])
       commit('landCard', [])

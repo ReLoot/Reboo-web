@@ -237,12 +237,23 @@ export default {
       }]
     }
   },
+  watch: {
+    account(){
+      this.init()
+    }
+  },
   created() {
-    this.getPgrss()
-    this.reserveStatus()
-    this.stepSet()
+    this.init()
   },
   methods: {
+    init() {
+      console.log(this.account)
+      if(this.account) {
+        this.getPgrss()
+        this.reserveStatus()
+        this.stepSet()
+      }
+    },
     stepSet() {
       const curTime = new Date().getTime()/1000
       switch (true) {

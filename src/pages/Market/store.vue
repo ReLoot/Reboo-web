@@ -78,14 +78,14 @@
           <span>{{num*price|tofixed2}} VBN</span>
         </div>
         <div class="store--pay_append">
-          <!-- <cus-btn-ein 
+          <cus-btn-ein 
             class="pay"
             bg="/image/market/btn_1.png"
             v-if="!pageLoading"
             @click.native="pay"
-          >BUY NOW</cus-btn-ein> -->
-           <!-- v-if="pageLoading" -->
-          <span class="pause">{{$t('market.storePaying')}}</span>
+          >BUY NOW</cus-btn-ein>
+           <!--  -->
+          <span v-if="pageLoading" class="pause">{{$t('market.storePaying')}}</span>
         </div>
       </div>
       <cus-divider-ein dStyle="white" style="margin-bottom: 40px" />
