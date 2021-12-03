@@ -8,6 +8,7 @@ export default {
     "loadingWarden": [],
     "idoMaxCandidate": 0,
     "pageMenuVisible": false,
+    "authentication": false,
   },
   getters: {
     lang: state => state.lang || localStorage.getItem('lang'),
@@ -15,8 +16,12 @@ export default {
     loadingWarden: state => state.loadingWarden,
     idoMaxCandidate: state => state.idoMaxCandidate,
     pageMenuVisible: state => state.pageMenuVisible,
+    authentication: state => state.authentication
   },
   mutations: {
+    authentication(state, sta) {
+      Vue.set(state, 'authentication', sta)
+    },
     lang(state, str) {
         localStorage.setItem('lang', str)
         state.lang = str

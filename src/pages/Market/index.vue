@@ -61,10 +61,10 @@ export default {
         type: 'market'
       },{
         txt: 'market.navTabItem2',
-        type: 'boxesList'
+        type: 'market_boxesList'
       },{
         txt: 'market.navTabItem3',
-        type: 'cardList'
+        type: 'market_cardList'
       }]
     }
   },

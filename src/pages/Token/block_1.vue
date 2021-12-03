@@ -40,9 +40,9 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
 $bnListHd: (
-  $--page-xs-width:(fontsize: 35px, marginTop: 243px),
-  $--page-sm-width:(fontsize: 35px, marginTop: 243px),
-  $--page-md-width:(fontsize: 35px, marginTop: 243px),
+  $--page-xs-width:(fontsize: 35px, marginTop: 180px, width: 250px),
+  $--page-sm-width:(fontsize: 35px, marginTop: 243px, width: 250px),
+  $--page-md-width:(fontsize: 35px, marginTop: 243px, width: 100%),
   $--page-lg-width:(fontsize: 40px, marginTop: 200px),
 );
 $btnList: (
@@ -67,6 +67,8 @@ $btnList: (
       // font-size: 70px;
       font-family: OrbitronBlack;
       margin-bottom: 35px;
+      margin-left: auto;
+      margin-right: auto;
       text-align: center;
       color: $--color-yellow;
       line-height: 125%;

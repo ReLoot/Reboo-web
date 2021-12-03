@@ -1,5 +1,5 @@
 import detectEthereumProvider from "@metamask/detect-provider"
-import storage from '@/store/index'
+import store from '@/store/index'
 import Web3 from "web3"
 import tp from 'tp-js-sdk'
 
@@ -8,7 +8,7 @@ import {showTipsMsg} from '@/utils/message'
 
 export class metaMaskUtils {
   provider_
-  account = storage.getters["user/account"]
+  account = store.getters["user/account"]
   
   constructor (params) {
     this.options = {
@@ -30,7 +30,7 @@ export class metaMaskUtils {
       try { 
         const accounts = await this.provider_.request({ method: 'eth_requestAccounts' });
         this.account = new Web3().utils.toChecksumAddress(accounts[0])
-        storage.commit('user/account', this.account)
+        store.commit('user/account', this.account)
         this.eventRegister()
         return this.account
       } catch (err) {
@@ -78,7 +78,7 @@ export class metaMaskUtils {
   }
 
   onAccountChanged(account_) {
-    // if(!account_ && account_ !== storage.getters['user/account']) {
+    // if(!account_ && account_ !== store.getters['user/account']) {
       this.clearCatch()
       window.location.reload()
     // }
@@ -90,8 +90,8 @@ export class metaMaskUtils {
   }
 
   clearCatch() {
-    localStorage.removeItem('account')
-    storage.dispatch('user/cleanAccount')
+    store.dispatch('user/cleanAccount')
+    store.commit('common/authentication', false)
   }
 
 }

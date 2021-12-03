@@ -25,19 +25,16 @@
             tag="li" 
             :key="`menu_item_${idx}`" 
             v-if="item.meta && item.meta.view"
+            :class="{active: curRoute.match(item.name)}"
             :to="{name: item.name}"
             @click.native="menuTrigger"
           >{{$t(item.meta.view)}}</router-link>
         </template>
 
-        <router-link 
-          :to="{name: 'personalInfo'}" 
-          tag="li" 
-          @click.native="menuTrigger"
-        >{{$t('header.dropItem1')}}</router-link>
-        <template v-if="account">
-          <router-link v-if="nft_benefit==1" :to="{name: 'receivenft'}" tag="li" @click.native="menuTrigger">{{$t('header.dropItem2')}}</router-link>
-          <router-link v-if="nft_benefit==0" :to="{name: 'idcard'}" tag="li" @click.native="menuTrigger">{{$t('header.dropItem3')}}</router-link>
+        <router-link v-if="authentication" :to="{name: 'personalInfo'}" :class="{active: curRoute == 'personalInfo'}" tag="li" @click.native="menuTrigger">{{$t('header.dropItem1')}}</router-link>
+        <template v-if="authentication">
+          <router-link v-if="nft_benefit==1" :to="{name: 'receivenft'}" :class="{active: curRoute == 'receivenft'}" tag="li" @click.native="menuTrigger">{{$t('header.dropItem2')}}</router-link>
+          <router-link v-if="nft_benefit==0 && nft" :to="{name: 'idcard'}" :class="{active: curRoute == 'idcard'}" tag="li" @click.native="menuTrigger">{{$t('header.dropItem3')}}</router-link>
         </template>
       </ul>
 
@@ -52,7 +49,7 @@
           class="subscribeBtn"
           :bg="`/image/footer_btn_subscribe.png`"
           @click.native="subscrTrigger"
-          v-if="account"
+          v-if="authentication"
         >
           <em  v-if="subscribe == 1" class="subscribed"></em>
           <em v-else class="unsubscribe"></em>
@@ -84,13 +81,15 @@ export default {
       account: 'account',
       nickName: 'nickName',
       gid: 'gid',
+      nft: 'nft',
       nft_benefit: 'nft_benefit',
       ido_qua: 'ido_qua',
       ido_unpartake: 'ido_unpartake',  // false is buy ido
       subscribe: 'subscribe'
     }),
     ...mapGetters('common', {
-      pageMenuVisible: 'pageMenuVisible'
+      pageMenuVisible: 'pageMenuVisible',
+      authentication: 'authentication'
     }),
     locale(){
       return this.$i18n.locale == 'en' ? 'English' : '繁体中文'
@@ -99,10 +98,12 @@ export default {
   data() {
     return {
       navs: this.$router.options.routes[1]['children'],
+      curRoute: ''
     }
   },
   watch: {
     '$route'(to) {
+      this.curRoute = to.name
       document.documentElement.style.backgroundColor = '#18212C'
       for(let keys in to.matched) {
         if (to.matched[keys]['meta'] && to.matched[keys]['meta']['background']) {
@@ -121,20 +122,23 @@ export default {
             }
           })
       }
-
-      this.$landContract.init()
-      this.$buildingContract.init()
-      this.$idoContract.checkQualification()
+      this.init()
     }
   },
   async created(){
     await pageInitlization()
+    this.init()
     // this.$idoContract.checkQualification()
     // this.$landContract.init()
     // this.$buildingContract.init()
     
   },
   methods: {
+    init() {
+      this.$landContract.init()
+      this.$buildingContract.init()
+      this.$idoContract.checkQualification()
+    },
     menuTrigger() {
       this.$store.dispatch('common/pageMenuTrigger')
     },
@@ -144,7 +148,6 @@ export default {
     },
     async walletConnect() {
       await pageInitlization(true)
-
     },
     changeLang() {
       let lang_
@@ -193,7 +196,7 @@ export default {
       padding: 10px 0;
       line-height: 100%;
       color: $--color-white-04;
-      &.router-link-exact-active {
+      &.active {
         color: $--color-aqua;
       }
     }
@@ -257,7 +260,8 @@ export default {
 
     @include m(append) {
       @include plcenter();
-      bottom: 30px;
+      bottom: 40px;
+      opacity: 0.8;
     }
 
     // $--append-btn: 

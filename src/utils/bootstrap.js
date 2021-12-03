@@ -32,7 +32,7 @@ export const pageInitlization = async (type) => {
           store.commit('user/email', userInfo.data.email)
           store.commit('user/subscribe', userInfo.data.subscribe)
           store.commit('user/gid', userInfo.data.game_no)
-          store.commit('user/nft', userInfo.data.nft)
+          store.commit('user/nft', userInfo.data.nft || null)
           store.commit('user/nft_benefit', userInfo.data.nft_benefit)
           store.commit('user/nickName', userInfo.data.name)
         }
@@ -41,6 +41,7 @@ export const pageInitlization = async (type) => {
         if (whiteList && whiteList.data) 
           store.commit('user/ido_qua', Boolean(parseInt(whiteList.data.is_white)))
         
+        store.commit('common/authentication', true)
       } else {
         const authInfo = await $http('login', {eth_address: account})
         if(authInfo && authInfo.data) {

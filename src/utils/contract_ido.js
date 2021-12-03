@@ -30,10 +30,6 @@ export class idoContractClass extends contractBootstrap {
     const account_ = this.accountCheck()
     if (!account_) return false
 
-    // const vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
-    //       balance = await vbnContract.methods.balanceOf(account_).call(),
-    //       unit = Math.pow(10, 9),
-    //       balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
     const busdContract = await super.contractMaker(busd_abi, busd_contract_address),
           balance = await busdContract.methods.balanceOf(account_).call(),
           unit = Math.pow(10, 9),

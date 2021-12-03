@@ -35,7 +35,7 @@
                     <img v-if="item.rarity == 'SSS'" class="rank" src="/image/market/rank_3.png" />
                     <p># {{item.token_id}}</p>
                   </div> 
-                  <div class="r-part"  v-if="item.attributes">
+                  <div class="r-part hidden-sm-and-down"  v-if="item.attributes">
                     <template v-for="(attr, key) in item.attributes" >
                       <p class="item" :key="`attr_${key}`">
                         <label>{{key}}</label>

@@ -8,12 +8,12 @@
           v-if="item.meta && item.meta.view"
           tag="li"
           :key="`navs_${idx}`"
-          :class="{active: curRoute == item.name}"
+          :class="{active: curRoute.match(item.name)}"
           :to="{name: item.name}"
         >{{$t(item.meta.view)}}</router-link>
       </template>
 
-      <template v-if="account">
+      <template v-if="authentication">
         <router-link v-if="nft_benefit == 1" tag="li" :class="{active: curRoute == 'receivenft'}" :to="{name: 'receivenft'}" >{{$t('header.dropItem2')}}</router-link>
         <router-link v-if="nft_benefit == 0" tag="li" :class="{active: curRoute == 'idcard'}" :to="{name: 'idcard'}" >{{$t('header.dropItem3')}}</router-link>
       </template>
@@ -54,11 +54,7 @@
       >
         <a class="header--append_avatar"></a>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
-          <!-- <template v-if="!ido_unpartake">
-            <el-dropdown-item command="toReceiveNFN" v-if="nft_benefit == 1">{{$t('header.dropItem2')}}</el-dropdown-item>
-            <el-dropdown-item command="toIDCard" v-if="nft_benefit == 0" >{{$t('header.dropItem3')}}</el-dropdown-item>
-          </template> -->
+          <el-dropdown-item v-if="authentication" command="toPersonalInfo">{{$t('header.dropItem1')}}</el-dropdown-item>
           <el-dropdown-item command="logout" >{{$t('header.dropItem4')}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -151,6 +147,9 @@ export default {
           nft_benefit: 'nft_benefit',
           ido_qua: 'ido_qua',
           ido_unpartake: 'ido_unpartake'  // false is buy ido
+      }),
+      ...mapGetters('common', {
+          authentication: 'authentication'
       }),
       locale(){
           return this.$i18n.locale == 'en' ? 'English' : '繁体中文'
@@ -286,11 +285,13 @@ export default {
       if (type == 'toIDCard') {
         this.$router.push({name: 'idcard'})
       }
-      
+      // const targetRoute = this.$route.matched[this.$route.matched.length - 1]['name']
       if(type == 'logout') {
         this.$store.dispatch('user/cleanAccount')
         this.$store.dispatch('common/cleanToken')
-        window.location.href = '/home'
+        this.$store.commit('common/authentication', false)
+        this.$router.replace({'name': 'home'})
+
       }
     },
     changeLang(lang) {

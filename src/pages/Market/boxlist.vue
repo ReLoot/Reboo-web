@@ -28,7 +28,7 @@
                 <cus-btn-ein
                   class="card_btn"
                   @click.native="boxSelect(item)"
-                >WAIT</cus-btn-ein>
+                >OPEN</cus-btn-ein>
               </div>
             </div>
           </el-col>

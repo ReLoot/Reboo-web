@@ -8,8 +8,8 @@ export default {
     "gid": localStorage.getItem('gid') || null,
     "nickName": localStorage.getItem('nickName') || null,
     "subscribe": localStorage.getItem('subscribe') || 0,
-    "nft": '',
-    "nft_benefit": 0,       // 0为没有权限领取
+    "nft": {},
+    "nft_benefit": null,       // 0为没有权限领取
     "ido_qua": false,       // ido qua
     "ido_unpartake": true,   //no taked part in ido
     "balance": 0,
@@ -109,8 +109,8 @@ export default {
       commit('gid', '')
       commit('nickName', '')
       commit('subscribe', 0)
-      commit('nft', '')
-      commit('nft_benefit', 0)
+      commit('nft', {})
+      commit('nft_benefit', null)
       commit('ido_qua', false)
       commit('ido_unpartake', true)
       commit('balance', 0)

@@ -121,8 +121,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$container: (
+  $--page-xs-width: (paddingTop: 120px),
+  $--page-sm-width: (paddingTop: 160px),
+  $--page-md-width: (paddingTop: 206px),
+  $--page-lg-width: (paddingTop: 206px),
+);
 .container {
-  padding-top: 206px;
+  @include mediaAdapt($container);
 }
 
 $rb: (

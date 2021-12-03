@@ -31,7 +31,6 @@ Vue.use(ElementUI)
 Vue.prototype.$http = http
 Vue.prototype.$globalBus = new Vue()
 
-
 Vue.config.productionTip = false
 
 new Vue({

@@ -105,6 +105,9 @@ export default {
       account: 'account',
       email: 'email',
     }),
+    ...mapGetters('common', {
+      authentication: 'authentication'
+    }),
     price() {
       return this.curTabIdx == 0?0.1:1
     }
@@ -126,18 +129,28 @@ export default {
       rankList: [['market.tr1Cell1','market.tr1Cell2'], 'S', 'SS', 'SSS'],
       processList: [['market.tr2Cell1', 'market.tr2Cell2'], [50, 60], [35, 30], [15, 10]],
       // price: 10,
-      num: 1,
-      min: 1,
-      max: 10,
+      num: 0,
+      min: 0,
+      max: 0,
+    }
+  },
+  watch:{
+    authentication() {
+      this.init()
     }
   },
   async created() {
-    if (this.account) {
-      const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
-      this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
-    }
+    this.init()
   },
   methods: {
+    async init() {
+      if (this.authentication) {
+        const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+        this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
+        this.num = checkDomain.data.remain >= 0?1:0
+        this.min = 1
+      }
+    },
     async tabsTrigger(cur) {
       this.curTabIdx = cur
       this.num = this.min

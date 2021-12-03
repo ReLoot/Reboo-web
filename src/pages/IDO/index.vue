@@ -183,11 +183,13 @@ export default {
   computed: {
       ...mapGetters('user', {
           account: 'account',
+          userInfo: 'userInfo',
           ido_qua: 'ido_qua',
           ido_unpartake: 'ido_unpartake'
       }),
       ...mapGetters('common', {
         loadingWarden: 'loadingWarden',
+        authentication: 'authentication'
       }),
   },
   data(){
@@ -238,7 +240,7 @@ export default {
     }
   },
   watch: {
-    account(){
+    authentication(){
       this.init()
     }
   },
@@ -247,11 +249,12 @@ export default {
   },
   methods: {
     init() {
-      console.log(this.account)
-      if(this.account) {
-        this.getPgrss()
-        this.reserveStatus()
-        this.stepSet()
+      if(this.authentication) {
+        const initOptions = ['getPgrss', 'reserveStatus', 'stepSet']
+        initOptions.forEach(item => {
+          if(this[item] && typeof this[item] == 'function' ) 
+            this[item]()
+        })
       }
     },
     stepSet() {
@@ -369,6 +372,21 @@ $navHeight: (
   $--page-lg-width:(paddingTop: 76px*2),
 );
 
+$bdlpart: (
+  $--page-xs-width:(padding: 20px 20px 20px),
+  $--page-sm-width:(padding: 20px 26px 26px),
+  $--page-md-width:(padding: 20px 32px 32px),
+  $--page-lg-width:(padding: 20px 40px 40px),
+);
+
+$bdFormBtn: (
+  $--page-xs-width:(height: 40px, fontsize: 12px),
+  $--page-sm-width:(height: 44px, fontsize: 14px),
+  $--page-md-width:(height: 48px, fontsize: 16px),
+  $--page-lg-width:(height: 54px, fontsize: 20px),
+);
+
+
 .container {
   @include mediaAdapt($navHeight);
 }
@@ -392,8 +410,8 @@ $navHeight: (
     margin-top: 36px;
     margin-bottom: 40px;
     @include m(lpart) {
+      @include mediaAdapt($bdlpart);
       margin-bottom: 30px;
-      padding: 20px 40px 40px;
       height: 437px;
       background-color: rgba(78, 96, 119, 0.2);
       border:1px solid rgba(208, 230, 238, 0.2);
@@ -429,9 +447,8 @@ $navHeight: (
       }
 
       .form_submit {
+        @include mediaAdapt($bdFormBtn);
         width: 100%;
-        height: 54px;
-        font-size: 20px;
         font-family: OrbitronRegular;
         &.disabled {
           opacity: 0.5;

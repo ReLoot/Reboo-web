@@ -33,12 +33,12 @@
             </div>
           </el-col>
           
-          <template v-if="memberAmount==-1||memberAmount>1000">
+          <!-- <template v-if="memberAmount==-1||memberAmount>1000">
             <el-col :md="10">
               <div class="temp">COMING SOON...</div>
             </el-col>
           </template>
-          <template v-else >
+          <template v-else > -->
             <el-col :md="10">
               <el-form ref="registForm" :model="formData" > 
                 <el-form-item label="Nick Name" prop="nickname" required>
@@ -69,7 +69,7 @@
                 </cus-btn-ein>
               </el-form>
             </el-col>
-          </template>
+          <!-- </template> -->
         </el-row>
       </div>
 
@@ -101,7 +101,7 @@ export default {
   async created() {
     this.formData.gid = this.gid
     this.formData.nickname = this.nickName
-    this.memberAmount = await this.$nftContract.currentAmount()
+    // this.memberAmount = await this.$nftContract.currentAmount()
   },
   data(){
     return {
@@ -120,7 +120,7 @@ export default {
               {required: true, trigger:'change'},
           ],
       },
-      memberAmount: -1
+      // memberAmount: -1
     }
   },
   watch: {

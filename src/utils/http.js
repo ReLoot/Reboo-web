@@ -19,12 +19,11 @@ http.interceptors.request.use(function (config) {
 })
 
 http.interceptors.response.use(function (response) {
-    // console.log(response)
-    // console.log('========================')
     if (response && response.data.code == '401') {
       store.dispatch('user/cleanAccount')
+      store.commit('common/authentication', false)
       const warnning = 'Authentication failed'
-      showTipsMsg(warnning)
+      // showTipsMsg(warnning)
       throw new Error(warnning)
     }
     return response
