@@ -178,7 +178,7 @@ $info: (
 );
 
 $apps: (
-  $--page-xs-width: (width:18px, height:18px, marginRight: 12px),
+  $--page-xs-width: (width:24px, height:24px, marginRight: 12px),
   $--page-sm-width: (width:28px, height:28px, marginRight: 12px),
   $--page-md-width: (width:32px, height:32px, marginRight: 16px),
   $--page-lg-width: (width:40px, height:40px, marginRight: 20px),
