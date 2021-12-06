@@ -29,9 +29,11 @@ class cardContract extends contractBootstrap{
     if (!account_) return false
     const vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           balance = await vbnContract.methods.balanceOf(account_).call(),
-          unit = Math.pow(10, 9),
-          balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
-          
+          unit = Math.pow(10, 9)
+          // balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
+    let balance_ = new BN(balance).div(new BN(unit)).toString()
+    
+    balance_ = parseFloat(balance_/unit)
     store.commit('user/balance', balance_)
     return {
       balance,
