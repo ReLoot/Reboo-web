@@ -50,6 +50,8 @@ class cardContract extends contractBootstrap{
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           mainContract = await super.contractMaker()
     
+    console.log(amount)
+
     let amount_
     if (type == 0)
       amount_ = amount*0.1
@@ -60,14 +62,14 @@ class cardContract extends contractBootstrap{
       super.msgLog('Not enough balance for pay')
       return false
     }
-
+    
     try {
       await vbnContract.methods.approve(this.options.contract_address, new BN(String(vbn_require_amount*amount_*Math.pow(10, 18)))).send({from: account_})
       let res
       if (amount <= 1) {
         res = await mainContract.methods.mint(account_).send({from: account_})
       } else {
-        res = await mainContract.methods.mintMulti(account_, amount_).send({from: account_})
+        res = await mainContract.methods.mintMulti(account_, amount).send({from: account_})
       }
 
       super.msgLog('Buy successed!', 'success')
