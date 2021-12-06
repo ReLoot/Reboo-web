@@ -6,8 +6,9 @@ import {showTipsMsg} from '@/utils/message'
 const UA = navigator.userAgent.toLowerCase()
 
 export const appVersionCheck = async () => {
-  const appVer = localStorage.getItem('APP_VERSION')
-  if(appVer != process.env.VUE_APP_VERSION || UA.match(/mobile/g)) {
+  // const appVer = localStorage.getItem('APP_VERSION')
+  // appVer != process.env.VUE_APP_VERSION ||
+  if(UA.match(/mobile/g)) {
     // localStorage.clear()
     store.dispatch('user/cleanAccount')
     store.dispatch('common/cleanToken')

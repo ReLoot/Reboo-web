@@ -1,5 +1,6 @@
 import { contractBootstrap } from "./contract_bootstrap"
 
+
 import store from '@/store/index'
 import $http from '@/utils/http'
 
@@ -52,9 +53,13 @@ class cardContract extends contractBootstrap{
     
     let amount_
     if (type == 0)
-      amount_ = amount*0.1
+      // amount_ = amount*0.1
+      amount_ = amount*1
     else
       amount_ = amount
+
+    // const provider = await detectEthereumProvider()
+    // const web3 = new Web3(provider)
 
     if (balanceFormart <= vbn_require_amount*amount_) {
       super.msgLog('Not enough balance for pay')
@@ -62,12 +67,17 @@ class cardContract extends contractBootstrap{
     }
     
     try {
-      await vbnContract.methods.approve(this.options.contract_address, new BN(String(vbn_require_amount*amount_*Math.pow(10, 18)))).send({from: account_})
+      const gas_approve = await vbnContract.methods.approve(this.options.contract_address, new BN(String(vbn_require_amount*amount_*Math.pow(10, 18)))).estimateGas({from: account_})
+      await vbnContract.methods.approve(this.options.contract_address, new BN(String(vbn_require_amount*amount_*Math.pow(10, 18)))).send({from: account_, gas: gas_approve*2})
       let res
       if (amount <= 1) {
-        res = await mainContract.methods.mint(account_).send({from: account_})
+        const gas_mint = await mainContract.methods.mint(account_).estimateGas({from: account_})
+        console.log('gm:', gas_mint)
+        res = await mainContract.methods.mint(account_).send({from: account_, gas: gas_mint*2})
       } else {
-        res = await mainContract.methods.mintMulti(account_, amount).send({from: account_})
+        const gas_mintMulti = await mainContract.methods.mintMulti(account_, amount).estimateGas({from: account_})
+        console.log('gm:', gas_mintMulti)
+        res = await mainContract.methods.mintMulti(account_, amount).send({from: account_, gas: gas_mintMulti*2})
       }
 
       super.msgLog('Buy successed!', 'success')

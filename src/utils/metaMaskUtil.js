@@ -1,7 +1,7 @@
 import detectEthereumProvider from "@metamask/detect-provider"
 import store from '@/store/index'
 import Web3 from "web3"
-import tp from 'tp-js-sdk'
+// import tp from 'tp-js-sdk'
 
 
 import {showTipsMsg} from '@/utils/message'

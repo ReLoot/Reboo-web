@@ -179,11 +179,11 @@ export default {
           let recieveOptions = await this.$nftContract.claim(this.formData.gid)
           if (recieveOptions) {
             this.$store.dispatch('common/deleteLoading', 'receive_nft')
-            // window.location.href = '/idCard'
             await pageInitlization()
             this.$router.replace({name: 'idcard'})
+          }else{
+            this.$store.dispatch('common/deleteLoading', 'receive_nft')
           }
-
         } catch (err) {
           this.$store.dispatch('common/deleteLoading', 'receive_nft')
         }

@@ -36,16 +36,16 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
 $nav:(
-  $--page-xs-width:(marginLeft: auto, marginRight: auto),
-  $--page-sm-width:(marginLeft: auto, marginRight: auto),
-  $--page-md-width:(marginLeft: 0, marginRight: auto),
+  $--page-xs-width:(marginLeft: auto, marginRight: auto, width: 100%),
+  $--page-sm-width:(marginLeft: auto, marginRight: auto,  width: auto),
+  $--page-md-width:(marginLeft: 0, marginRight: auto, width: auto),
   $--page-lg-width:(marginLeft: 0, marginRight: auto),
 );
 $navItem: (
-  $--page-xs-width:(lineHeight: 30px, height: 30px, fontSize: 12px),
-  $--page-sm-width:(lineHeight: 34px, height: 34px, fontSize: 14px),
-  $--page-md-width:(lineHeight: 40px, height: 40px, fontSize: 16px),
-  $--page-lg-width:(lineHeight: 46px, height: 46px, fontSize: 16px),
+  $--page-xs-width:(lineHeight: 30px, height: 30px, fontSize: 12px, paddingLeft:0, paddingRight:0, width: 50%),
+  $--page-sm-width:(lineHeight: 34px, height: 34px, fontSize: 14px, paddingLeft:10px, paddingRight:10px, width: auto),
+  $--page-md-width:(lineHeight: 40px, height: 40px, fontSize: 16px, paddingLeft:15px, paddingRight:15px, width: auto),
+  $--page-lg-width:(lineHeight: 46px, height: 46px, fontSize: 16px, paddingLeft:20px, paddingRight:20px, width: auto),
 );
 
 @include b(market) {
@@ -58,8 +58,6 @@ $navItem: (
       display: table-cell;
       border-collapse: collapse;
       float: left;
-      padding-left: 20px;
-      padding-right: 20px;
       text-align: center;
       border: 1px solid $--color-white-07;
       color: $--color-white-07;
@@ -67,6 +65,7 @@ $navItem: (
       -webkit-user-select: none;
       user-select: none;
       font-family: OrbitronRegular;
+      white-space: nowrap;
       &.active {
         border-color: $--color-aqua;
         color: $--color-aqua;

@@ -27,6 +27,7 @@
                 </div>
                 <cus-btn-ein
                   class="card_btn"
+                  :class="{disabled: idx==boxSelectedCurIdx}"
                   @click.native="boxSelect(item)"
                 >OPEN</cus-btn-ein>
               </div>
@@ -94,8 +95,8 @@ export default {
   data(){
     return {
       listType: 0,     // land 0 \ building 1
-      boxDialogVisible: false,
       curItemID: null,
+      boxDialogVisible: false,
       tabs: [{
         type: 'domain',
         view: 'market.boxType1',
@@ -105,9 +106,9 @@ export default {
       }],
       cardTabs: [ 'market.cardType1','market.cardType2'],
       viewList: [],
-      pageLoading: false,
       gifURL: '',
-      boxCardRank: 1
+      boxCardRank: 1,
+      pageLoading: false,
     }
   },
   mounted() {
@@ -152,10 +153,7 @@ export default {
 
         }).catch(err => {
           this.pageLoading = false
-          this.$message({
-            message: err,
-            type: 'error'
-          })
+          this.$message({ message: err, type: 'error' })
         })
     },
     boxDialogClose() {

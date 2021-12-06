@@ -179,7 +179,7 @@ export default {
           await this.$landContract.init()
         }
         if(this.curTabIdx == 1) {
-          payOptions = await this.$buildingContract.payForBox(this.num, 1)
+          payOptions = await this.$buildingContract.payForBox(this.num*this.price)
           await this.$buildingContract.init()
         }
         

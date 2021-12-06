@@ -17,7 +17,7 @@
               <div class="inner">
                 <h4 class="title">
                   <span v-if="listType == 0">Landcard</span>
-                  <span v-else>Particle Detector</span>
+                  <span v-else># {{item.token_id}}</span>
                 </h4>
                 <div class="element--wrap">
                   <em 
@@ -28,18 +28,39 @@
                     }"
                   />
                 </div>
-                <div class="info">
+                <div class="info" :class="{'land': listType==0, 'building': listType==1}">
                   <div class="l-part">
                     <img v-if="item.rarity == 'S'" class="rank" src="/image/market/rank_1.png" />
                     <img v-if="item.rarity == 'SS'" class="rank" src="/image/market/rank_2.png" />
                     <img v-if="item.rarity == 'SSS'" class="rank" src="/image/market/rank_3.png" />
-                    <p># {{item.token_id}}</p>
+                    <p v-if="listType==0"># {{item.token_id}}</p>
+                  </div> 
+                  <div class="r-part"  v-if="item.attributes">
+                    <template v-for="(attr, key) in item.attributes" >
+                      <p class="item" :key="`attr_${key}`">
+                        <label>{{attrArrs[key]}}</label>
+                        <!-- <span>{{attr}} %</span> -->
+                        <em class="progress">
+                          <span class="progress-bar">
+                            <i class="progress-bar-inner" :style="{width: attr+'%'}"></i>
+                            <i class="progress-bar-num">{{attr}} %</i>
+                          </span>
+                        </em>
+                      </p>
+                    </template>
+                  </div>
+                </div>
+
+                <!-- <div class="info" :class="{'land': listType==0, 'building': listType==1}">
+                  <div class="l-part">
+                    <img v-if="item.rarity == 'S'" class="rank" src="/image/market/rank_1.png" />
+                    <img v-if="item.rarity == 'SS'" class="rank" src="/image/market/rank_2.png" />
+                    <img v-if="item.rarity == 'SSS'" class="rank" src="/image/market/rank_3.png" />
                   </div> 
                   <div class="r-part hidden-sm-and-down"  v-if="item.attributes">
                     <template v-for="(attr, key) in item.attributes" >
                       <p class="item" :key="`attr_${key}`">
                         <label>{{attrArrs[key]}}</label>
-                        <!-- <span>{{attr}} %</span> -->
                         <em class="progress">
                           <span class="progress-bar">
                             <i class="progress-bar-inner" :style="{width: attr+'%'}"></i>
@@ -48,7 +69,9 @@
                       </p>
                     </template>
                   </div>
-                </div>
+                </div> -->
+
+
               </div>
             </div>
           </el-col>
@@ -125,6 +148,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
+$rank: (
+  $--page-xs-width:(height: 22px),
+  $--page-sm-width:(height: 28px),
+  $--page-md-width:(height: 32px),
+  $--page-lg-width:(height: 36px),
+);
+
 
 @include b(dataList) {
   @include e(hd) {
@@ -199,16 +229,85 @@ export default {
     }
   }
   .info {
-    @include displayFlex();
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: unset;
     width: 100%;
     padding: 13px;
-    
+    &.land {
+      @include displayFlex();
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: unset;
+      .l-part img.rank {
+        margin-bottom: 20px;
+      }
+      .r-part {
+        width: 47.5%;
+      }
+    }
+
+    &.building {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      .l-part img.rank {
+        margin-bottom: 0;
+      }
+      .r-part {
+        width: 100%;
+        font-size: 12px;
+        display: table;
+        border-spacing: 5px 2px;
+        font-family: Arial, Helvetica, sans-serif;
+        label {
+          display: table-cell;
+          padding: 0;
+          text-align: left;
+          font-size: 12px;
+        }
+
+        p {
+          display: table-row;
+          width: 100%;
+          white-space: nowrap;
+          text-align: right;
+        }
+
+        .progress {
+          display: table-cell;
+          margin-left: 5px;
+          color: $--color-aqua;
+          width: 100%;
+          vertical-align: middle;
+          &-bar {
+            position: relative;
+            display: block;
+            height: 0.8em;
+            width: 100%;
+            border: 1px solid $--color-aqua;
+            &-inner {
+              height: 100%;
+              background-image: linear-gradient(to right,  rgba(72, 255, 250, 0.2), rgba(44, 255, 243, 0.6));
+              display: block;
+            }
+            &-num {
+              position: absolute;
+              z-index: 1;
+              color: $--color-white;
+              top: 50%;
+              right: 0;
+              margin-top: -0.5em;
+              font-size: 12px;
+              -webkit-transform: scale(0.8);
+              transform: scale(0.8);
+            }
+          }
+        }
+      }
+    }
+
+
     .item {
       margin-bottom: 10px;
       line-height: 125%;
@@ -218,50 +317,12 @@ export default {
     }
     .l-part {
       img.rank {
-        height: 36px;
+        // height: 36px;
+        @include mediaAdapt($rank);
         margin-bottom: 20px;
       }
       p {
         line-height: 100%;
-      }
-
-    }
-    .r-part {
-      width: 47.5%;
-      font-size: 12px;
-      display: table;
-      border-spacing: 5px 2px;
-
-      p {
-        display: table-row;
-        width: 100%;
-        white-space: nowrap;
-        text-align: right;
-      }
-      label {
-        display: table-cell;
-        padding: 0 0 0px 4px;
-      }
-
-      .progress {
-        // padding: 4px 0 0px 4px;
-        display: table-cell;
-        margin-left: 5px;
-        color: $--color-aqua;
-        width: 100px;
-        vertical-align: middle;
-        &-bar {
-          position: relative;
-          display: block;
-          height: 0.6em;
-          width: 30px;
-          &-inner {
-            height: 100%;
-            background-color: $--color-aqua;
-            display: block;
-          }
-          // width: 60%;
-        }
       }
     }
   }

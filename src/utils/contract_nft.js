@@ -23,7 +23,8 @@ export class nftContractClass extends contractBootstrap {
     if (parseInt(gid) !== 0) {
       try {
         const nftContract = await super.contractMaker()
-        const token = await nftContract.methods.claim(new BN(gid)).send({from: account_})
+        const gas_claim = await nftContract.methods.claim(new BN(gid)).estimateGas({from: account_})
+        const token = await nftContract.methods.claim(new BN(gid)).send({from: account_, gas: gas_claim})
         super.msgLog("Claim NFT Successed", "success")
         return token
       } catch (err) {
