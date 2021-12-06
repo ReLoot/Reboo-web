@@ -299,8 +299,8 @@ $rank: (
               right: -4px;
               margin-top: -0.5em;
               font-size: 12px;
-              -webkit-transform: scale(0.6);
-              transform: scale(0.6);
+              -webkit-transform: translateY(-50%) scale(0.6);
+              transform: translateY(-50%) scale(0.6);
             }
           }
         }
