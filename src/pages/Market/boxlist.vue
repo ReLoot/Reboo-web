@@ -27,7 +27,6 @@
                 </div>
                 <cus-btn-ein
                   class="card_btn"
-                  :class="{disabled: idx==boxSelectedCurIdx}"
                   @click.native="boxSelect(item)"
                 >OPEN</cus-btn-ein>
               </div>
@@ -140,17 +139,17 @@ export default {
       this.pageLoading = true
       contractObj.openBox(id)
         .then(res => {
-          this.boxDialogVisible = true
-          if (res.data.rarity == 'SS')
-            this.boxCardRank = 2
-          else if (res.data.rarity == 'SSS')
-            this.boxCardRank = 3
-          else
-            this.boxCardRank = 1
-
+          if(res.code == 0) {
+            this.boxDialogVisible = true
+            if (res.data.rarity == 'SS')
+              this.boxCardRank = 2
+            else if (res.data.rarity == 'SSS')
+              this.boxCardRank = 3
+            else
+              this.boxCardRank = 1
+          }
           this.pageLoading = false
           contractObj.classifyItem()
-
         }).catch(err => {
           this.pageLoading = false
           this.$message({ message: err, type: 'error' })
