@@ -57,7 +57,7 @@ class cardContract extends contractBootstrap{
     else
       amount_ = amount
 
-    if (balanceFormart <= vbn_require_amount*amount_) {
+    if (balanceFormart < vbn_require_amount*amount_) {
       super.msgLog('Not enough balance for pay')
       return false
     }
