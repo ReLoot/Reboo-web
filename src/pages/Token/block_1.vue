@@ -6,18 +6,20 @@
         {{$t('token.desc')}}
       </p>
 
-      <div class="token--banner_btns hidden-sm-and-down">
-        <cus-btn-ein 
-        class="btn"
-        bg="/image/token/btn_1.png"
-        @click.native="link"
-      >{{$t('token.btn1')}}</cus-btn-ein>
+      <div class="token--banner_btns ">
+        <a href="https://pancakeswap.finance/swap" target="blank_">
+          <cus-btn-ein 
+            class="btn"
+            bg="/image/token/btn_1.png"
+          >{{$t('token.btn1')}}</cus-btn-ein>
+        </a>
 
-      <cus-btn-ein 
-        class="btn"
-        bg="/image/token/btn_2.png"
-        @click.native="link"
-      >{{$t('token.btn2')}}</cus-btn-ein>
+        <a href="https://bscscan.com/address/0x4B41cA61f5FBe12dDbA38bC2D8bacC5f68FD491F" target="blank_">
+          <cus-btn-ein 
+            class="btn"
+            bg="/image/token/btn_2.png"
+          >{{$t('token.btn2')}}</cus-btn-ein>
+        </a>
 
       </div>
     </div>
@@ -27,12 +29,15 @@
 <script>
 export default {
   methods: {
-    link() {  //url
-      this.$message({
-        showClose: true,
-        message: this.$t('token.altr')
-      })
+    toPancake() {
+      
     },
+    // link() {  //url
+    //   this.$message({
+    //     showClose: true,
+    //     message: this.$t('token.altr')
+    //   })
+    // },
   }
 }
 </script>
@@ -40,16 +45,16 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
 $bnListHd: (
-  $--page-xs-width:(fontsize: 35px, marginTop: 180px, width: 250px),
-  $--page-sm-width:(fontsize: 35px, marginTop: 243px, width: 250px),
+  $--page-xs-width:(fontsize: 35px, marginTop: 80px, width: 250px),
+  $--page-sm-width:(fontsize: 35px, marginTop: 180px, width: 250px),
   $--page-md-width:(fontsize: 35px, marginTop: 243px, width: 100%),
   $--page-lg-width:(fontsize: 40px, marginTop: 200px),
 );
 $btnList: (
-  $--page-xs-width:(width: 256px, height: 67px, fontsize: 18px),
-  $--page-sm-width:(width: 256px, height: 67px, fontsize: 18px),
-  $--page-md-width:(width: 280px, height: 73px, fontsize: 22px),
-  $--page-lg-width:(width: 280px, height: 73px, fontsize: 22px),
+  $--page-xs-width:(width: 256px, height: 67px, fontsize: 18px, margin: 0 10px 20px 10px),
+  $--page-sm-width:(width: 256px, height: 67px, fontsize: 18px, margin: 0 10px 20px 10px),
+  $--page-md-width:(width: 280px, height: 73px, fontsize: 22px, margin: 0 35px 0 0),
+  $--page-lg-width:(width: 280px, height: 73px, fontsize: 22px, margin: 0 35px 0 0),
 );
 
 
@@ -87,14 +92,7 @@ $btnList: (
       text-align: center;
       .btn {
         @include mediaAdapt($btnList);
-        // width: 345px;
-        // height: 90px;
-        // font-size: 32px;
-        margin-right: 35px;
         font-family: OrbitronBlack;
-        &:last-child {
-          margin-right: 0;
-        }
       }
     }
 
