@@ -28,7 +28,7 @@
                 <cus-btn-ein
                   class="card_btn"
                   @click.native="boxSelect(item)"
-                >WAIT</cus-btn-ein>
+                >OPEN</cus-btn-ein>
               </div>
             </div>
           </el-col>
@@ -128,36 +128,35 @@ export default {
       }
     },
     boxSelect(id) {
-      return false
-      // if(this.pageLoading) return false
-      // this.pageLoading = true
+      if(this.pageLoading) return false
+      this.pageLoading = true
 
-      // this.gifURL = this.listType==0?'/image/market/box_land.gif':'/image/market/box_building.gif'
-      // this.curItemID = id
+      this.gifURL = this.listType==0?'/image/market/box_land.gif':'/image/market/box_building.gif'
+      this.curItemID = id
 
-      // const contractObj = this.listType == 0 ? this.$landContract : this.$buildingContract
-      // // let id = this.curItemID
-      // this.pageLoading = true
-      // contractObj.openBox(id)
-      //   .then(res => {
-      //     this.boxDialogVisible = true
-      //     if (res.data.rarity == 'SS')
-      //       this.boxCardRank = 2
-      //     else if (res.data.rarity == 'SSS')
-      //       this.boxCardRank = 3
-      //     else
-      //       this.boxCardRank = 1
+      const contractObj = this.listType == 0 ? this.$landContract : this.$buildingContract
+      // let id = this.curItemID
+      this.pageLoading = true
+      contractObj.openBox(id)
+        .then(res => {
+          this.boxDialogVisible = true
+          if (res.data.rarity == 'SS')
+            this.boxCardRank = 2
+          else if (res.data.rarity == 'SSS')
+            this.boxCardRank = 3
+          else
+            this.boxCardRank = 1
 
-      //     this.pageLoading = false
-      //     contractObj.classifyItem()
+          this.pageLoading = false
+          contractObj.classifyItem()
 
-      //   }).catch(err => {
-      //     this.pageLoading = false
-      //     this.$message({
-      //       message: err,
-      //       type: 'error'
-      //     })
-      //   })
+        }).catch(err => {
+          this.pageLoading = false
+          this.$message({
+            message: err,
+            type: 'error'
+          })
+        })
     },
     boxDialogClose() {
       this.gifURL = ''
@@ -262,7 +261,7 @@ $cardBtn: (
     background-color: #2D8A92;
     border: 2px solid #3DB5AE;
 
-    opacity: 0.2;
+    // opacity: 0.2;
   }
 }
 

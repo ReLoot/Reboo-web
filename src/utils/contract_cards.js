@@ -31,7 +31,7 @@ class cardContract extends contractBootstrap{
           balance = await vbnContract.methods.balanceOf(account_).call(),
           unit = Math.pow(10, 9),
           balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
-          
+    
     store.commit('user/balance', balance_)
     return {
       balance,
