@@ -50,15 +50,13 @@ class cardContract extends contractBootstrap{
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           mainContract = await super.contractMaker()
     
-    console.log(amount)
-
     let amount_
     if (type == 0)
       amount_ = amount*0.1
     else
       amount_ = amount
 
-    if (balanceFormart <= vbn_require_amount*amount) {
+    if (balanceFormart <= vbn_require_amount*amount_) {
       super.msgLog('Not enough balance for pay')
       return false
     }
