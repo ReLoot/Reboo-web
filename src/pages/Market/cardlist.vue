@@ -38,8 +38,13 @@
                   <div class="r-part hidden-sm-and-down"  v-if="item.attributes">
                     <template v-for="(attr, key) in item.attributes" >
                       <p class="item" :key="`attr_${key}`">
-                        <label>{{key}}</label>
-                        <span>{{attr}} %</span>
+                        <label>{{attrArrs[key]}}</label>
+                        <!-- <span>{{attr}} %</span> -->
+                        <em class="progress">
+                          <span class="progress-bar">
+                            <i class="progress-bar-inner" :style="{width: attr+'%'}"></i>
+                          </span>
+                        </em>
                       </p>
                     </template>
                   </div>
@@ -88,6 +93,12 @@ export default {
         type: 'build',
         view: 'market.cardType2'
       }],
+      attrArrs: {
+        'power': 'Power',
+        'strong': 'Durability',
+        'energy': 'Energy',
+        'efficiency': 'Efficiency'
+      },
       viewList: []
     }
   },
@@ -219,24 +230,38 @@ export default {
       width: 47.5%;
       font-size: 12px;
       display: table;
+      border-spacing: 5px 2px;
+
       p {
         display: table-row;
-        // @include displayFlex();
-        // justify-content: space-between;
         width: 100%;
         white-space: nowrap;
         text-align: right;
       }
       label {
         display: table-cell;
-        padding: 4px 0 0px 4px;
+        padding: 0 0 0px 4px;
       }
 
-      span {
-        padding: 4px 0 0px 4px;
+      .progress {
+        // padding: 4px 0 0px 4px;
         display: table-cell;
         margin-left: 5px;
         color: $--color-aqua;
+        width: 100px;
+        vertical-align: middle;
+        &-bar {
+          position: relative;
+          display: block;
+          height: 0.6em;
+          width: 30px;
+          &-inner {
+            height: 100%;
+            background-color: $--color-aqua;
+            display: block;
+          }
+          // width: 60%;
+        }
       }
     }
   }
