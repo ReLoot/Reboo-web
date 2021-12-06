@@ -39,7 +39,6 @@
                     <template v-for="(attr, key) in item.attributes" >
                       <p class="item" :key="`attr_${key}`">
                         <label>{{attrArrs[key]}}</label>
-                        <!-- <span>{{attr}} %</span> -->
                         <em class="progress">
                           <span class="progress-bar">
                             <i class="progress-bar-inner" :style="{width: attr+'%'}"></i>

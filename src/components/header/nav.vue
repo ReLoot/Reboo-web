@@ -173,7 +173,7 @@ export default {
     return {
       bindEmailVisible: false,   // Email Dialog
       receiveNFTVisible: false,
-      nftGuidVisible: false,
+      nftGuidVisible: true,
       receiveNFTnomore: false,
       curRoute: '',
       navs: this.$router.options.routes[1]['children'],
