@@ -53,8 +53,7 @@ class cardContract extends contractBootstrap{
     
     let amount_
     if (type == 0)
-      // amount_ = amount*0.1
-      amount_ = amount*1
+      amount_ = amount*0.1
     else
       amount_ = amount
 
