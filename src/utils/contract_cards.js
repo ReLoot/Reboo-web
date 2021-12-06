@@ -41,7 +41,7 @@ class cardContract extends contractBootstrap{
     }
   }
 
-  async payForBox(amount) {
+  async payForBox(amount, type) {
     const account_ = this.accountCheck()
     if (!account_) return false
 
@@ -50,6 +50,9 @@ class cardContract extends contractBootstrap{
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           mainContract = await super.contractMaker()
     
+    if (type == 0)
+      amount = amount*0.1
+
     if (balanceFormart <= vbn_require_amount*amount) {
       super.msgLog('Not enough balance for pay')
       return false

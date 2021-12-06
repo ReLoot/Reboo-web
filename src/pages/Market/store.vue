@@ -175,11 +175,11 @@ export default {
 
         let payOptions
         if(this.curTabIdx == 0) {
-          payOptions = await this.$landContract.payForBox(this.num*this.price)
+          payOptions = await this.$landContract.payForBox(this.num, 0)
           await this.$landContract.init()
         }
         if(this.curTabIdx == 1) {
-          payOptions = await this.$buildingContract.payForBox(this.num*this.price)
+          payOptions = await this.$buildingContract.payForBox(this.num, 1)
           await this.$buildingContract.init()
         }
         
