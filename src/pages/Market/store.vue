@@ -192,7 +192,7 @@ export default {
             type: this.curTabIdx+1 
           })
           this.max = pusreObj.data.remain
-          this.num = pusreObj.data.remain
+          this.num = 1
           if(pusreObj.data.remain == 0) {
             this.min = pusreObj.data.remain
             this.num = pusreObj.data.remain

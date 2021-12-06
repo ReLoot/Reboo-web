@@ -47,7 +47,7 @@ class cardContract extends contractBootstrap{
     if (!account_) return false
 
     const vbn_require_amount = 1,     // get from store
-          {balanceFormart} = await this.getVbnBalance(),
+          {balance, balanceFormart} = await this.getVbnBalance(),
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           mainContract = await super.contractMaker()
     
@@ -57,17 +57,18 @@ class cardContract extends contractBootstrap{
     else
       amount_ = amount
 
-    // const provider = await detectEthereumProvider()
-    // const web3 = new Web3(provider)
-
     if (balanceFormart <= vbn_require_amount*amount_) {
       super.msgLog('Not enough balance for pay')
       return false
     }
     
     try {
-      const gas_approve = await vbnContract.methods.approve(this.options.contract_address, new BN(String(vbn_require_amount*amount_*Math.pow(10, 18)))).estimateGas({from: account_})
-      await vbnContract.methods.approve(this.options.contract_address, new BN(String(vbn_require_amount*amount_*Math.pow(10, 18)))).send({from: account_, gas: gas_approve*2})
+      const allow = await vbnContract.methods.allowance(account_, this.options.contract_address).call()
+      if (new BN(allow).div(new BN(Math.pow(10, 9))).toString()/Math.pow(10, 9) < vbn_require_amount*amount_) {
+        const gas_approve = await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).estimateGas({from: account_})
+        await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).send({from: account_, gas: gas_approve*2})
+      }
+
       let res
       if (amount <= 1) {
         const gas_mint = await mainContract.methods.mint(account_).estimateGas({from: account_})
