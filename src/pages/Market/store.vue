@@ -1,5 +1,9 @@
 <template>
-  <div class="store">
+  <div class="store" 
+    v-loading.fullscreen.lock="pageLoading" 
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+    element-loading-text="Please waiting..."
+  >
     <div class="store--hd">
       <tabs-market :tabs="tabs" :tabIdx="curTabIdx" @trigger="tabsTrigger" />
     </div>

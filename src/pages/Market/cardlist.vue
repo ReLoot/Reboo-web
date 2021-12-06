@@ -297,7 +297,7 @@ $rank: (
               color: $--color-white;
               top: 50%;
               right: -4px;
-              margin-top: -0.5em;
+              // margin-top: -0.5em;
               font-size: 12px;
               -webkit-transform: translateY(-50%) scale(0.6);
               transform: translateY(-50%) scale(0.6);
