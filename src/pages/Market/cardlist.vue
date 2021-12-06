@@ -296,11 +296,11 @@ $rank: (
               z-index: 1;
               color: $--color-white;
               top: 50%;
-              right: 0;
+              right: -4px;
               margin-top: -0.5em;
               font-size: 12px;
-              -webkit-transform: scale(0.8);
-              transform: scale(0.8);
+              -webkit-transform: scale(0.6);
+              transform: scale(0.6);
             }
           }
         }
