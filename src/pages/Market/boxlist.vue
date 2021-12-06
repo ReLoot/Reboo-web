@@ -147,6 +147,8 @@ export default {
               this.boxCardRank = 3
             else
               this.boxCardRank = 1
+          } else {
+            this.$message({ message: res.data, type: 'warning' })
           }
           this.pageLoading = false
           contractObj.classifyItem()
