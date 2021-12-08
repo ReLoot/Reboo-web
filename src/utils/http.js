@@ -1,7 +1,7 @@
 import axios from 'axios'
 import apis from './api'
 import store from '@/store'
-import {showTipsMsg} from '@/utils/message'
+// import {showTipsMsg} from '@/utils/message'
 
 var http = axios.create({
   baseURL: '/',

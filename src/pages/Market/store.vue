@@ -85,7 +85,7 @@
           <cus-btn-ein 
             class="pay"
             bg="/image/market/btn_1.png"
-            v-if="!pageLoading"
+            v-show="!pageLoading"
             @click.native="pay"
           >BUY NOW</cus-btn-ein>
            <!-- v-if="pageLoading" -->
@@ -179,37 +179,52 @@ export default {
 
         let payOptions
         if(this.curTabIdx == 0) {
-          payOptions = await this.$landContract.payForBox(this.num, 0)
+          await this.$landContract.payForBox(this.num, this.price, this.boxPurchaseRequest)
           await this.$landContract.init()
         }
         if(this.curTabIdx == 1) {
-          payOptions = await this.$buildingContract.payForBox(this.num*this.price)
+          await this.$buildingContract.payForBox(this.num, this.price, this.boxPurchaseRequest)
           await this.$buildingContract.init()
         }
         
-        if (payOptions) {
-          const pusreObj = await this.$http('boxPurchase', { 
-            eth_address: this.account, 
-            transactionHash:payOptions.transactionHash, 
-            blockNumber:String(payOptions.blockNumber), 
-            box_num: this.num,
-            type: this.curTabIdx+1 
-          })
-          this.max = pusreObj.data.remain
-          this.num = 1
-          if(pusreObj.data.remain == 0) {
-            this.min = pusreObj.data.remain
-            this.num = pusreObj.data.remain
-          }
+        // if (payOptions) {
+        //   const pusreObj = await this.$http('boxPurchase', { 
+        //     eth_address: this.account, 
+        //     transactionHash:payOptions.transactionHash, 
+        //     blockNumber:String(payOptions.blockNumber), 
+        //     box_num: this.num,
+        //     type: this.curTabIdx+1 
+        //   })
+        //   this.max = pusreObj.data.remain
+        //   this.num = 1
+        //   if(pusreObj.data.remain == 0) {
+        //     this.min = pusreObj.data.remain
+        //     this.num = pusreObj.data.remain
+        //   }
           
-        }
+        // }
 
         this.pageLoading = false
       } catch (err) {
         this.pageLoading = false
         console.error(err)
       }
-
+    },
+    boxPurchaseRequest(tx) {
+      console.log(tx)
+      console.log(this)
+      this.$http('boxPurchase', { 
+        eth_address: this.account, 
+        transactionHash:tx, 
+        // blockNumber:String(tx.blockNumber), 
+        box_num: this.num,
+        type: this.curTabIdx+1 
+      }).then(res => {
+        if(res) {
+          this.max = res.data.remain
+          this.num = res.data.remain==0?res.data.remain:1
+        }
+      })
     }
   }
 }

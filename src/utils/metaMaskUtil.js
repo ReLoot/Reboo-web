@@ -3,7 +3,6 @@ import store from '@/store/index'
 import Web3 from "web3"
 // import tp from 'tp-js-sdk'
 
-
 import {showTipsMsg} from '@/utils/message'
 
 export class metaMaskUtils {

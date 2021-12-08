@@ -4,7 +4,7 @@ import {Message} from 'element-ui'
 
 import Web3 from "web3"
 
-
+const BN = new Web3().utils.BN
 export class contractBootstrap {
   constructor(option_) {
     let defaults = {
@@ -15,9 +15,13 @@ export class contractBootstrap {
     this.options.account = this.accountCheck()
   }
 
-  async contractMaker (abi, address) {
+  async providerMaker () {
     const provider = await detectEthereumProvider()
-    const web3 = new Web3(provider)
+    return new Web3(provider)
+  }
+
+  async contractMaker (abi, address) {
+    const web3 = await this.providerMaker()
     return new web3.eth.Contract(abi||this.options.abi, address||this.options.contract_address)
   }
 
@@ -35,6 +39,12 @@ export class contractBootstrap {
     } else {
       return null
     }
+  }
+
+  gasOptions() {
+    const gasPrice = 11*Math.pow(10, 9)
+          // gas = 66312
+    return {gasPrice}
   }
 
 }

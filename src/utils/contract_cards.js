@@ -42,42 +42,45 @@ class cardContract extends contractBootstrap{
     }
   }
 
-  async payForBox(amount, type) {
+
+  async payForBox(amount, price, payHandler) {
     const account_ = this.accountCheck()
     if (!account_) return false
 
-    const vbn_require_amount = 1,     // get from store
-          {balance, balanceFormart} = await this.getVbnBalance(),
+    const {balance, balanceFormart} = await this.getVbnBalance(),
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           mainContract = await super.contractMaker()
-    
-    let amount_
-    if (type == 0)
-      amount_ = amount*0.1
-    else
-      amount_ = amount
 
-    if (balanceFormart < vbn_require_amount*amount_) {
+    if (balanceFormart < price*amount) {
       super.msgLog('Not enough balance for pay')
       return false
     }
-    
+
     try {
       const allow = await vbnContract.methods.allowance(account_, this.options.contract_address).call()
-      if (new BN(allow).div(new BN(Math.pow(10, 9))).toString()/Math.pow(10, 9) < vbn_require_amount*amount_) {
-        const gas_approve = await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).estimateGas({from: account_})
-        await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).send({from: account_, gas: gas_approve*2})
+      const gasOptions = this.gasOptions()
+      let res
+      if (new BN(allow).div(new BN(Math.pow(10, 9))).toString()/Math.pow(10, 9) < price*amount) {
+        // const gas_approve = await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).estimateGas({from: account_})
+        await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).send({from: account_, ...gasOptions})
       }
 
-      let res
       if (amount <= 1) {
-        const gas_mint = await mainContract.methods.mint(account_).estimateGas({from: account_})
-        console.log('gm:', gas_mint)
-        res = await mainContract.methods.mint(account_).send({from: account_, gas: gas_mint*2})
+        res = await mainContract.methods.mint(account_).send({from: account_, ...gasOptions})
+          .on('transactionHash', function(hash){
+            console.log(typeof payHandler)
+            if(payHandler) {
+              payHandler(hash)
+            }
+          })
+
       } else {
-        const gas_mintMulti = await mainContract.methods.mintMulti(account_, amount).estimateGas({from: account_})
-        console.log('gm:', gas_mintMulti)
-        res = await mainContract.methods.mintMulti(account_, amount).send({from: account_, gas: gas_mintMulti*2})
+        res = await mainContract.methods.mintMulti(account_, amount).send({from: account_, ...gasOptions})
+          .on('transactionHash', function(hash){
+            if(payHandler) {
+              payHandler(hash)
+            }
+          })
       }
 
       super.msgLog('Buy successed!', 'success')
