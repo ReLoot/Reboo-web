@@ -1,6 +1,8 @@
 import detectEthereumProvider from "@metamask/detect-provider"
 import store from '@/store/index'
 import Web3 from "web3"
+
+import {pageInitlization} from '@/utils/bootstrap'
 // import tp from 'tp-js-sdk'
 
 import {showTipsMsg} from '@/utils/message'
@@ -29,8 +31,6 @@ export class metaMaskUtils {
       try { 
         const accounts = await this.provider_.request({ method: 'eth_requestAccounts' });
         this.account = new Web3().utils.toChecksumAddress(accounts[0])
-        store.commit('user/account', this.account)
-        this.eventRegister()
         return this.account
       } catch (err) {
         console.error(err)
@@ -60,15 +60,11 @@ export class metaMaskUtils {
   }
 
   eventRegister () {
-    this.provider_.on('chainChanged', ()=>{
-      this.onChainChanged()
-    })
-    this.provider_.on('accountsChanged', ()=>{
-      this.onAccountChanged(this.account)
-    })
-    this.provider_.on('disconnect', ()=>{
-      this.onDisconnect()
-    })
+    console.log(444)
+    console.log(this.provider_.off)
+    this.provider_.on('chainChanged', ()=>{this.onChainChanged()})
+    this.provider_.on('accountsChanged', account => {this.onAccountChanged(account)})
+    this.provider_.on('disconnect', ()=>{this.onDisconnect()})
   }
 
   onChainChanged() {
@@ -76,10 +72,16 @@ export class metaMaskUtils {
     window.location.reload()
   }
 
-  onAccountChanged(account_) {
+  onAccountChanged(account) {
+    console.log('onAccountChanged:', account)
     // if(!account_ && account_ !== store.getters['user/account']) {
-      this.clearCatch()
-      window.location.reload()
+
+      // this.clearCatch()
+      store.dispatch('user/cleanAccount')
+      store.dispatch('common/cleanToken')
+      pageInitlization()
+      
+      // window.location.reload()
     // }
   }
 
@@ -90,6 +92,7 @@ export class metaMaskUtils {
 
   clearCatch() {
     store.dispatch('user/cleanAccount')
+    store.dispatch('common/cleanToken')
     store.commit('common/authentication', false)
   }
 

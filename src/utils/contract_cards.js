@@ -113,7 +113,7 @@ class cardContract extends contractBootstrap{
   }
 
   async classifyItem() {
-    const account_ = this.accountCheck()
+    /* const account_ = this.accountCheck()
     if (!account_) return false
     
     let boxList = [], cardList = []
@@ -134,9 +134,10 @@ class cardContract extends contractBootstrap{
             store.commit(this.options.storeAttr.boxes, boxList)
           }
       }).catch(err => {
-        this.msgLog(err)
+        console.error(err)
+        // this.msgLog(err)
       })
-    })
+    }) */
   }
 }
 

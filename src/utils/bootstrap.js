@@ -21,13 +21,19 @@ export const pageInitlization = async (type) => {
   let account
   // type = UA.match(/mobile/g)?true:type
   
-  if (type || AUTH_TOKEN)
+  console.log(type, AUTH_TOKEN)
+  if (type || AUTH_TOKEN) {
     account = await MU.initlization()
+    MU.eventRegister()
+  }
   // console.log(type)
+
   try {
     if(account){
       let params = {eth_address: account}
       if (AUTH_TOKEN) {
+        console.log('get user info ----------------')
+
         const userInfo = await $http('user_info', params)
         if(userInfo && userInfo.data) {
           store.commit('user/email', userInfo.data.email)
@@ -44,8 +50,12 @@ export const pageInitlization = async (type) => {
         
         store.commit('common/authentication', true)
       } else {
+        console.log('login ----------------')
         const authInfo = await $http('login', {eth_address: account})
         if(authInfo && authInfo.data) {
+          // when login successed catched the account
+          store.commit('user/account', account)
+
           store.commit('common/token', authInfo.data.token)
           store.commit('user/subscribe', authInfo.data.user_info.subscribe)
           store.commit('user/email', authInfo.data.user_info.email || '')

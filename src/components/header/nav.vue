@@ -40,13 +40,14 @@
       <cus-btn-ein 
         class="wc hidden-md-and-down"
         bg="/image/btn_banner.png"
-        v-if="!account"
+        v-if="!authentication && !(loadingWarden.includes('login') || loadingWarden.includes('user_info'))"
         @click.native="walletConnect"
       >{{$t('header.btn')}}</cus-btn-ein>
 
+      <span v-if="loadingWarden.includes('login') || loadingWarden.includes('user_info')">Logining... {{(loadingWarden.includes('login') || loadingWarden.includes('user_info'))}}</span>
 
       <el-dropdown 
-        v-if="account" 
+        v-if="authentication" 
         class="header--append_account hidden-md-and-down" 
         @command="accountHandler" 
         placement="top" 
@@ -149,7 +150,8 @@ export default {
           ido_unpartake: 'ido_unpartake'  // false is buy ido
       }),
       ...mapGetters('common', {
-          authentication: 'authentication'
+          authentication: 'authentication',
+          loadingWarden: 'loadingWarden'
       }),
       locale(){
           return this.$i18n.locale == 'en' ? 'English' : '繁体中文'
