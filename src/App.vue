@@ -112,18 +112,18 @@ export default {
         }
       }
     },
-    'account'(n, o) {
-      if (localStorage.getItem('token')) {
-        this.$http('user_info', { eth_address: this.account })
-          .then(res => {
-            if(res.data) {
-              this.$store.commit('user/email', res.data.email)
-              this.$store.commit('user/subscribe', res.data.subscribe)
-            }
-          })
-      }
-      this.init()
-    }
+    // 'account'(n, o) {
+    //   if (localStorage.getItem('token')) {
+    //     this.$http('user_info', { eth_address: this.account })
+    //       .then(res => {
+    //         if(res.data) {
+    //           this.$store.commit('user/email', res.data.email)
+    //           this.$store.commit('user/subscribe', res.data.subscribe)
+    //         }
+    //       })
+    //   }
+    //   this.init()
+    // }
   },
   async created(){
     await pageInitlization()

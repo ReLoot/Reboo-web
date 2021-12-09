@@ -8,11 +8,11 @@ const UA = navigator.userAgent.toLowerCase()
 export const appVersionCheck = async () => {
   // const appVer = localStorage.getItem('APP_VERSION')
   // appVer != process.env.VUE_APP_VERSION ||
-  if(UA.match(/mobile/g)) {
-    // localStorage.clear()
-    store.dispatch('user/cleanAccount')
-    store.dispatch('common/cleanToken')
-  }
+  // if(UA.match(/mobile/g)) {
+  //   // localStorage.clear()
+  //   store.dispatch('user/cleanAccount')
+  //   store.dispatch('common/cleanToken')
+  // }
 }
 
 export const pageInitlization = async (type) => {
@@ -21,10 +21,10 @@ export const pageInitlization = async (type) => {
   let account
   // type = UA.match(/mobile/g)?true:type
   
-  console.log(type, AUTH_TOKEN)
   if (type || AUTH_TOKEN) {
+    // debugger
     account = await MU.initlization()
-    MU.eventRegister()
+    // MU.eventRegister()
   }
   // console.log(type)
 

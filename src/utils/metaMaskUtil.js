@@ -21,8 +21,13 @@ export class metaMaskUtils {
   }
 
   async initlization () {
-    const provider_ = await new detectEthereumProvider()
-    this.provider_ = provider_
+    console.log(this.provider_)
+    if(!this.provider_) {
+      const provider_ = await new detectEthereumProvider()
+      this.provider_ = provider_
+      // debugger
+      this.eventRegister()
+    }
 
     if (this.provider_) {
       let check_ = await this.networkCheck()
@@ -60,8 +65,8 @@ export class metaMaskUtils {
   }
 
   eventRegister () {
-    console.log(444)
-    console.log(this.provider_.off)
+    // console.log(444)
+    // console.log(this.provider_.off)
     this.provider_.on('chainChanged', ()=>{this.onChainChanged()})
     this.provider_.on('accountsChanged', account => {this.onAccountChanged(account)})
     this.provider_.on('disconnect', ()=>{this.onDisconnect()})

@@ -10,8 +10,8 @@ import {initI18n} from '@/utils/i18n'
 import {appVersionCheck} from '@/utils/bootstrap'
 
 // test code 
-// import VConsole from 'vconsole'
-// new VConsole()
+import VConsole from 'vconsole'
+new VConsole()
 
 import 'element-ui/lib/theme-chalk/display.css';
 import '@/style/element-variables.scss'

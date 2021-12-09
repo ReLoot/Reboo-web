@@ -187,22 +187,24 @@ export default {
           await this.$buildingContract.init()
         }
         
-        // if (payOptions) {
-        //   const pusreObj = await this.$http('boxPurchase', { 
-        //     eth_address: this.account, 
-        //     transactionHash:payOptions.transactionHash, 
-        //     blockNumber:String(payOptions.blockNumber), 
-        //     box_num: this.num,
-        //     type: this.curTabIdx+1 
-        //   })
-        //   this.max = pusreObj.data.remain
-        //   this.num = 1
-        //   if(pusreObj.data.remain == 0) {
-        //     this.min = pusreObj.data.remain
-        //     this.num = pusreObj.data.remain
-        //   }
+        if (payOptions) {
+          console.log(payOptions)
+          debugger
+          const pusreObj = await this.$http('boxPurchase', { 
+            eth_address: this.account, 
+            transactionHash:payOptions.transactionHash, 
+            blockNumber:String(payOptions.blockNumber), 
+            box_num: this.num,
+            type: this.curTabIdx+1 
+          })
+          this.max = pusreObj.data.remain
+          this.num = 1
+          if(pusreObj.data.remain == 0) {
+            this.min = pusreObj.data.remain
+            this.num = pusreObj.data.remain
+          }
           
-        // }
+        }
 
         this.pageLoading = false
       } catch (err) {
