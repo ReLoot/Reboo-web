@@ -2,11 +2,12 @@
   <div class="home--bk">
     <div class="container">
       <h1 v-html="$t('home.bannerTxt')"></h1>
-      <cus-btn-ein 
-        class="home--bk_btn"
-        bg="/image/home/bk_1_btn.png"
-        @click.native="bannerBtn"
-      >PLAY NOW</cus-btn-ein>
+      <a data-v-c2937896="" href="http://game.vibraniumslg.io" target="_blank">
+        <cus-btn-ein 
+          class="home--bk_btn"
+          bg="/image/home/bk_1_btn.png"
+        >PLAY NOW</cus-btn-ein>
+      </a>
     </div>
   </div>
 </template>

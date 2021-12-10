@@ -31,7 +31,6 @@ class cardContract extends contractBootstrap{
     const vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           balance = await vbnContract.methods.balanceOf(account_).call(),
           unit = Math.pow(10, 9)
-          // balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
     let balance_ = new BN(balance).div(new BN(unit)).toString()
     
     balance_ = parseFloat(balance_/unit)
@@ -131,7 +130,8 @@ class cardContract extends contractBootstrap{
             store.commit(this.options.storeAttr.boxes, boxList)
           }
       }).catch(err => {
-        this.msgLog(err)
+        console.log(err)
+        // this.msgLog(err)
       })
     })
   }

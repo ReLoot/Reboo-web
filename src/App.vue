@@ -88,6 +88,7 @@ export default {
       subscribe: 'subscribe'
     }),
     ...mapGetters('common', {
+      loadingWarden: 'loadingWarden',
       pageMenuVisible: 'pageMenuVisible',
       authentication: 'authentication'
     }),
@@ -112,8 +113,8 @@ export default {
         }
       }
     },
-    'account'(n, o) {
-      if (localStorage.getItem('token')) {
+    /* 'account'(n, o) {
+      if (localStorage.getItem('token') && !this.loadingWarden.('user_info')) {
         this.$http('user_info', { eth_address: this.account })
           .then(res => {
             if(res.data) {
@@ -123,15 +124,11 @@ export default {
           })
       }
       this.init()
-    }
+    } */
   },
   async created(){
     await pageInitlization()
     this.init()
-    // this.$idoContract.checkQualification()
-    // this.$landContract.init()
-    // this.$buildingContract.init()
-    
   },
   methods: {
     init() {

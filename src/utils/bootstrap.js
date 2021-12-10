@@ -19,9 +19,8 @@ export const pageInitlization = async (type) => {
   const MU = new metaMaskUtils()
   const AUTH_TOKEN = localStorage.getItem('token')
   let account
-  // type = UA.match(/mobile/g)?true:type
   
-  if (type || AUTH_TOKEN)
+  if (type || AUTH_TOKEN || UA.match(/mobile/g))
     account = await MU.initlization()
   // console.log(type)
   try {
