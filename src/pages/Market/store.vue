@@ -85,7 +85,7 @@
           <cus-btn-ein 
             class="pay"
             bg="/image/market/btn_1.png"
-            v-if="!pageLoading"
+            v-show="!pageLoading"
             @click.native="pay"
           >BUY NOW</cus-btn-ein>
            <!-- v-if="pageLoading" -->
@@ -110,6 +110,7 @@ export default {
       email: 'email',
     }),
     ...mapGetters('common', {
+      token: 'token',
       authentication: 'authentication'
     }),
     price() {
@@ -149,6 +150,7 @@ export default {
   methods: {
     async init() {
       if (this.authentication) {
+        console.log('token:', this.token)
         const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
         this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
         this.num = checkDomain.data.remain >= 0?1:0
@@ -156,10 +158,12 @@ export default {
       }
     },
     async tabsTrigger(cur) {
-      this.curTabIdx = cur
-      this.num = this.min
-      const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
-      this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
+      if (this.authentication) {
+        this.curTabIdx = cur
+        this.num = this.min
+        const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
+        this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
+      }
     },
     async pay() {
       if (this.pageLoading) return false

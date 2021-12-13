@@ -15,14 +15,18 @@ export class contractBootstrap {
     this.options.account = this.accountCheck()
   }
 
-  async contractMaker (abi, address) {
+  async providerMaker () {
     let provider
     if (process.env.VUE_APP_DEV_TYPE == 'main') {
       provider = new Web3.providers.HttpProvider("http://13.214.167.71:8545")
     } else {
       provider = await detectEthereumProvider()
     }
-    const web3 = new Web3(provider)
+    return new Web3(provider)
+  }
+
+  async contractMaker (abi, address) {
+    const web3 = await this.providerMaker()
     return new web3.eth.Contract(abi||this.options.abi, address||this.options.contract_address)
   }
 

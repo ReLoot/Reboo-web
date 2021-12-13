@@ -48,7 +48,8 @@ class cardContract extends contractBootstrap{
     const vbn_require_amount = 1,     // get from store
           {balance, balanceFormart} = await this.getVbnBalance(),
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
-          mainContract = await super.contractMaker()
+          mainContract = await super.contractMaker(),
+          web3 = await super.providerMaker()
     
     let amount_
     if (type == 0)
@@ -61,12 +62,21 @@ class cardContract extends contractBootstrap{
       return false
     }
     
+    console.log(amount)
+    console.log(mainContract.methods.mint)
     try {
       const allow = await vbnContract.methods.allowance(account_, this.options.contract_address).call()
-      if (new BN(allow).div(new BN(Math.pow(10, 9))).toString()/Math.pow(10, 9) < vbn_require_amount*amount_) {
+      console.log('allow:', allow)
+      // if (new BN(allow).div(new BN(Math.pow(10, 9))).toString()/Math.pow(10, 9) < vbn_require_amount*amount_) {
         const gas_approve = await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).estimateGas({from: account_})
         await vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).send({from: account_, gas: gas_approve*2})
-      }
+        // const vbnApprove = vbnContract.methods.approve(this.options.contract_address, new BN(String(balance))).encodeABI()
+        // console.log(vbnApprove)
+        // debugger
+        // web3.eth.accounts.signTransaction(vbnApprove).then(signed => {
+        //   web3.eth.sendSignedTransaction(signed.rawTransaction).on('receipt', console.log)
+        // });
+      // }
 
       let res
       if (amount <= 1) {
