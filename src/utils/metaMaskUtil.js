@@ -2,7 +2,6 @@ import detectEthereumProvider from "@metamask/detect-provider"
 import store from '@/store/index'
 import Web3 from "web3"
 
-import {pageInitlization} from '@/utils/bootstrap'
 // import tp from 'tp-js-sdk'
 
 import {showTipsMsg} from '@/utils/message'
@@ -21,11 +20,9 @@ export class metaMaskUtils {
   }
 
   async initlization () {
-    console.log(this.provider_)
     if(!this.provider_) {
       const provider_ = await new detectEthereumProvider()
       this.provider_ = provider_
-      // debugger
       this.eventRegister()
     }
 
@@ -65,8 +62,6 @@ export class metaMaskUtils {
   }
 
   eventRegister () {
-    // console.log(444)
-    // console.log(this.provider_.off)
     this.provider_.on('chainChanged', ()=>{this.onChainChanged()})
     this.provider_.on('accountsChanged', account => {this.onAccountChanged(account)})
     this.provider_.on('disconnect', ()=>{this.onDisconnect()})
@@ -80,12 +75,10 @@ export class metaMaskUtils {
   onAccountChanged(account) {
     console.log('onAccountChanged:', account)
     // if(!account_ && account_ !== store.getters['user/account']) {
-
       // this.clearCatch()
       store.dispatch('user/cleanAccount')
       store.dispatch('common/cleanToken')
-      pageInitlization()
-      
+      // pageInitlization()
       // window.location.reload()
     // }
   }

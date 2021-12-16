@@ -21,6 +21,7 @@ http.interceptors.request.use(function (config) {
 http.interceptors.response.use(function (response) {
     if (response && response.data.code == '401') {
       store.dispatch('user/cleanAccount')
+      console.log('Trigger: 401')
       store.commit('common/authentication', false)
       const warnning = 'Authentication failed'
       // showTipsMsg(warnning)

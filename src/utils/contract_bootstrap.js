@@ -16,7 +16,13 @@ export class contractBootstrap {
   }
 
   async providerMaker () {
-    const provider = await detectEthereumProvider()
+    let provider
+    // if (process.env.VUE_APP_DEV_TYPE == 'main') {
+    //   provider = new Web3.providers.HttpProvider("http://13.214.167.71:8545")
+    // } else {
+    //   provider = await detectEthereumProvider()
+    // }
+    provider = await detectEthereumProvider()
     return new Web3(provider)
   }
 
@@ -43,7 +49,6 @@ export class contractBootstrap {
 
   gasOptions() {
     const gasPrice = 11*Math.pow(10, 9)
-          // gas = 66312
     return {gasPrice}
   }
 

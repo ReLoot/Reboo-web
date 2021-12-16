@@ -113,9 +113,9 @@ $navItem: (
 );
 $countList: (
   $--page-xs-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: center),
-  $--page-sm-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: center),
-  $--page-md-width:(fontsize: 16px, lineHeight: 24px, marginTop:0),
-  $--page-lg-width:(fontsize: 18px, lineHeight: 24px, marginTop:0),
+  $--page-sm-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: right),
+  $--page-md-width:(fontsize: 16px, lineHeight: 24px, marginTop:0, textAlign: right),
+  $--page-lg-width:(fontsize: 18px, lineHeight: 24px, marginTop:0, textAlign: right),
 );
 
 @include b(market) {

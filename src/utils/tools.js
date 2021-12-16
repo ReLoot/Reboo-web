@@ -3,8 +3,8 @@ export const mergeArray = (arr1, arr2, repeat=false) => {
   return Array.from(new Set(arr))
 }
 
-export const removeArrTarget = (tagArr, str) => {
-  tagArr = tagArr.filter(item => (item == str))
+export const removeArrTarget = (tagArr, arr) => {
+  tagArr = tagArr.filter(item => (item !== arr[0]))
   return tagArr
 }
 

@@ -88,6 +88,7 @@ export default {
       subscribe: 'subscribe'
     }),
     ...mapGetters('common', {
+      loadingWarden: 'loadingWarden',
       pageMenuVisible: 'pageMenuVisible',
       authentication: 'authentication'
     }),
@@ -112,26 +113,26 @@ export default {
         }
       }
     },
-    // 'account'(n, o) {
-    //   if (localStorage.getItem('token')) {
-    //     this.$http('user_info', { eth_address: this.account })
-    //       .then(res => {
-    //         if(res.data) {
-    //           this.$store.commit('user/email', res.data.email)
-    //           this.$store.commit('user/subscribe', res.data.subscribe)
-    //         }
-    //       })
-    //   }
-    //   this.init()
-    // }
+    'account'(n, o) {
+      // if (localStorage.getItem('token') && !this.loadingWarden.includes('user_info')) {
+      //   this.$http('user_info', { eth_address: this.account })
+      //     .then(res => {
+      //       if(res.data) {
+      //         this.$store.commit('user/email', res.data.email)
+      //         this.$store.commit('user/subscribe', res.data.subscribe)
+      //       }
+      //     })
+      // }
+      console.log('Account Change: ----------')
+      this.init()
+    }
   },
+  
   async created(){
     await pageInitlization()
-    this.init()
-    // this.$idoContract.checkQualification()
-    // this.$landContract.init()
-    // this.$buildingContract.init()
-    
+    this.$nextTick(() => {
+      this.init()
+    })
   },
   methods: {
     init() {

@@ -1,4 +1,4 @@
-<template>
+me<template>
   <header class="header">
     <a class="header--logo"></a>
     <ul class="header--nav hidden-md-and-down">
@@ -40,11 +40,11 @@
       <cus-btn-ein 
         class="wc hidden-md-and-down"
         bg="/image/btn_banner.png"
-        v-if="!authentication && !(loadingWarden.includes('login') || loadingWarden.includes('user_info'))"
+        v-if="!authentication && !loadingWarden.includes('commonAuthLoading')"
         @click.native="walletConnect"
       >{{$t('header.btn')}}</cus-btn-ein>
 
-      <span v-if="loadingWarden.includes('login') || loadingWarden.includes('user_info')">Logining... {{(loadingWarden.includes('login') || loadingWarden.includes('user_info'))}}</span>
+      <span v-if="loadingWarden.includes('commonAuthLoading')" class="header--append_loading hidden-md-and-down" > Logining... </span>
 
       <el-dropdown 
         v-if="authentication" 

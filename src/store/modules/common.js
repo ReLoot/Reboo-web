@@ -56,7 +56,7 @@ export default {
     deleteLoading({commit, state}, obj) {
       let arr
       if (typeof obj == 'string')
-        arr = new Array().push(obj)
+        arr = [obj]
       else 
         arr = obj
       commit('loadingWarden', removeArrTarget(state.loadingWarden, arr))

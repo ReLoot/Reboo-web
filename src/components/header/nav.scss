@@ -102,6 +102,12 @@ $avatarList: (
       font-family: OrbitronRegular;
     }
     
+    @include m(loading) {
+      font-family: OrbitronRegular;
+      opacity: 0.2;
+      font-size: 12px;
+    }
+
     @include m(menubtn){
       font-size: 24px;
       color: $--color-white-07;

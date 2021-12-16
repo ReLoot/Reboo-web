@@ -31,7 +31,6 @@ class cardContract extends contractBootstrap{
     const vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           balance = await vbnContract.methods.balanceOf(account_).call(),
           unit = Math.pow(10, 9)
-          // balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
     let balance_ = new BN(balance).div(new BN(unit)).toString()
     
     balance_ = parseFloat(balance_/unit)
@@ -49,7 +48,14 @@ class cardContract extends contractBootstrap{
 
     const {balance, balanceFormart} = await this.getVbnBalance(),
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
-          mainContract = await super.contractMaker()
+          mainContract = await super.contractMaker(),
+          web3 = await super.providerMaker()
+    
+    // let amount_
+    // if (type == 0)
+    //   amount_ = amount*0.1
+    // else
+    //   amount_ = amount
 
     if (balanceFormart < price*amount) {
       super.msgLog('Not enough balance for pay')
@@ -68,7 +74,6 @@ class cardContract extends contractBootstrap{
       if (amount <= 1) {
         res = await mainContract.methods.mint(account_).send({from: account_, ...gasOptions})
           .on('transactionHash', function(hash){
-            console.log(typeof payHandler)
             if(payHandler) {
               payHandler(hash)
             }
@@ -134,8 +139,7 @@ class cardContract extends contractBootstrap{
             store.commit(this.options.storeAttr.boxes, boxList)
           }
       }).catch(err => {
-        console.error(err)
-        // this.msgLog(err)
+        console.log(err)
       })
     })
   }
