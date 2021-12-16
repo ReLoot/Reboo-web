@@ -40,7 +40,7 @@ me<template>
       <cus-btn-ein 
         class="wc hidden-md-and-down"
         bg="/image/btn_banner.png"
-        v-if="!authentication && !loadingWarden.includes('commonAuthLoading')"
+        v-show="!authentication && !loadingWarden.includes('commonAuthLoading')"
         @click.native="walletConnect"
       >{{$t('header.btn')}}</cus-btn-ein>
 

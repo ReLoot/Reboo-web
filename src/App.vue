@@ -113,22 +113,27 @@ export default {
         }
       }
     },
-    'account'(n, o) {
-      // if (localStorage.getItem('token') && !this.loadingWarden.includes('user_info')) {
-      //   this.$http('user_info', { eth_address: this.account })
-      //     .then(res => {
-      //       if(res.data) {
-      //         this.$store.commit('user/email', res.data.email)
-      //         this.$store.commit('user/subscribe', res.data.subscribe)
-      //       }
-      //     })
-      // }
-      console.log('Account Change: ----------')
+    // 'account'(n, o) {
+    //   // if (localStorage.getItem('token') && !this.loadingWarden.includes('user_info')) {
+    //   //   this.$http('user_info', { eth_address: this.account })
+    //   //     .then(res => {
+    //   //       if(res.data) {
+    //   //         this.$store.commit('user/email', res.data.email)
+    //   //         this.$store.commit('user/subscribe', res.data.subscribe)
+    //   //       }
+    //   //     })
+    //   // }
+    //   console.log('Account Change: ----------')
+    //   this.init()
+    // }
+    'authentication' () {
+      console.log('Auth Change: ----------')
       this.init()
     }
   },
   
   async created(){
+    // console.log(process.env)
     await pageInitlization()
     this.$nextTick(() => {
       this.init()

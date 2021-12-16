@@ -13,6 +13,7 @@ export const appVersionCheck = async () => {
   //   store.dispatch('user/cleanAccount')
   //   store.dispatch('common/cleanToken')
   // }
+  return
 }
 
 export const pageInitlization = async (type) => {

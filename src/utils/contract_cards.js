@@ -31,8 +31,8 @@ class cardContract extends contractBootstrap{
     const vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
           balance = await vbnContract.methods.balanceOf(account_).call(),
           unit = Math.pow(10, 9)
+
     let balance_ = new BN(balance).div(new BN(unit)).toString()
-    
     balance_ = parseFloat(balance_/unit)
     store.commit('user/balance', balance_)
     return {
@@ -48,15 +48,9 @@ class cardContract extends contractBootstrap{
 
     const {balance, balanceFormart} = await this.getVbnBalance(),
           vbnContract = await super.contractMaker(vbn_abi, vbn_contract_address),
-          mainContract = await super.contractMaker(),
-          web3 = await super.providerMaker()
+          mainContract = await super.contractMaker()
+          // web3 = await super.providerMaker()
     
-    // let amount_
-    // if (type == 0)
-    //   amount_ = amount*0.1
-    // else
-    //   amount_ = amount
-
     if (balanceFormart < price*amount) {
       super.msgLog('Not enough balance for pay')
       return false
