@@ -25,7 +25,7 @@ export class idoContractClass extends contractBootstrap {
     return await mainContract.methods._maxCandidate().call()
   }
 
-  /* 获取VBN数量 */
+  // 获取VBN数量
   async getVbnBalance () {
     const account_ = this.accountCheck()
     if (!account_) return false
@@ -42,7 +42,7 @@ export class idoContractClass extends contractBootstrap {
     }
   }
  
-  // 是否有资格购买
+  // 是否有参与IDO资格
   async checkQualification() {
     const account_ = super.accountCheck()
 

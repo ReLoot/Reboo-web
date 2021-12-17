@@ -100,10 +100,6 @@ export default {
     },  
     cleanAccount({commit}){
       localStorage.clear()
-      // commit('account', account_)
-      // commit('email', account_)
-      // commit('subscribe', 0)
-      // commit('gid', 0)"userInfo": localStorage.getItem('USERINFO') || {},
       commit('account', '')
       commit('email', '')
       commit('gid', '')

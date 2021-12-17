@@ -310,7 +310,8 @@ export default {
         let res = await this.$idoContract.pay(this.piece)
         if (res) {
           this.progress = await this.$idoContract.getProgress(this.piece, this.progress.maxMember*this.piece)
-          this.$globalBus.$emit('RECEIVE_NFT_DIALOG_VISIBLE')
+          // this.$globalBus.$emit('RECEIVE_NFT_DIALOG_VISIBLE')
+          this.$store.commit('dialog/RECEIVE_NFT_AFTER_IDO', true)
           this.$message({ message:'Purchare successed', type:'success' })
         }
       } catch (err) {

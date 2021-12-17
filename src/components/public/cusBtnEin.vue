@@ -60,8 +60,12 @@ export default {
       }
 
       &.disabled {
-        opacity: 0.7;
+        opacity: 0.5;
         cursor: default;
+        &:active {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
       }
     }
 

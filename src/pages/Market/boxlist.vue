@@ -135,7 +135,6 @@ export default {
       this.curItemID = id
 
       const contractObj = this.listType == 0 ? this.$landContract : this.$buildingContract
-      // let id = this.curItemID
       this.pageLoading = true
       contractObj.openBox(id)
         .then(res => {

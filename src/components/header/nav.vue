@@ -40,11 +40,12 @@ me<template>
       <cus-btn-ein 
         class="wc hidden-md-and-down"
         bg="/image/btn_banner.png"
-        v-show="!authentication && !loadingWarden.includes('commonAuthLoading')"
+        v-show="!authentication"
+        :disabled="loadingWarden.includes('commonAuthLoading')"
         @click.native="walletConnect"
-      >{{$t('header.btn')}}</cus-btn-ein>
-
-      <span v-if="loadingWarden.includes('commonAuthLoading')" class="header--append_loading hidden-md-and-down" > Logining... </span>
+      >
+        {{loadingWarden.includes('commonAuthLoading')?'Loading...':$t('header.btn')}}
+      </cus-btn-ein>
 
       <el-dropdown 
         v-if="authentication" 
@@ -65,7 +66,7 @@ me<template>
       </div>
     </div>
 
-    <el-dialog
+    <!-- <el-dialog
       class="account--dialog"
       :visible.sync="bindEmailVisible"
       :append-to-body="true"
@@ -93,9 +94,9 @@ me<template>
           bg="/image/account/btn_form.png"
         >{{$t('header.submit')}}</cus-btn-ein>
       </el-form>
-    </el-dialog>
+    </el-dialog> -->
 
-    <el-dialog
+    <!-- <el-dialog
       class="receivenft--tipblock"
       :visible.sync="receiveNFTVisible"
       :append-to-body="true"
@@ -110,15 +111,15 @@ me<template>
         <cus-btn-ein 
           @click.native="closeRNTips"
           class="receivenft--tipblock_btn"
-        >GET IT</cus-btn-ein>
+        >GET IT2</cus-btn-ein>
         <div >
           <el-checkbox v-model="receiveNFTnomore">Don't remind again</el-checkbox>
         </div>
       </div>
-    </el-dialog>
+    </el-dialog> -->
 
 
-    <el-dialog
+    <!-- <el-dialog
       class="receivenft--tipblock"
       :visible.sync="nftGuidVisible"
       :append-to-body="true"
@@ -131,16 +132,31 @@ me<template>
         <cus-btn-ein 
           @click.native="closeRNTips"
           class="receivenft--tipblock_btn"
-        >GET IT</cus-btn-ein>
+        >GET IT1</cus-btn-ein>
       </div>
-    </el-dialog>
+    </el-dialog> -->
+
+    <!-- Receive NFT Tips Before Bind EMAIL -->
+    <dialog-rn-be />
+    <!-- Receive NFT Tips After IDO -->
+    <dialog-rn-af-ido />
+    <!-- Bind Email -->
+    <dialog-bind-email />
+
+    
   </header>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 import {pageInitlization} from '@/utils/bootstrap'
+
+import dialogRnBe from '@/components/dialog/setone_rn'
+import dialogRnAfIdo from '@/components/dialog/setone_rn_aido'
+import dialogBindEmail from '@/components/dialog/settwo_bind_email'
+
 export default {
+  components: {dialogRnBe, dialogRnAfIdo, dialogBindEmail},
   computed: {
       ...mapGetters('user', {
           account: 'account',
@@ -164,19 +180,19 @@ export default {
         this.curRoute = to.name
       },
     },
-    account() {
-      setTimeout(() => {
-        if(parseInt(localStorage.getItem('RECEIVE_NFT_TIPS_SHOW')) != 1 && this.nft_benefit == 1 && !this.ido_unpartake) 
-          this.receiveNFTVisible = true
-      }, 2000)
-    }
+    // account() {
+    //   setTimeout(() => {
+    //     if(parseInt(localStorage.getItem('RECEIVE_NFT_TIPS_SHOW')) != 1 && this.nft_benefit == 1 && !this.ido_unpartake) 
+    //       this.receiveNFTVisible = true
+    //   }, 2000)
+    // }
   },
   data(){
     return {
-      bindEmailVisible: false,   // Email Dialog
-      receiveNFTVisible: false,
-      nftGuidVisible: false,
-      receiveNFTnomore: false,
+      // bindEmailVisible: false,   // Email Dialog
+      // receiveNFTVisible: false,
+      // nftGuidVisible: false,
+      // receiveNFTnomore: false,
       curRoute: '',
       navs: this.$router.options.routes[1]['children'],
       formData: {
@@ -189,92 +205,92 @@ export default {
       loading: false,
     }
   },
-  created() {
-    this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
-      if(this.nft_benefit == 1) {
-        this.nftGuidVisible = !this.nftGuidVisible
-      } else {
-        this.bindEmailVisible = !this.bindEmailVisible
-      }
-    })
-    this.$globalBus.$on('RECEIVE_NFT_DIALOG_VISIBLE', () => {
-      this.receiveNFTVisible = !this.receiveNFTVisible
-    })
-  },
+  // created() {
+  //   this.$globalBus.$on('EMAIL_DIALOG_VISIBLE', () => {
+  //     if(this.nft_benefit == 1) {
+  //       // this.nftGuidVisible = !this.nftGuidVisible
+  //     } else {
+  //       this.bindEmailVisible = !this.bindEmailVisible
+  //     }
+  //   })
+  //   this.$globalBus.$on('RECEIVE_NFT_DIALOG_VISIBLE', () => {
+  //     this.receiveNFTVisible = !this.receiveNFTVisible
+  //   })
+  // },
   methods: {
     async walletConnect() {
       pageInitlization(true)
     },
-    bindEmail(){
-      if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
-        this.$message({
-          message: this.$t('header.bindEmailIput'),
-          type: 'error'
-        })
-        return false
-      }
+    // bindEmail(){
+    //   if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
+    //     this.$message({
+    //       message: this.$t('header.bindEmailIput'),
+    //       type: 'error'
+    //     })
+    //     return false
+    //   }
 
-      if (!this.formData.pass_code) {
-        this.$message({
-          message: "Please fill in your ID card private code",
-          type: 'error'
-        })
-        return false
-      }
+    //   if (!this.formData.pass_code) {
+    //     this.$message({
+    //       message: "Please fill in your ID card private code",
+    //       type: 'error'
+    //     })
+    //     return false
+    //   }
 
-      if(this.loading) return false
-      this.loading = true
-      this.$http('bind_email', {
-        eth_address: this.account,
-        email: this.formData.email,
-        code: this.formData.code,
-        pass_code: this.formData.pass_code
-      }).then(res => {
-        this.$store.commit('user/email', this.formData.email)
-        this.bindEmailVisible = false
-        this.loading = false
-        this.$message({
-          message: 'Subscribe Successed!',
-          type: 'success'
-        })
-      }).catch(err => {
-        this.loading = false
-        this.$message({
-          message: err.response.data.msg,
-          type: 'error'
-        })
-      })
-    },
-    getCode(){
-      if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
-        this.$message({
-          message: this.$t('header.bindEmailIput'),
-          type: 'error'
-        })
-        return false
-      }
-      if (this.count < 60) return false
-      this.count = 59
-        let res = this.$http('getEmailCode', {
-          email: this.formData.email,
-          eth_address: this.account
-        })
+    //   if(this.loading) return false
+    //   this.loading = true
+    //   this.$http('bind_email', {
+    //     eth_address: this.account,
+    //     email: this.formData.email,
+    //     code: this.formData.code,
+    //     pass_code: this.formData.pass_code
+    //   }).then(res => {
+    //     this.$store.commit('user/email', this.formData.email)
+    //     this.bindEmailVisible = false
+    //     this.loading = false
+    //     this.$message({
+    //       message: 'Subscribe Successed!',
+    //       type: 'success'
+    //     })
+    //   }).catch(err => {
+    //     this.loading = false
+    //     this.$message({
+    //       message: err.response.data.msg,
+    //       type: 'error'
+    //     })
+    //   })
+    // },
+    // getCode(){
+    //   if (!/^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(this.formData.email)){
+    //     this.$message({
+    //       message: this.$t('header.bindEmailIput'),
+    //       type: 'error'
+    //     })
+    //     return false
+    //   }
+    //   if (this.count < 60) return false
+    //   this.count = 59
+    //     let res = this.$http('getEmailCode', {
+    //       email: this.formData.email,
+    //       eth_address: this.account
+    //     })
 
-        if (res) {
-          this.$message({
-            message: this.$t('header.sendCodeTip')+this.formData.email,
-            type: 'success'
-          })
-          const timer = setInterval(() => {
-            if(this.count <= 0){
-              this.count = this.countSet
-              clearInterval(timer)
-            } else {
-                this.count --
-            }
-          }, 1000)
-        }
-    },
+    //     if (res) {
+    //       this.$message({
+    //         message: this.$t('header.sendCodeTip')+this.formData.email,
+    //         type: 'success'
+    //       })
+    //       const timer = setInterval(() => {
+    //         if(this.count <= 0){
+    //           this.count = this.countSet
+    //           clearInterval(timer)
+    //         } else {
+    //             this.count --
+    //         }
+    //       }, 1000)
+    //     }
+    // },
     accountHandler(type) {
       if (type == 'toPersonalInfo') {
         this.$router.push({name: 'personalInfo'})
@@ -300,18 +316,18 @@ export default {
       this.$i18n.locale = lang
       localStorage.setItem('lang', lang)
     },
-    closeRNTips(handleType) {
-      if (this.receiveNFTnomore) {
-        localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 1)
-      } else {
-        localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 0)
-      }
-      if(handleType != 0) {
-        this.$router.push({'name': 'receivenft'})
-      }
-      this.receiveNFTVisible = false
-      this.nftGuidVisible = false
-    },
+    // closeRNTips(handleType) {
+    //   if (this.receiveNFTnomore) {
+    //     localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 1)
+    //   } else {
+    //     localStorage.setItem('RECEIVE_NFT_TIPS_SHOW', 0)
+    //   }
+    //   if(handleType != 0) {
+    //     this.$router.push({'name': 'receivenft'})
+    //   }
+    //   this.receiveNFTVisible = false
+    //   // this.nftGuidVisible = false
+    // },
     pageMenuTrigger() {
       this.$store.dispatch('common/pageMenuTrigger')
     }

@@ -11,3 +11,7 @@ export const removeArrTarget = (tagArr, arr) => {
 export const timeStrFormart = (timeStr) => {
   return timeStr.slice(0, 19).replace(/[A-Z]/g, ' ')
 }
+
+export const emailFormat = (str) => {
+  return /^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(str)
+}

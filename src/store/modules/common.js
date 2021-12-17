@@ -8,7 +8,7 @@ export default {
     "loadingWarden": [],
     "idoMaxCandidate": 0,
     "pageMenuVisible": false,
-    "authentication": false,
+    "authentication": localStorage.getItem('token')?true:false,
   },
   getters: {
     lang: state => state.lang || localStorage.getItem('lang'),

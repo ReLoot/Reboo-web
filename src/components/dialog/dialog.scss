@@ -1,0 +1,92 @@
+@import '@/style/custom.scss';
+@include b(dialog) {
+  @include e(setone) {
+    font-family: OrbitronRegular;
+    ::v-deep .el-dialog {
+      width: 400px;
+      max-width: 90%;
+      position: relative;
+      &__header { display: none; }
+      &__body { padding: 0; }
+    }
+
+    @include m(inner) {
+      padding: 25px 40px;
+      position: relative;
+      background-color: #4B5056;
+      border: 2px solid #99A9BD;
+      color: $--color-white;
+      text-align: center;
+      .box-title {
+        font-size: 24px;
+        white-space: nowrap;
+        margin-top: 20px;
+        margin-bottom: 15px;
+      }
+      .box-sub {
+        font-size: 12px;
+        line-height: 150%;
+        word-break: break-word;
+        margin: 20px auto;
+      }
+      .box-btn {
+        width: 200px;
+        height: 40px;
+        background-color: #2D8A92;
+        border: 2px solid #58DFD7;
+        font-family: inherit;
+        font-size: 16px;
+        margin-top: 40px;
+      }
+    }
+  }
+}
+
+
+@include b(dialog) {
+  @include e(settwo) {
+    font-family: OrbitronRegular;
+    ::v-deep .el-dialog {
+      width: 500px;
+      max-width: 90%;
+      position: relative;
+      background-color: transparent;
+      &__header {
+        padding-top: 21px;
+        padding-bottom: 21px;
+        background: url(/image/wallet_card_hd.png) no-repeat center;
+        background-size: 100% 100%;
+
+      }
+
+      &__close {
+        color: $--color-black;
+        font-size: 20px;
+        font-weight: 800;
+        color: #99A9BD;
+      }
+
+      &__headerbtn {
+        z-index: 99;
+      }
+
+      &__body {
+        padding: 40px 30px 60px;
+        border-width: 0 3px 3px;
+        border-color: #afcad4;
+        border-style: solid;
+        background-color: #4B5056;
+        position: relative;
+        color: $--color-white;
+      }
+    }
+
+    ::v-deep .form {
+      &--title {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 1em;
+      }
+    }
+  }
+}

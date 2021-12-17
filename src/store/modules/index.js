@@ -1,4 +1,4 @@
 import common from './common'
 import user from './user'
-
-export default {common, user}
+import dialog from './dialog'
+export default {common, user, dialog}

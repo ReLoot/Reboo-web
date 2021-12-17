@@ -202,6 +202,7 @@ export default {
       padding: 10px 0;
       line-height: 100%;
       color: $--color-white-04;
+      cursor: pointer;
       &.active {
         color: $--color-aqua;
       }

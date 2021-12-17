@@ -34,6 +34,7 @@ class cardContract extends contractBootstrap{
 
     let balance_ = new BN(balance).div(new BN(unit)).toString()
     balance_ = parseFloat(balance_/unit)
+          // balance_ = new BN(balance).div(new BN(unit)).div(new BN(unit)).toString()
     store.commit('user/balance', balance_)
     return {
       balance,

@@ -56,7 +56,8 @@ export default {
   },
   methods: {
     emailDialogCall(){
-      this.$globalBus.$emit('EMAIL_DIALOG_VISIBLE')
+      // this.$globalBus.$emit('EMAIL_DIALOG_VISIBLE')
+      this.$store.commit('dialog/BIND_EMAIL', true)
     }
   }
 }

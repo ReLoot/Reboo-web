@@ -94,6 +94,11 @@ $btnList: (
         @include mediaAdapt($btnList);
         font-family: OrbitronBlack;
       }
+
+      & > a:last-child .btn {
+        margin-right: 0;
+      }
+
     }
 
   }

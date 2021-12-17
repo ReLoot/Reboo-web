@@ -2,7 +2,7 @@
   <div class="market">
     <div class="container">
       <el-row class="market--hd" >
-        <el-col :lg="14" >
+        <el-col :md="14" >
         <ul class="market--hd_tabs">
           <li 
             v-for="(item, key) in tabs" 
@@ -15,7 +15,7 @@
         </ul>
         </el-col>
 
-        <el-col :lg="10" >
+        <el-col :md="10" >
           <div class="market--count">
             <span>{{$t('market.balance')}}: </span>
             <span class="num" :style="{color:'#D0E6EE'}">{{balance}} VBN</span>
@@ -113,7 +113,7 @@ $navItem: (
 );
 $countList: (
   $--page-xs-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: center),
-  $--page-sm-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: right),
+  $--page-sm-width:(fontsize: 16px, lineHeight: 24px, marginTop:10px, textAlign: center),
   $--page-md-width:(fontsize: 16px, lineHeight: 24px, marginTop:0, textAlign: right),
   $--page-lg-width:(fontsize: 18px, lineHeight: 24px, marginTop:0, textAlign: right),
 );
