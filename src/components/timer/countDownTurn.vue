@@ -203,7 +203,7 @@ $--elem-h: 50px;
   border-bottom: 1px solid #666666;
   background: url(/image/timer.png) no-repeat top;
   background-size: 100% auto;
-  background-color: #4E6077;
+  background-color: $--color-bg-block;
   // border-radius: 10px 10px 0 0;
 }
 

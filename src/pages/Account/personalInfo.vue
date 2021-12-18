@@ -2,7 +2,6 @@
   <div class="user">
     <div class="container">
       <div class="user--hd">
-        <!-- <h2>{{$t('personal.hd')}}</h2> -->
         <h2>Personal Information</h2>
         <cus-divider-ein dStyle="white" />
       </div>

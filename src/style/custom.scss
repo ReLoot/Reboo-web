@@ -4,6 +4,8 @@ $--color-white: #FFFFFF !default;
 $--color-white-07: rgba(255,255,255,0.7) !default;
 $--color-white-04: rgba(255,255,255,0.4) !default;
 $--color-white-01: rgba(255,255,255,0.1) !default;
+
+$--color-whitening-1: #D0E6EE;
 /// color|1|Background Color|4
 $--color-black: #1A1A1A !default;
 $--color-black-1: #4D4D4D;
@@ -39,6 +41,11 @@ $--color-yellow: #FFED2C !default;
 $--color-blue: #13ABFF !default;
 // Theme Color 5
 $--color-fuchsia: #FF00CC !default;
+
+// Bg Block
+$--color-bg-block: #4E6077;
+// Bg Page
+$--color-bg-page: #18212C;
 
 /* 
   -lg (≥1200px) || -md (≥992px) || -sm (≥768px) || -xs (<768px)

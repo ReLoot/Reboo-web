@@ -29,7 +29,7 @@ export default {
   // $_elem_w: 165px;
   @include e(pagation) {
     @include m(wrap) {
-      background-color: #4E6077;
+      background-color: $--color-bg-block;
       height: $_elem_h;
       line-height: $_elem_h;
       position: relative;
@@ -37,7 +37,7 @@ export default {
 
     @include m(ctn) {
       border: 1px solid $--color-white-01;
-      background-color: #4E6077;
+      background-color: $--color-bg-block;
       text-align: center;
     }
 
