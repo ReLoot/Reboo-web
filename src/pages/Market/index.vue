@@ -80,13 +80,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
-$navHeight: (
-  $--page-xs-width:(paddingTop: 50px),
-  $--page-sm-width:(paddingTop: 50px),
-  $--page-md-width:(paddingTop: 63px),
-  $--page-lg-width:(paddingTop: 76px),
-);
-
 .container {
   @include mediaAdapt($navHeight);
 }
@@ -132,10 +125,9 @@ $countList: (
       li {
         @include mediaAdapt($navItem);
         // float: left;
-        display: inline-block;
         cursor: pointer;
+        display: inline-block;
         color: $--color-white-07;
-        font-size: 22px;
         white-space: nowrap;
         &.active {
           color: $--color-aqua;

@@ -293,7 +293,7 @@ $rank: (
             &-num {
               position: absolute;
               z-index: 1;
-              color: $--color-white;
+              color: $--color-whitening-1;
               top: 50%;
               right: -4px;
               // margin-top: -0.5em;

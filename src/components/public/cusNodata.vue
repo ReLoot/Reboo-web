@@ -8,10 +8,10 @@
 <style lang="scss" scoped>
 @import '@/style/custom.scss';
 $nodata: (
-  $--page-xs-width:(fontsize: 16px),
-  $--page-sm-width:(fontsize: 18px),
-  $--page-md-width:(fontsize: 24px),
-  $--page-lg-width:(fontsize: 30px),
+  $--page-xs-width:(fontsize: 14px),
+  $--page-sm-width:(fontsize: 16px),
+  $--page-md-width:(fontsize: 18px),
+  $--page-lg-width:(fontsize: 20px),
 );
 @include b(page) {
   @include e(nodata) {
@@ -22,7 +22,7 @@ $nodata: (
     text-align: center;
     // font-size: 30px;
     font-family: OrbitronRegular;
-    color: $--color-white;
+    color: $--color-whitening-1;
     position: relative;
     a {
       display: block;

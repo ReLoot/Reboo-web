@@ -1,0 +1,50 @@
+@import '@/style/custom.scss';
+$hd: (
+  $--page-xs-width:(padding: 20px 10px 15px),
+  $--page-sm-width:(padding: 20px 10px 15px),
+  $--page-md-width:(padding: 25px 10px 20px),
+  $--page-lg-width:(padding: 28px 10px 25px),
+);
+$haNav: (
+  $--page-xs-width:(textAlign: center),
+  $--page-sm-width:(textAlign: center),
+  $--page-md-width:(textAlign: left),
+  $--page-lg-width:(textAlign: left),
+);
+$hdNavItem: (
+  $--page-xs-width:(marginRight: 18px, fontsize: 12px, lineHeight: 24px),
+  $--page-sm-width:(marginRight: 18px, fontsize: 14px, lineHeight: 24px),
+  $--page-md-width:(marginRight: 20px, fontsize: 16px, lineHeight: 24px),
+  $--page-lg-width:(marginRight: 28px, fontsize: 18px, lineHeight: 24px),
+);
+@include b(synt) {
+  @include e(hd) {
+    @include mediaAdapt($hd);
+    font-family: OrbitronRegular;
+    line-height: 40px;
+    @include m(tabs) {
+      @include mediaAdapt($haNav);
+      font-size: 0;
+      line-height: 1;
+
+      li {
+        @include mediaAdapt($hdNavItem);
+        cursor: pointer;
+        white-space: nowrap;
+        display: inline-block;
+        color: $--color-white-07;
+        &.active {
+          color: $--color-aqua;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  @include e(bd) {
+    padding: 40px 0 0; 
+  }
+
+}

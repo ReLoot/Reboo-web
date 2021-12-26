@@ -1,4 +1,5 @@
 $--color-primary: #2CFFF3 !default;
+$--color-primary-dark: #1C4D4A;
 /// color|1|Background Color|4
 $--color-white: #FFFFFF !default;
 $--color-white-07: rgba(255,255,255,0.7) !default;
@@ -43,7 +44,8 @@ $--color-blue: #13ABFF !default;
 $--color-fuchsia: #FF00CC !default;
 
 // Bg Block
-$--color-bg-block: #4E6077;
+// $--color-bg-block: rgba(#4E6077, 0.2);
+$--color-bg-block: #232E3B;
 // Bg Page
 $--color-bg-page: #18212C;
 
@@ -64,6 +66,14 @@ $--page-menu-width: 200px;
   form options
  */
 $--form-controller-bg: $--color-black-2;
+
+/* page nav */
+$navHeight: (
+  $--page-xs-width:(paddingTop: 50px),
+  $--page-sm-width:(paddingTop: 50px),
+  $--page-md-width:(paddingTop: 63px),
+  $--page-lg-width:(paddingTop: 76px),
+);
 
 /* 
   public methods

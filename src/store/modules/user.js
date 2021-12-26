@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import $http from '@/utils/http'
+
 export default {
   namespaced: true,
   state: {
@@ -17,6 +19,7 @@ export default {
     "buildingBox": [],
     "landCard": [],
     "buildingCard": [],
+    "unsetBuildingCard": []
   },
   getters: {
     userInfo: state => state.userInfo || localStorage.getItem('USERINFO'),
@@ -34,6 +37,7 @@ export default {
     buildingBox: state => state.buildingBox,
     landCard: state => state.landCard,
     buildingCard: state => state.buildingCard,
+    unsetBuildingCard: state => state.unsetBuildingCard,
   },
   mutations: {
     userInfo(state, options) {
@@ -92,12 +96,24 @@ export default {
     },
     buildBoxRemain(state, num) {
       Vue.set(state, 'buildBoxRemain', num)
-    }
+    },
+    unsetBuildingCard(state, arr) {
+      Vue.set(state, 'unsetBuildingCard', arr)
+    },
   },
   actions: {
     updateUserInfo({commit, state}, options) {
       commit('userInfo', Object.assign(state, options))
     },  
+    async updateUnsetBuildingCard({commit, state}, options) {
+      try {
+        const res = await $http('getUsefulBuildingCard', {eth_address: state.account})
+        if(res && res.data)
+          commit('unsetBuildingCard', res.data)
+      } catch (err) {
+        console.error(err)
+      }
+    },
     cleanAccount({commit}){
       localStorage.clear()
       commit('account', '')
@@ -114,6 +130,7 @@ export default {
       commit('buildingBox', [])
       commit('landCard', [])
       commit('buildingCard', [])
+      commit('unsetBuildingCard', [])
     }
   }
 }

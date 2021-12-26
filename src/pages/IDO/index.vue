@@ -443,7 +443,7 @@ $bdFormBtn: (
         em {
           flex: 1;
           display: inline-block;
-          border-bottom: 1px dashed $--color-white;
+          border-bottom: 1px dashed $--color-whitening-1;
         }
       }
 
@@ -582,7 +582,7 @@ $bdFormBtn: (
       padding: 25px 40px;
       background-color: #4B5056;
       border: 2px solid #99A9BD;
-      color: $--color-white;
+      color: $--color-whitening-1;
       text-align: center;
       font-family: OrbitronRegular;
     }

@@ -15,7 +15,7 @@
       position: relative;
       background-color: #4B5056;
       border: 2px solid #99A9BD;
-      color: $--color-white;
+      color: $--color-whitening-1;
       text-align: center;
       .box-title {
         font-size: 24px;
@@ -52,10 +52,13 @@
       position: relative;
       background-color: transparent;
       &__header {
-        padding-top: 21px;
-        padding-bottom: 21px;
+        // padding-top: 21px;
+        // padding-bottom: 15px;
+        padding-bottom: 3.25%;
         background: url(/image/wallet_card_hd.png) no-repeat center;
         background-size: 100% 100%;
+        margin-bottom: -1px;
+        border-right: 2px solid #afcad4;
 
       }
 
@@ -72,12 +75,12 @@
 
       &__body {
         padding: 40px 30px 60px;
-        border-width: 0 3px 3px;
+        border-width: 0 2px 2px;
         border-color: #afcad4;
         border-style: solid;
         background-color: #4B5056;
         position: relative;
-        color: $--color-white;
+        color: $--color-whitening-1;
       }
     }
 

@@ -25,6 +25,7 @@ export default {
         navItem2: '版本規劃',
         navItem3: '代幣體系',
         navItem4: '商城',
+        navItem5: '合成',
         bindEmailHd: '綁定郵箱',
         bindEmailIput: '請填寫郵箱正確格式',
         sendCode: '發送驗證碼',
@@ -185,5 +186,58 @@ export default {
         artP4: '參與 Vibranium IDO 的用戶將會隨機獲得一張 Vibranium 星球的創始居民身份ID證，該身份證同時也是一個 NFT。',
         artP5: '所有申請白名單並加入 Discord 社區的用戶，將有機會獲得空投獎勵和價值10,000 美元的 NFT 福利!',
         tipSub: '您使用以下地址參與IDO購買並接收VBN',
+    },
+    synt: {
+        main: '主卡片',
+        syntNavItem1: '合成台',
+        syntNavItem2: '卡片',
+        syntNavItem3: '记录',
+        stuff1: '副卡 1',
+        stuff2: '副卡 2',
+        stuff3: '副卡 3',
+        desc1: '您可以选择1张主卡、3张副卡卡片，合成一张SSS卡。',
+        desc2: '您成功的概率为30%，成功后，主卡的属性会改变，副卡消失。',
+        desc3: '合成失败后，副卡消失。',
+        desc4: '消耗 {fee} DKMT 提升 20% 成功率',
+        desc5: '可用余额:',
+        desc6: '*如若不显示已购买的探测器, 请登录游戏查看背包里的探测器, 刷新此页面, 再进行合成',
+        btnSelect: '选择卡片',
+        records:{
+            tbItem1: '交易哈希',
+            tbItem2: '主卡片 ID',
+            tbItem3: '副卡片 ID',
+            tbItem4: '使用DKMT',
+            tbItem5: '结果',
+            tbItem6: '时间',
+            type1: '是',   
+            type2: '否',
+            state1: '成功',  
+            state2: '失败',  
+        }
+    },
+    vote: {
+        index: {
+            appendItem1: '全部'
+        },
+        status: {
+            unstart: '未开始',
+            started: '投票中',
+            ended: '已完成'
+        },
+        detail: {
+            block1Title: '',
+            block2Title: '选择您同意的选项',
+            block3Title: '投票数',
+            block4Title: '概括',
+            block5Title: '当前投票',
+            btn: '投票',
+            btn2: '已投票',
+        },
+        creator: '创建者',
+        system: '投票制度',
+        currency: '权益通证',
+        start: '开始时间',
+        end: '结束时间',
+        total: '总票数'
     }
 }

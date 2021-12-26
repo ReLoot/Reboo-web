@@ -15,3 +15,8 @@ export const timeStrFormart = (timeStr) => {
 export const emailFormat = (str) => {
   return /^([a-zA-Z\d])(\w|-)+@[a-zA-Z\d]+\.[a-zA-Z]{1,63}$/.test(str)
 }
+
+export const addressFormat = (address) => {
+  const c = address.match(/(^.{4})|(.{4}$)/g)
+  return `${c[0]}...${c[1]}`
+}

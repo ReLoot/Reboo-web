@@ -101,8 +101,6 @@ export class metaMaskUtils {
   }
 
   onChainChanged(currentNetwork) {
-    // console.log('currentNetwork', currentNetwork)
-    // console.log(new Web3().utils.toHex(this.options.network))
     if(currentNetwork != new Web3().utils.toHex(this.options.network)) {
       this.clearCatch()
       window.location.reload()
@@ -110,10 +108,7 @@ export class metaMaskUtils {
   }
 
   onAccountChanged(account) {
-    console.log('onAccountChanged:', account)
     const prevAccount = store.getters['user/account']
-    console.log('prevAccount:', prevAccount)
-    console.log('currentAccount', account)
     this.clearCatch()
     if(prevAccount && account && account !== prevAccount) {
       pageInitlization(true)

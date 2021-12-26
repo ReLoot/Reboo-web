@@ -83,7 +83,7 @@
         </div>
         <div class="store--pay_append">
           <cus-btn-ein 
-            class="pay"
+            class="submit"
             bg="/image/market/btn_1.png"
             v-show="!pageLoading"
             @click.native="pay"
@@ -157,9 +157,9 @@ export default {
       }
     },
     async tabsTrigger(cur) {
-      if (this.authentication) {
         this.curTabIdx = cur
         this.num = this.min
+      if (this.authentication) {
         const checkDomain = await this.$http('boxCount', {eth_address: this.account, type: this.curTabIdx+1})
         this.max = checkDomain.data.remain >= 10?10:checkDomain.data.remain
       }
@@ -437,7 +437,7 @@ $viewbox: (
     }
     
     @include m(append) {
-      .pay {
+      .submit {
         @include mediaAdapt($payBtn);
         font-family: OrbitronBlack;
         width: 10em;
@@ -482,7 +482,7 @@ $numberInner: (
     background-color: $--color-white-01;
     // font-size: 30px;
     font-weight: 800;
-    color: $--color-white;
+    color: $--color-whitening-1;
     // line-height: $-elem-h;
     &.is-disabled {
       color: $--color-white-04;
@@ -495,7 +495,7 @@ $numberInner: (
       @include mediaAdapt($numberInner);
       border-color: $--color-white-01 !important; 
       background-color: #18212C;
-      color: $--color-white;
+      color: $--color-whitening-1;
       border-radius: 0;
       // height: $-elem-h + 2;
       // font-size: 30px;

@@ -22,6 +22,9 @@ import '@/assets/style/font-orbitron.css';
 import '@/utils/publicComponents'
 import '@/utils/contract'
 
+import 'swiper/swiper.min.css'
+
+
 appVersionCheck()
 
 const i18n = initI18n(localStorage.getItem('lang')||'en') // process.env.VUE_APP_LANG

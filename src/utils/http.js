@@ -13,6 +13,7 @@ http.interceptors.request.use(function (config) {
     config.headers['Content-Type'] = 'application/json;charset=UTF-8'
   }
   config.headers['Authorization'] = 'Bearer '+store.getters['common/token']
+  config.headers['Accept-Language'] = localStorage.getItem('lang')
   return config
 }, function (error) {
   return Promise.reject(error)

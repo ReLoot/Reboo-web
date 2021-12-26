@@ -108,7 +108,7 @@ $navHeight: (
       width: 83px;
       height: 83px;
       top: -41.5px;
-      background: $--color-white;
+      background: $--color-whitening-1;
       padding: 10px;
       border-radius: 50%;
       img {

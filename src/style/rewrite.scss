@@ -9,7 +9,7 @@ input, select, button, img, hr, br {
 
 html {
   background-color: $--color-bg-page;
-  color: $--color-white;
+  color: $--color-whitening-1;
   // min-width: $--page-md-width;
 }
 
@@ -122,7 +122,7 @@ $containerList: (
       font-family: OrbitronRegular;
       border-color: #58DFD7;
       background-color: #2D8A92;
-      color: $--color-white;
+      color: $--color-whitening-1;
       -webkit-user-select: none;
       user-select: none;
       border-radius: 0;
@@ -170,5 +170,73 @@ $containerList: (
       overflow: auto;
     }
   }
+
+  &-table {
+    background-color: transparent;
+    color: $--color-whitening-1;
+    border-bottom: 0 none;
+    &__header-wrapper {
+      background-color: transparent;
+    }
+    tr {
+      background-color: $--color-bg-block;
+    }
+    th.el-table__cell, td.el-table__cell {
+      background-color: transparent;
+      color: $--color-whitening-1;
+      border-color: $--color-white-01 !important;
+    }
+
+    &__body {
+      tr.hover-row > *.el-table__cell {
+        background-color: $--color-bg-block !important;
+      }
+    }
+
+    .el-table__fixed {
+      background-color: #232E3B;
+      height: 100% !important;
+    }
+  }
+
+  &-checkbox {
+    &__inner {
+      &::after {
+        border-color: $--color-black;
+      }
+    }
+  }
+
+  &-pagination {
+    text-align: center;
+    .btn{
+      &-prev, &-next {
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  &-pager{
+    li {
+      background-color: transparent !important;
+    }
+  }
 }
 
+.el-radio-button {
+  &:first-child &__inner, &:last-child &__inner {
+    border-radius: 0;
+  }
+
+  &__inner {
+    background-color: $--color-bg-page;
+    color: $--color-white-07;
+    font-size: 18px;
+  }
+
+  &__orig-radio:checked + &__inner {
+    background-color: $--color-bg-page;
+    border-color: $--color-aqua;
+    color: $--color-aqua;
+  }
+}

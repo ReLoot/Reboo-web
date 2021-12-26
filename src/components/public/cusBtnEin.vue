@@ -26,7 +26,7 @@ export default {
       default: ''
     },
     disabled: {
-      type: Boolean,
+      type: [Boolean, Number],
       default: false
     }
   }

@@ -3,7 +3,7 @@
     <div class="container">
       <h1 v-html="$t('home.bannerTxt')"></h1>
 
-      <a href="http://game.vibraniumslg.io" target="_blank">
+      <a :href="game_site" target="_blank">
         <cus-btn-ein 
           class="home--bk_btn"
           bg="/image/home/bk_1_btn.png"
@@ -16,10 +16,10 @@
 
 <script>
 export default {
-  methods: {
-    // bannerBtn(){
-    //   this.$message(this.$t('token.altr'))
-    // }
+  data() {
+    return {
+      game_site: process.env.VUE_APP_GAME_SITE
+    }
   }
 }
 </script>

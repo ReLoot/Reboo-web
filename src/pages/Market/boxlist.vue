@@ -278,7 +278,7 @@ $cardBtn: (
         width: 100%;
         height: 100%;
         position: relative;
-        color: $--color-white;
+        color: $--color-whitening-1;
         
         .mainCtn {
           width: 100%;

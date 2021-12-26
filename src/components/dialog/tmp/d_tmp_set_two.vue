@@ -5,6 +5,8 @@
     :append-to-body="true"
     :close-on-click-modal="closeOnClickModal"
     @close="closeHandler"
+    :width="width"
+    ref="dialogSetTwo"
   >
     <slot></slot>
   </el-dialog>
@@ -12,10 +14,16 @@
 
 <script>
 export default {
-  props: ['visible', 'closeOnClickModal'],
+  props: ['width', 'visible', 'closeOnClickModal', 'styleTop'],
   methods: {
     closeHandler(params) {
       this.$emit('closeHandler', params)
+    }
+  },
+  mounted() {
+    if(this.styleTop) {
+      const $dialogEl = this.$refs['dialogSetTwo'].$el.querySelector('.el-dialog')
+      $dialogEl.style.top = this.styleTop
     }
   }
 }

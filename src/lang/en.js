@@ -25,6 +25,7 @@ export default {
         navItem2: 'Planning',
         navItem3: 'Token Model',
         navItem4: 'Market',
+        navItem5: 'Mint',
         bindEmailHd: 'Bind Email',
         bindEmailIput: 'Please fill in the correct email format',
         sendCode: 'Send Code',
@@ -198,5 +199,58 @@ export default {
         artP4: 'Participating in Vibranium IDO users will randomly get a Vibranium Planet\'s founding resident ID card, which is also an NFT.',
         artP5: 'All users who apply for the whitelist and join the Discord community will have the opportunity to receive airdrop rewards and NFT benefits worth $10,000!',
         tipSub: 'You use the following address to participate in IDO purchases and receive VBN',
+    },
+    synt: {
+        main: 'Main Card',
+        syntNavItem1: 'Synt',
+        syntNavItem2: 'Cards',
+        syntNavItem3: 'Records',
+        stuff1: 'Sub Card 1',
+        stuff2: 'Sub Card 2',
+        stuff3: 'Sub Card 3',
+        desc1: 'You can choose 1 main card and 3 sub cards to form an SSS card.',
+        desc2: 'The probability of success is 30%. After the synthesis is successful, the attributes of the main card will change and the secondary card will disappear.',
+        desc3: 'After the synthesis fails, the sub cards will disappear.',
+        desc4: '{fee} DKMT Increase success rate by 20%',
+        desc5: 'Available Balance:',
+        desc6: '*If the purchased detector is not displayed, please log in to the game to check the detector in the backpack and reload this page before synthesize',
+        btnSelect: 'Select Card',
+        records:{
+            tbItem1: 'Transcation Hash',
+            tbItem2: 'Main Card ID',
+            tbItem3: 'Sub Card ID',
+            tbItem4: 'USED DKMT',
+            tbItem5: 'Result',
+            tbItem6: 'Time',
+            type1: 'YES',   
+            type2: 'NO',
+            state1: 'Success',  
+            state2: 'Failed',  
+        }
+    },
+    vote: {
+        index: {
+            appendItem1: 'All'
+        },
+        status: {
+            unstart: 'Unstart',
+            started: 'Voting',
+            ended: 'Finished'
+        },  
+        detail: {
+            block1Title: '',
+            block2Title: 'Choose the option you agree with',
+            block3Title: 'Votes',
+            block4Title: 'Summary',
+            block5Title: 'Current Votes',
+            btn: 'Vote',
+            btn2: 'Voted',
+        },
+        creator: 'Creator',
+        system: 'Vote',
+        currency: 'Currency',
+        start: 'Start',
+        end: 'End',
+        total: 'total'
     }
 }
