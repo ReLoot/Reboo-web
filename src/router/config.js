@@ -127,7 +127,34 @@ export default (() => {
     //     name: 'dao_current',
     //     component: () => import('@/pages/Dao/vote'),
     //   }]
-    // }
+    // },
+    {
+      path: '/lucky',
+      name: 'lucky',
+      component:()=>import('@/pages/Lucky'),
+      redirect: {name: 'lucky_rule'},
+      meta: {
+        view: 'Lucky Star'
+      },
+      children:[{
+        path: 'rule',
+        name: 'lucky_rule',
+        component:()=>import('@/pages/Lucky')
+      },{
+        path: 'record',
+        name: 'lucky_record',
+        component:()=>import('@/pages/Lucky')
+      },{
+        path: 'wish',
+        name: 'lucky_wish',
+        component:()=>import('@/pages/Lucky')
+      }]
+    },
+    {
+      path: '/ttt',
+      name: 'test',
+      component:()=>import('@/pages/Test')
+    }
     ]
   }]
   return routes_
