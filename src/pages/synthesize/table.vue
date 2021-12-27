@@ -13,11 +13,11 @@
             <div class="synt--box_tl" >
               <span>{{$t('synt.main')}}</span>
             </div>
-            <card-building v-if="card_main" class="synt--gamecard" :rank="card_main.rarity" :attributes="card_main.attributes" :id="card_main.token_id" />
+            <card-building v-if="card_main" class="synt--gamecard" :rank="card_main.rarity" :attributes="card_main.attributes" :id="card_main.token_id" :isLabel="false" />
             <div class="synt--box_back" v-else >
               <em>
                 <i class="el-icon-plus"></i>
-                <span>{{$t('synt.btnSelect')}}</span>
+                <!-- <span>{{$t('synt.btnSelect')}}</span> -->
               </em>
             </div>
           </div>
@@ -30,11 +30,11 @@
             <div class="synt--box_tl">
               <span>{{$t('synt.stuff1')}}</span>
             </div>
-            <card-building v-if="card_stuff_1" class="synt--gamecard" :rank="card_stuff_1.rarity" :attributes="card_stuff_1.attributes" :id="card_stuff_1.token_id" />
+            <card-building v-if="card_stuff_1" class="synt--gamecard" :rank="card_stuff_1.rarity" :attributes="card_stuff_1.attributes" :id="card_stuff_1.token_id" :isLabel="false" />
             <div class="synt--box_back" v-else >
               <em>
                 <i class="el-icon-plus"></i>
-                <span>{{$t('synt.btnSelect')}}</span>
+                <!-- <span>{{$t('synt.btnSelect')}}</span> -->
               </em>
             </div>
           </div>
@@ -47,11 +47,11 @@
             <div class="synt--box_tl">
               <span>{{$t('synt.stuff2')}}</span>
             </div>
-            <card-building v-if="card_stuff_2" class="gamecard" :rank="card_stuff_2.rarity" :attributes="card_stuff_2.attributes" :id="card_stuff_2.token_id" />
+            <card-building v-if="card_stuff_2" class="gamecard" :rank="card_stuff_2.rarity" :attributes="card_stuff_2.attributes" :id="card_stuff_2.token_id" :isLabel="false" />
             <div v-else class="synt--box_back">
               <em>
                 <i class="el-icon-plus"></i>
-                <span>{{$t('synt.btnSelect')}}</span>
+                <!-- <span>{{$t('synt.btnSelect')}}</span> -->
               </em>
             </div>
           </div>
@@ -64,11 +64,11 @@
             <div class="synt--box_tl">
               <span>{{$t('synt.stuff3')}}</span>
             </div>
-            <card-building v-if="card_stuff_3" class="gamecard" :rank="card_stuff_3.rarity" :attributes="card_stuff_3.attributes" :id="card_stuff_3.token_id" />
+            <card-building v-if="card_stuff_3" class="gamecard" :rank="card_stuff_3.rarity" :attributes="card_stuff_3.attributes" :id="card_stuff_3.token_id" :isLabel="false" />
             <div v-else class="synt--box_back">
               <em>
                 <i class="el-icon-plus"></i>
-                <span>{{$t('synt.btnSelect')}}</span>
+                <!-- <span>{{$t('synt.btnSelect')}}</span> -->
               </em>
             </div>
           </div>

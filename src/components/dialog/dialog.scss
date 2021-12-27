@@ -43,6 +43,13 @@
 }
 
 
+$setTowBd: (
+  $--page-xs-width:(padding:20px 15px 20px),
+  $--page-sm-width:(padding:25px 20px 30px),
+  $--page-md-width:(padding:30px 25px 40px),
+  $--page-lg-width:(padding:35px 30px 50px),
+);
+
 @include b(dialog) {
   @include e(settwo) {
     font-family: OrbitronRegular;
@@ -74,7 +81,7 @@
       }
 
       &__body {
-        padding: 40px 30px 60px;
+        @include mediaAdapt($setTowBd);
         border-width: 0 2px 2px;
         border-color: #afcad4;
         border-style: solid;

@@ -16,8 +16,8 @@
         <div class="r-part">
           <template v-for="(item, attridx) in attributes">
             <p class="item" :key="`attr_${attridx}`">
-              <label>{{attridx}}</label>
-              <em class="progress">
+              <label v-if="isLabel">{{attridx}}</label>
+              <em class="progress" :class="{noBorder: !isLabel}">
                 <span class="progress--bar">
                   <i class="progress--bar_inner" :style="{width: (item?item:0)+'%'}"></i>
                   <i class="progress--bar_num">{{item}} %</i>
@@ -54,6 +54,10 @@ export default {
     id: {
       type: String,
       default: ''
+    },
+    isLabel: {
+      type: [Boolean, Number],
+      default: true
     }
   }
 }
@@ -68,10 +72,22 @@ $cardTitle: (
   $--page-lg-width:(fontsize: 21px),
 );
 $rank: (
-  $--page-xs-width:(height: 0.24em),
-  $--page-sm-width:(height: 0.28em),
-  $--page-md-width:(height: 0.32em),
-  $--page-lg-width:(height: 0.36em),
+  $--page-xs-width:(height: 0.16em),
+  $--page-sm-width:(height: 0.22em),
+  $--page-md-width:(height: 0.28em),
+  $--page-lg-width:(height: 0.34em),
+);
+$cardCtn: (
+  $--page-xs-width:(padding: 0.03em),
+  $--page-sm-width:(padding: 0.06em),
+  $--page-md-width:(padding: 0.09em),
+  $--page-lg-width:(padding: 0.12em),
+);
+$cardCtnLp: (
+  $--page-xs-width:(padding: 0.1em ),
+  $--page-sm-width:(padding: 0.15em),
+  $--page-md-width:(padding: 0.2em),
+  $--page-lg-width:(padding: 0.25em),
 );
 
 @include b(gamecard) {
@@ -125,8 +141,9 @@ $rank: (
     }
   }
   @include e(ctn) {
+    @include mediaAdapt($cardCtn);
     width: 100%;
-    padding: 0.13em;
+    // padding: 0.13em;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -136,10 +153,10 @@ $rank: (
 
     
     .l-part {
+      // @include mediaAdapt($cardCtnLp);
+      padding: 0.05em;
       img.rank {
-        // height: 36px;
         @include mediaAdapt($rank);
-        margin-bottom: 0.2em;
       }
       p {
         line-height: 100%;
@@ -152,33 +169,46 @@ $rank: (
       display: table;
       border-spacing: 5px 2px;
       font-family: Arial, Helvetica, sans-serif;
+
+      border-collapse: collapse;
       label {
         display: table-cell;
         padding: 0;
         text-align: left;
         font-size: 12px;
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        -webkit-transform-origin: left;
+        transform-origin: left;
       }
       p {
         display: table-row;
         width: 100%;
         white-space: nowrap;
         text-align: right;
-      }
-      .item {
-        margin-bottom: 0.1em;
-        line-height: 125%;
-        &:last-child {
-          margin-bottom: 0;
+        &.item {
+          line-height: 125%;
+          &:last-child {
+            margin-bottom: 0;
+          }
         }
       }
+      
     }
 
     @include b(progress) {
       display: table-cell;
-      margin-left: 5px;
       color: $--color-aqua;
       width: 100%;
       vertical-align: middle;
+      &.noBorder {
+        padding-left: 0.5em;
+        padding-bottom: 0.3em;
+        .progress--bar{
+          border: 0 none;
+        }
+      }
+
       @include e(bar) {
         position: relative;
         display: block;
@@ -199,6 +229,8 @@ $rank: (
           font-size: 12px;
           -webkit-transform: translateY(-50%) scale(0.6);
           transform: translateY(-50%) scale(0.6);
+          // -webkit-transform-origin: right;
+          // transform-origin: right;
         }
       }
     }
