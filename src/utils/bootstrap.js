@@ -31,8 +31,6 @@ export const pageInitlization = async (type) => {
       let params = {eth_address: account}
       store.dispatch('common/addLoading', 'commonAuthLoading')
       if (AUTH_TOKEN) {
-        console.log('get user info ----------------')
-
         const userInfo = await $http('user_info', params)
         if(userInfo && userInfo.data) {
           store.commit('user/email', userInfo.data.email)

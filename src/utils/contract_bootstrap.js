@@ -6,6 +6,11 @@ import Web3 from "web3"
 
 const BN = new Web3().utils.BN
 export class contractBootstrap {
+
+  wei=Math.pow(10, 9)
+
+  options={}
+
   constructor(option_) {
     let defaults = {
       abi: '',

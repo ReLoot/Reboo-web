@@ -1,7 +1,7 @@
 <template>
   <el-dialog 
     class="dialog--settwo" 
-    :visible='visible'
+    :visible='Boolean(visible)'
     :append-to-body="true"
     :close-on-click-modal="closeOnClickModal"
     @close="closeHandler"

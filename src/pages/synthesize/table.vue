@@ -90,7 +90,7 @@
       <div class="inner">
         <div class="synt--handler_info">
           <p><el-checkbox v-model="checked">{{$t('synt.desc4', {fee: paymentAmount||'--'})}}</el-checkbox></p>
-          <p>{{$t('synt.desc5')}} {{paymentAmount || '--'}} DKMT</p>
+          <p>{{$t('synt.desc5')}} {{paymentBalance || '--'}} DKMT</p>
         </div>
         <div class="synt--handler_append">
           <cus-btn-ein 
@@ -118,7 +118,7 @@ import cardBuilding from '@/components/cards/card_building'
 import dialogSyntSelectCard from '@/components/dialog/settow_synt_select_card'
 import dialogSyntResult from '@/components/dialog/settwo_synt_result'
 
-import test_card_data from '@/testData/building_card_data.js'
+// import test_card_data from '@/testData/building_card_data.js'
 export default {
   // components:{cardBuilding, Swiper, SwiperSlide},
   // cardBuilding,
@@ -143,7 +143,8 @@ export default {
       card_stuff_2: null,
       card_stuff_3: null,
       integContract: null,
-      paymentAmount: null
+      paymentAmount: 0,
+      paymentBalance: 0
     }
   },
   watch: {
@@ -190,7 +191,12 @@ export default {
       if (!this.authentication || this.loadingWarden.includes('getUsefulBuildingCard')) return false
       this.$store.dispatch('user/updateUnsetBuildingCard')
       this.integContract = new integContractClass()
-      this.paymentAmount = await this.integContract.getPaymentAmount()
+      // this.paymentAmount = 100
+      const getPaymentAmount = await this.integContract.getPaymentAmount()
+      const getPaymentBalance = await this.integContract.getPaymentBalance(this.account)
+
+      this.paymentAmount = getPaymentAmount.amountFormat
+      this.paymentBalance = getPaymentBalance.amountFormat
     },
     cardSelect(type) {
       this.$refs['dialogSyntSelect'].viewOpen(type)
@@ -266,6 +272,13 @@ $btnHandlerAppend: (
   $--page-sm-width:(width:auto)
 );
 
+$desc: (
+  $--page-xs-width:(paddingTop:10px),
+  $--page-sm-width:(paddingTop:16px),
+  $--page-md-width:(paddingTop:22px),
+  $--page-lg-width:(paddingTop:28px),
+);
+
 .container {
   @include mediaAdapt($navHeight);
 }
@@ -275,9 +288,9 @@ $btnHandlerAppend: (
     padding: 40px 0 0; 
   }
 
-  @include e(table) {
-    margin-bottom: 20px
-  }
+  // @include e(table) {
+    // margin-bottom: 20px
+  // }
 
   @include e(box) {
     cursor: pointer;
@@ -362,7 +375,8 @@ $btnHandlerAppend: (
   }
   
   @include e(desc) {
-    padding: 30px 0;
+    @include mediaAdapt($desc);
+    padding-bottom: 25px;
     color: $--color-white-07;
   }
 
@@ -378,9 +392,19 @@ $btnHandlerAppend: (
       margin-bottom: 14px;
       p:first-child .el-checkbox{
         font-size: 18px;
+        position: relative;
+        ::v-deep .el-checkbox__input {
+          position: absolute;
+          top: 0.5em;
+          left: 0;
+          margin-top: -0.25em;
+        }
         ::v-deep .el-checkbox__label{
+          padding-left: 25px;
           font-size: inherit;
           color: $--color-whitening-1;
+          word-break: break-wrod;
+          white-space: normal;
         }
       }
       p:last-child {

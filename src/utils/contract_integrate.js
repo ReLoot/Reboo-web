@@ -72,14 +72,19 @@ export class integContractClass extends contractBootstrap {
 
     const feeContract = await super.contractMaker(payment_abi, payment_contract_address),
           buildCardContract = await super.contractMaker(ml_abi, building_contract_address),
-          mainContract = await super.contractMaker()
-    
+          mainContract = await super.contractMaker(),
+          getPaymentAmount = await this.getPaymentAmount(),
+          getPaymentBalance = await this.getPaymentBalance(account_),
+          wei_ = this.wei
+
     try {
-    // fee approve
-      const fee_balance = await feeContract.methods.balanceOf(account_).call()
-      const fee_allow = await feeContract.methods.allowance(account_, this.options.contract_address).call()
-      if(fee_allow <= 0) {
-        await feeContract.methods.approve(this.options.contract_address, new BN(String(fee_balance))).send({from: account_})
+      if(parseFloat(getPaymentAmount.amountFormat) > parseFloat(getPaymentBalance.amountFormat)) {
+        throw new Error('Not enough balance for pay')
+      }
+
+      const paymentAllow = await feeContract.methods.allowance(account_, this.options.contract_address).call()
+      if (parseFloat(new BN(paymentAllow).div(new BN(wei_)).toString())/wei_ < parseFloat(getPaymentAmount.amountFormat)) {
+        await feeContract.methods.approve(this.options.contract_address, new BN(String(getPaymentBalance.amount))).send({from: account_})
       }
       
       // nft approve
@@ -117,10 +122,24 @@ export class integContractClass extends contractBootstrap {
 
   async getPaymentAmount() {
     const mainContract = await super.contractMaker()
-    const fee = await mainContract.methods.getPaymentAmount().call()
-    return new BN(fee).div(new BN(Math.pow(10, 9))).div(new BN(Math.pow(10, 9))).toString()
+    const amount = await mainContract.methods.getPaymentAmount().call()
+    const wei_ = this.wei
+    // return new BN(amount).div(new BN(Math.pow(10, 9))).div(new BN(Math.pow(10, 9))).toString()
+    return {
+      amount,
+      amountFormat: parseFloat(new BN(amount).div(new BN(wei_)).toString())/wei_
+    }
   }
 
+  async getPaymentBalance(account) {
+    const feeContract = await super.contractMaker(payment_abi, payment_contract_address)
+    const amount = await feeContract.methods.balanceOf(account).call()
+    const wei_ = this.wei
+    return {
+      amount,
+      amountFormat: parseFloat(new BN(amount).div(new BN(wei_)).toString())/wei_
+    }
+  }
   
   /* 
     @params requestAction | integrate | integrateResult

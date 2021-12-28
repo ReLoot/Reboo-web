@@ -50,10 +50,16 @@ $bnListHd: (
   $--page-md-width:(fontsize: 35px, marginTop: 243px, width: 100%),
   $--page-lg-width:(fontsize: 40px, marginTop: 200px),
 );
+$desc: (
+  $--page-xs-width:(margin:0 auto 60px,),
+  $--page-sm-width:(margin:0 auto 70px,),
+  $--page-md-width:(margin:0 auto 80px,),
+  $--page-lg-width:(margin:0 auto 90px,),
+);
 $btnList: (
-  $--page-xs-width:(width: 256px, height: 67px, fontsize: 18px, margin: 0 10px 20px 10px),
-  $--page-sm-width:(width: 256px, height: 67px, fontsize: 18px, margin: 0 10px 20px 10px),
-  $--page-md-width:(width: 280px, height: 73px, fontsize: 22px, margin: 0 35px 0 0),
+  $--page-xs-width:(width: 180px, height: 47px, fontsize: 12px, margin: 0 10px 20px 10px),
+  $--page-sm-width:(width: 200px, height: 52px, fontsize: 16px, margin: 0 10px 20px 10px),
+  $--page-md-width:(width: 256px, height: 67px, fontsize: 18px, margin: 0 35px 0 0),
   $--page-lg-width:(width: 280px, height: 73px, fontsize: 22px, margin: 0 35px 0 0),
 );
 
@@ -80,11 +86,11 @@ $btnList: (
     }
 
     @include m(desc) {
+      @include mediaAdapt($desc);
       max-width: 720px;
       padding: 0 5px;
       font-size: 16px;
       line-height: 150%;
-      margin: 0 auto 90px;
       font-family: OrbitronRegular;
     }
 
@@ -93,10 +99,6 @@ $btnList: (
       .btn {
         @include mediaAdapt($btnList);
         font-family: OrbitronBlack;
-      }
-
-      & > a:last-child .btn {
-        margin-right: 0;
       }
 
     }

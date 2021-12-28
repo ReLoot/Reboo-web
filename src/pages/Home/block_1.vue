@@ -34,7 +34,7 @@ $bkList: (
 );
 
 $bkListHd: (
-  $--page-xs-width:(fontsize: 20px, marginTop: 172px, marginBottom: 40px),
+  $--page-xs-width:(fontsize: 30px, marginTop: 172px, marginBottom: 40px),
   $--page-sm-width:(fontsize: 36px, marginTop: 172px, marginBottom: 40px),
   $--page-md-width:(fontsize: 45px, marginTop: 222px, marginBottom: 60px),
   $--page-lg-width:(fontsize: 53px, margin: 269px auto 85px),
@@ -71,6 +71,7 @@ $btnList: (
       line-height: 125%;
       color: $--color-aqua;
       white-space: nowrap;
+      letter-spacing: -1px;
     }
 
     @include m(btn) {

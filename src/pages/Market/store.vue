@@ -191,8 +191,6 @@ export default {
         }
         
         if (payOptions) {
-          console.log(payOptions)
-          debugger
           const pusreObj = await this.$http('boxPurchase', { 
             eth_address: this.account, 
             transactionHash:payOptions.transactionHash, 
@@ -216,8 +214,6 @@ export default {
       }
     },
     boxPurchaseRequest(tx) {
-      console.log(tx)
-      console.log(this)
       this.$http('boxPurchase', { 
         eth_address: this.account, 
         transactionHash:tx, 

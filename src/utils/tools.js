@@ -17,6 +17,10 @@ export const emailFormat = (str) => {
 }
 
 export const addressFormat = (address) => {
-  const c = address.match(/(^.{4})|(.{4}$)/g)
-  return `${c[0]}...${c[1]}`
+  if(address && address.substr(0, 2) == '0x') {
+    const c = address.match(/(^.{4})|(.{4}$)/g)
+    return `${c[0]}...${c[1]}`
+  } else {
+    return address
+  }
 }

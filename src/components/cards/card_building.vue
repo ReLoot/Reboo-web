@@ -155,6 +155,7 @@ $cardCtnLp: (
     .l-part {
       // @include mediaAdapt($cardCtnLp);
       padding: 0.05em;
+      text-align: left;
       img.rank {
         @include mediaAdapt($rank);
       }
@@ -164,11 +165,12 @@ $cardCtnLp: (
     }
 
     .r-part {
-      width: 100%;
+      width: 98%;
       font-size: 0.12em;
       display: table;
       border-spacing: 5px 2px;
       font-family: Arial, Helvetica, sans-serif;
+      margin: 0 auto 5px;
 
       border-collapse: collapse;
       label {

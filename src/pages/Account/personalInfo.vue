@@ -27,7 +27,7 @@
             <em :style="{backgroundImage: `url(/image/account/user_info_lab3.png)`}"></em>
             <div class="user--info_ctn" >
               <p class="name">Address</p>
-              <p class="props">{{account || '--'}}</p>
+              <p class="props">{{(account|| '--')|addressFormat}}</p>
             </div>
           </div>
         </div>
@@ -40,7 +40,11 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import {addressFormat} from '@/utils/tools'
 export default {
+  filters: {
+    addressFormat
+  },
   computed: {
     ...mapGetters('user', {
       account: 'account',

@@ -170,12 +170,14 @@ $btnHandler: (
       }
       .el-col {
         margin-bottom: 20px;
+        text-align: center;
       }
       .wrap {
         position: relative;
         display: inline-block;
         width: 100%;
         cursor: pointer;
+        max-width: 200px;
         i {
           display: none;
         }
