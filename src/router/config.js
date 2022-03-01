@@ -70,15 +70,17 @@ export default (() => {
         auth: 1,
         id_refused: 1
       }
-    },{
-      path: '/ido',
-      name: 'ido',
-      component: ()=>import('@/pages/IDO'),
-      meta: {
-        view: 'IDO',
-        ido_unpartake: 1
-      }
-    },{
+    },
+    // {
+    //   path: '/ido',
+    //   name: 'ido',
+    //   component: ()=>import('@/pages/IDO'),
+    //   meta: {
+    //     view: 'IDO',
+    //     ido_unpartake: 1
+    //   }
+    // },
+    {
       path: '/mint',
       name: 'synths',
       component: ()=>import('@/pages/synthesize'),

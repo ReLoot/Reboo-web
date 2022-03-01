@@ -30,9 +30,9 @@ export default {
 @import '@/style/custom.scss';
 $itemTitle: (
   $--page-xs-width: (fontsize: 20px, padding:0, maxwidth: 85%, background: none),
-  $--page-sm-width: (fontsize: 20px, padding:15px 91px 15px 90px, maxwidth: 80%),
-  $--page-md-width: (fontsize: 30px, padding:15px 91px 15px 90px),
-  $--page-lg-width: (fontsize: 34px, padding:18px 107px 18px 105px)
+  $--page-sm-width: (fontsize: 20px, padding:15px 91px 15px 90px, maxwidth: 80%, background:no-repeat center),
+  $--page-md-width: (fontsize: 30px, padding:15px 91px 15px 90px,  background:no-repeat center),
+  $--page-lg-width: (fontsize: 34px, padding:18px 107px 18px 105px,  background:no-repeat center)
 );
 
 @include b(bk) {
@@ -47,9 +47,7 @@ $itemTitle: (
       margin-left: auto;
       margin-right: auto;
       line-height: 125%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: auto 100%;
+      background-size: auto 100% !important;
       white-space: nowrap;
 
     }

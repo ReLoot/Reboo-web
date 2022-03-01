@@ -8,7 +8,7 @@
           <div class="tk--pie_view">
             <span class="unit">VBN</span>
           </div>
-          <div class="tk--pie_item tk--pie_item_00">
+          <!-- <div class="tk--pie_item tk--pie_item_00">
             <p>
               <span>{{$t('token.bk3Pie1Item0')}} </span>
               <span class="num">1%</span>
@@ -16,12 +16,12 @@
             <div class="stick">
               <em></em>
             </div>
-          </div>
+          </div> -->
 
           <div class="tk--pie_item tk--pie_item_01">
             <p>
               <span>{{$t('token.bk3Pie1Item1')}} </span>
-              <span class="num">4%</span>
+              <span class="num">5%</span>
             </p>
             <div class="stick">
               <em></em>
